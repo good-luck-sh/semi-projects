@@ -194,9 +194,9 @@ public class ReviewJdbcDao implements ReviewDao {
 	public List<Review> getAllReview(int productNo, int begin, int end) throws SQLException {
 		List<Review> reviews = new ArrayList<>();
 		String sql = " review_no, review_title, user_no, review_review_like_count, review_content, review_created_date, review_star_point, "
-				+ "	 user_no, U.user_id, user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
-				+ "	 user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check, "
-				+ "				+ \"	P.product_no, P.category_no, P.product_name, P.product_price , P.product_discount_price, P.product_stock, P.product_on_sale, P.product_review_count, \"\r\n"
+				+ "	 user_no, user_id, user_password, user_name, user_age, user_gender, manager_check, "
+				+ "	 user_address, user_order_point, user_degree, user_created_date, user_delete_check, "
+				+ "	 product_no, category_no, product_name, product_price , product_discount_price, product_stock, product_on_sale, product_review_count "
 				+ "				+ \" P.star_point, P.product_date \""
 				+ "from "
 				+ "(select row_number() over(order by R.review_no desc) rn,"
