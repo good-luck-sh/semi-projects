@@ -24,7 +24,7 @@ public interface ReviewDao {
 	 * @return 해당하는 아이디에 대한 리뷰정보
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
-	public List<Review> getAllReviewById(int userNo) throws SQLException;
+	public List<Review> getAllReviewById(int userNo, int begin, int end) throws SQLException;
 	
 	/**
 	 * 입력받은 리뷰를 등록한다.
@@ -54,7 +54,7 @@ public interface ReviewDao {
 	 * @return 리뷰 전체 정보
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
-	public List<Review> getAllReview(int productNo) throws SQLException;
+	public List<Review> getAllReview(int productNo, int begin, int end) throws SQLException;
 	
 	/**
 	 * 해당하는 리뷰의 정보를 수정한다. 
@@ -62,5 +62,28 @@ public interface ReviewDao {
 	 * @throws SQLException DB Access 오류시 예외가 발생한다. 
 	 */
 	public void updateReviewById(Review review) throws SQLException;
+	
+	/**
+	 * 해당하는 사용자의 리뷰의 갯수를 출력한다.
+	 * @param userNo 리뷰 작성자의 번호
+	 * @return 작성한 리뷰의 갯수
+	 * @throws SQLException DB Access 오류시 예외가 발생한다. 
+	 */
+	public int getCountReviewByUserNo(int userNo) throws SQLException;
+	
+	/**
+	 * 해당하는 상품의 리뷰의 갯수를 출력한다.
+	 * @param productNo 물건의 번호
+	 * @return 작성한 리뷰의 갯수
+	 * @throws SQLException DB Access 오류시 예외가 발생한다. 
+	 */
+	public int getCountReviewByProductNo(int productNo) throws SQLException;
+	
+	/**
+	 * 총 리뷰의 갯수를 출력한다.
+	 * @return 작성한 리뷰의 갯수
+	 * @throws SQLException DB Access 오류시 예외가 발생한다. 
+	 */
+	public int getAllCountReview() throws SQLException;
 	
 }

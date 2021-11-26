@@ -65,17 +65,27 @@ public class ReviewJdbcDao implements ReviewDao {
 	}
 
 	@Override
-	public List<Review> getAllReviewById(int userno) throws SQLException {
+	public List<Review> getAllReviewById(int userno, int begin, int end) throws SQLException {
 		
 		List<Review> reviews = new ArrayList<>();
-		String sql = "select R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point "
-				+ " U.user_no, U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check "
-				+ "	U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check "
-				+ "from review R, user_table U "
-				+ "where user_no =  ? ";
+		String sql = "select review_no, review_title, user_no, review_review_like_count, review_content, review_created_date, review_star_point "
+				+ " user_no, user_id, user_password, user_name, user_age, user_gender, manager_check "
+				+ "	user_address, user_order_point, user_degree, user_created_date, user_delete_check "
+				+ "from "
+				+ "	(select row_number() over(order by R.review_no desc) rn "
+				+ " 	R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point "
+				+ "	 	U.user_no, U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check "
+				+ "	 	U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check "
+				+ "		from review R, user_table U "
+				+ " 	where R.user_no = U.user_no "
+				+ " 	and R.user_no = ? "
+				+ "	) "
+				+ "where rn >= ? and rs <= ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setInt(1, userno);
+		ptmt.setInt(2, begin);
+		ptmt.setInt(3, end);
 		ResultSet rs = ptmt.executeQuery();
 		while(rs.next()) {
 			Review review = new Review();
@@ -128,8 +138,15 @@ public class ReviewJdbcDao implements ReviewDao {
 
 	@Override
 	public void deleteReviewById(int reviewNo) throws SQLException {
-		// TODO Auto-generated method stub
+		String sql = "delete from review where reviewNo = ? ";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setInt(1, reviewNo);
 		
+		ptmt.executeUpdate();
+		
+		ptmt.close();
+		connection.close();
 	}
 
 	@Override
@@ -174,9 +191,16 @@ public class ReviewJdbcDao implements ReviewDao {
 	}
 
 	@Override
-	public List<Review> getAllReview(int productNo) throws SQLException {
+	public List<Review> getAllReview(int productNo, int begin, int end) throws SQLException {
 		List<Review> reviews = new ArrayList<>();
-		String sql = "select R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point, "
+		String sql = " review_no, review_title, user_no, review_review_like_count, review_content, review_created_date, review_star_point, "
+				+ "	 user_no, U.user_id, user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
+				+ "	 user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check, "
+				+ "				+ \"	P.product_no, P.category_no, P.product_name, P.product_price , P.product_discount_price, P.product_stock, P.product_on_sale, P.product_review_count, \"\r\n"
+				+ "				+ \" P.star_point, P.product_date \""
+				+ "from "
+				+ "(select row_number() over(order by R.review_no desc) rn,"
+				+ " R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point, "
 				+ " U.user_no, U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
 				+ "	U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check, "
 				+ "	P.product_no, P.category_no, P.product_name, P.product_price , P.product_discount_price, P.product_stock, P.product_on_sale, P.product_review_count, "
@@ -185,7 +209,9 @@ public class ReviewJdbcDao implements ReviewDao {
 				+ "	where R.user_no = U.user_no "
 				+ "	and U.user_no = B.user_no "
 				+ "	and P.product_no = B.product_no "
-				+ " and P.product_no = ? ";
+				+ " and P.product_no = ? "
+				+ ")"
+				+ "where rn >= ? and rn <= ?";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setInt(1, productNo);
@@ -258,6 +284,21 @@ public class ReviewJdbcDao implements ReviewDao {
 		
 		ptmt.close();
 		connection.close();
+	}
+	@Override
+	public int getCountReviewByUserNo(int userNo) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int getCountReviewByProductNo(int productNo) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int getAllCountReview() throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

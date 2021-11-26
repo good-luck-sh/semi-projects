@@ -61,4 +61,19 @@ public interface CsBoardDao {
 	 */
 	public void deleteCsBoard(int csBoardNo) throws SQLException;
 	
+	/**
+	 * 문의사항 게시판에서 해결되지 않은 게시판의 갯수를 출력한다.
+	 * @param csReplyCheck 해결되지 않은 게시판 
+	 * @return 게시판의 갯수
+	 * @throws SQLException DB Access 오류시 예외가 발생한다.
+	 */
+	public int getCountCsBoard(String csReplyCheck) throws SQLException;
+	
+	/**
+	 * 문의사항 게시판에서 모든 게시판 갯수를 출력한다.
+	 * @return 등록된 게시판의 갯수
+	 * @throws SQLException DB Access 오류시 예외가 발생한다.
+	 */
+	public int getAllCountCsBoard() throws SQLException;
+	
 }

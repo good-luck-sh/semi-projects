@@ -239,5 +239,38 @@ public class CsBoardJdbcDao implements CsBoardDao {
 		connection.close();
 		
 	}
+	@Override
+	public int getCountCsBoard(String csReplyCheck) throws SQLException {
+		int countReply = 0;
+		String sql = "select count(*) as count from cs_board "
+				+ "where cs_reply_check like '%' ? '%' ";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setString(1, csReplyCheck);
+		ResultSet rs = ptmt.executeQuery();
+		rs.next();
+		
+		countReply = rs.getInt("count");
+		
+		rs.close();
+		ptmt.close();
+		connection.close();
+		return countReply;
+	}
+	@Override
+	public int getAllCountCsBoard() throws SQLException {
+		int countReply = 0;
+		String sql = "select count(*) as count from cs_board ";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ResultSet rs = ptmt.executeQuery();
+		rs.next();
+		countReply = rs.getInt("count");
+		
+		rs.close();
+		ptmt.close();
+		connection.close();
+		return countReply;
+	}
 
 }
