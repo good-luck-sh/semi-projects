@@ -195,7 +195,7 @@ public class ReviewJdbcDao implements ReviewDao {
 		List<Review> reviews = new ArrayList<>();
 		String sql = " review_no, review_title, user_no, review_review_like_count, review_content, review_created_date, review_star_point, "
 				+ "	 U.user_no, U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
-				+ "				+ \"	U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check, "
+				+ "	 U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check, "
 				+ "				+ \"	P.product_no, P.category_no, P.product_name, P.product_price , P.product_discount_price, P.product_stock, P.product_on_sale, P.product_review_count, \"\r\n"
 				+ "				+ \" P.star_point, P.product_date \""
 				+ "from "
