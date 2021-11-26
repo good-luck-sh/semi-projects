@@ -14,7 +14,7 @@
 		<div class="col mb-3 mt-3">
 			<h3 class="mb-3">리뷰 작성 폼</h3>
 			<p class=""><strong>안녕하세요 :) 김승희 회원님</strong></p>
-			<p class="">리뷰 작성시 1%를 추가 적립 받으실 수 있습니다왈.</p>
+			<p class="">리뷰 작성시 1%를 추가 적립 받으실 수 있습니다.</p>
 		</div>
 	</div>
 	<div class="row mt-3">
