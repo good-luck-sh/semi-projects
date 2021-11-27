@@ -58,11 +58,11 @@
 							disabled="disabled" value="홍길동">
 					</div>
 					<div class="mb-3" id="text-review-2">
-						<label for="exampleFormControlInput1" class="form-label">내용
-							입력</label> <input type="text" class="form-control" name="reviewText">
+						<label class="mb-3">리뷰 내용</label>
+						<textarea class="form-control col-sm-5" rows="5" name="reviewText" placeholder="내용을 입력하세요"></textarea>
 					</div>
 					<div>
-						<label>별점 입력</label>
+						<label class="mb-3">별점 입력</label>
 						 <select class="form-select form-select-lg mb-3" name="star">
 							<option selected="selected" disabled="disabled">별점 입력하기</option>
 							<option value="1">1</option>

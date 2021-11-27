@@ -24,19 +24,18 @@ public class ConnectionUtil {
 	static {
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
-		} catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
-	}
+		
 	
 	/**
 	 * RDBMS와 연결된 새로운 Connection 객체를 반환한다.
 	 * @return RDBMS와 연결을 담당하는 Connection 객체
 	 * @throws SQLException RDBMS와의 연결이 실패하는 경우 예외가 던져진다.
 	 */
-	public static Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(URL, USER_NAME, PASSWORD);
 	}
-	
-	
+	public static Connection getConnection() throws SQLException {
+		return DriverManager.getConnection(URL,USER_NAME,PASSWORD);
+	}
 }
