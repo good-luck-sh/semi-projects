@@ -17,11 +17,10 @@ public class UserDao {
 	    */
 	public UserTable getUserAllInfoByNo(int userNo) throws SQLException {
 	    
-		 String sql = "select user_no, user_id, user_password, user_name, user_age, user_gender, manager_check, "
-		               + " user_address, user_order_point, user_degree, user_created_date, user_delete_check  "
-		               + " from user_table "
-		               + " where user_no = ? ";
-		 
+		 String sql = "select user_no, user_id, user_password, user_name, user_age, user_gender, manager_check "
+		               + "user_address, user_order_point, user_degree, user_created_date, user_delete_check "
+		               + "from user_table "
+		               + "where user_no = ? ";
 		 UserTable user = null;
 		      
 		 Connection connection = getConnection();
@@ -43,7 +42,6 @@ public class UserDao {
 		    user.setUserCreateDate(rs.getDate("user_created_date"));
 		    user.setUserDeleteCheck(rs.getString("user_delete_check"));
 		    user.setManagerCheck(rs.getString("manager_check"));
-		    
 		 	}
 		      
 		  rs.close();

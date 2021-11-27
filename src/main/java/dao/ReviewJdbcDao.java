@@ -193,12 +193,12 @@ public class ReviewJdbcDao implements ReviewDao {
 	@Override
 	public List<Review> getAllReview(int productNo, int begin, int end) throws SQLException {
 		List<Review> reviews = new ArrayList<>();
-		String sql = "select review_no, review_title, user_no, review_review_like_count, review_content, review_created_date, review_star_point, "
+		String sql = " review_no, review_title, user_no, review_review_like_count, review_content, review_created_date, review_star_point, "
 				+ "	 user_no, user_id, user_password, user_name, user_age, user_gender, manager_check, "
 				+ "	 user_address, user_order_point, user_degree, user_created_date, user_delete_check, "
 				+ "	 product_no, category_no, product_name, product_price , product_discount_price, product_stock, product_on_sale, product_review_count "
-				+ "	star_point, P.product_date "
-				+ " from "
+				+ "				+ \" P.star_point, P.product_date \""
+				+ "from "
 				+ "(select row_number() over(order by R.review_no desc) rn,"
 				+ " R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point, "
 				+ " U.user_no, U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
@@ -211,23 +211,11 @@ public class ReviewJdbcDao implements ReviewDao {
 				+ "	and P.product_no = B.product_no "
 				+ " and P.product_no = ? "
 				+ ")"
-				+ "where rn >= ? and rn <= ? ";
+				+ "where rn >= ? and rn <= ?";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setInt(1, productNo);
-		ptmt.setInt(2, begin);
-		ptmt.setInt(3, end);
 		ResultSet rs = ptmt.executeQuery();
-		repeatProductUserReview(reviews, rs);
-		
-		rs.close();
-		ptmt.close();
-		connection.close();
-		return reviews;
-	}
-
-	
-	private void repeatProductUserReview(List<Review> reviews, ResultSet rs) throws SQLException {
 		while(rs.next()) {
 			Review review = new Review();
 			review.setReviewNo(rs.getInt("review_no"));
@@ -266,6 +254,11 @@ public class ReviewJdbcDao implements ReviewDao {
 			reviews.add(review);
 			
 		}
+		
+		rs.close();
+		ptmt.close();
+		connection.close();
+		return reviews;
 	}
 
 	@Override
@@ -294,55 +287,18 @@ public class ReviewJdbcDao implements ReviewDao {
 	}
 	@Override
 	public int getCountReviewByUserNo(int userNo) throws SQLException {
-		int findCount = 0;
-		String sql = "select count(*)as cnt from review where user_no";
-		Connection connection = getConnection();
-		PreparedStatement ptmt = connection.prepareStatement(sql);
-		ptmt.setInt(1, userNo);
-		ResultSet rs = ptmt.executeQuery();
-		rs.next();
-		findCount = rs.getInt("cnt");
-		rs.close();
-		ptmt.close();
-		connection.close();
-		return findCount;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	@Override
 	public int getCountReviewByProductNo(int productNo) throws SQLException {
-		int findCount = 0;
-		String sql = "select review_no count(*)as cnt "
-				+ "from review R, user_table U, product P, user_basket B "
-				+ "	where R.user_no = U.user_no "
-				+ "	and U.user_no = B.user_no "
-				+ "	and P.product_no = B.product_no " 
-				+ "	and P.product_no = ? "
-				+ " group by review_no ";
-		Connection connection = getConnection();
-		PreparedStatement ptmt = connection.prepareStatement(sql);
-		ptmt.setInt(1, productNo);
-		ResultSet rs = ptmt.executeQuery();
-		rs.next();
-		findCount = rs.getInt("cnt");
-		
-		rs.close();
-		ptmt.close();
-		connection.close();
-		return findCount;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	@Override
 	public int getAllCountReview() throws SQLException {
-		int findCount = 0;
-		String sql = "select count(*)as cnt from review ";
-		Connection connection = getConnection();
-		PreparedStatement ptmt = connection.prepareStatement(sql);
-		ResultSet rs = ptmt.executeQuery();
-		rs.next();
-		findCount = rs.getInt("cnt");
-		
-		rs.close();
-		ptmt.close();
-		connection.close();
-		return findCount;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
