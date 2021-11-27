@@ -36,7 +36,7 @@ public class UserDao {
 		    user.setUserPassword(rs.getString("user_password"));
 		    user.setUserName(rs.getString("user_name"));
 		    user.setUserAge(rs.getInt("user_age"));
-		    user.setUserGender(rs.getString("user_gener"));
+		    user.setUserGender(rs.getString("user_gender"));
 		    user.setUserAddress(rs.getString("user_address"));
 		    user.setUserOrderPoint(rs.getInt("user_order_point"));
 		    user.setUserDegree(rs.getString("user_degree"));

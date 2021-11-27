@@ -30,7 +30,7 @@
 		response.sendRedirect("form.jsp?error=noStar");
 		return;
 	}
-	
+		
 	Review review = new Review();
 	review.setReviewTitle(title);
 	review.setReviewContent(text);
@@ -39,10 +39,14 @@
 	UserDao user = new UserDao();
 	int userNo = 1;
 	UserTable findUser = user.getUserAllInfoByNo(userNo); //값이 입력되는지 확인되기 위한 값, 나중에 session에서 추출해야한다. 
-	review.setUserTable(findUser);
+	UserTable users = new UserTable();
+	users.setUserNo(userNo);
+	review.setUserTable(users);
 	
 	reviewDao.insertReviewById(review);
-	//ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
+	/**
+	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
+	**/
 	//productDao.getAllReviewByReviewNo(review.getReviewNo());
 	
 	

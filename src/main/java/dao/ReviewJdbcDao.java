@@ -119,6 +119,7 @@ public class ReviewJdbcDao implements ReviewDao {
 
 	@Override
 	public void insertReviewById(Review review) throws SQLException {
+		
 		String sql = "insert into review (review_no, review_title, user_no, review_review_like_count, review_content, review_created_date, review_star_point) "
 				+ " values(review_no.nextval, ?, ?, 0, ?, sysdate, ? ) ";
 		
@@ -133,7 +134,7 @@ public class ReviewJdbcDao implements ReviewDao {
 		
 		ptmt.close();
 		connection.close();
-		
+
 	}
 
 	@Override
