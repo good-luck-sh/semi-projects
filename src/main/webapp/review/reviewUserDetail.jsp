@@ -1,5 +1,3 @@
-<%@page import="vo.Review"%>
-<%@page import="dao.ReviewJdbcDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="ko">
@@ -14,18 +12,6 @@
 <%
 	int no = Integer.parseInt(request.getParameter("no"));
 	int category = Integer.parseInt(request.getParameter("category"));
-	
-	//if(loginUserInfo == null) {
-	//	response.sendRedirect("../loginform.jsp?error=empty")
-	//	return;
-	//} 나중에 loginform을 입력한다. 
-	
-	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
-	Review review = reviewDao.getReviewById(no);
-	
-	int Like = review.getReviewReviewLikeCount();
-	
-	
 %>
 <div class ="container mt-3">
 		<div class="row p-3">
@@ -52,9 +38,6 @@
 						</tr>
 					</tbody>
 				</table>
-<%
-
-%>
 				<div class="text-right">
 					<a href="update.jsp" class="btn warning">수정</a> <a href="delete.jsp" class="btn danger">삭제</a>
 					<a href="detail.jsp?no=" class="btn primary">목록</a>

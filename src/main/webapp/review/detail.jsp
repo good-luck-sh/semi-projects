@@ -31,7 +31,7 @@
 	if("complete".equals(text)) {
 %>
 	<div class="alert alert-primary">
-		<strong>리뷰 등록 성공</strong>구매금액의 1%을 적립했습니다.
+		<strong>리뷰 등록 성공</strong>리뷰 감사합니다.
 	</div>
 <%
 	}
