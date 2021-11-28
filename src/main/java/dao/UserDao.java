@@ -9,49 +9,6 @@ import static utils.ConnectionUtil.*;
 import vo.UserTable;
 
 public class UserDao {
-	
-	
-	public void deleteUser (int userNo) throws SQLException {
-		String sql = "delete from user_table "
-					+ "where user_no = ? ";
-		Connection connection = getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(sql);
-		pstmt.setInt(1, userNo);
-		pstmt.executeUpdate();
-		
-		pstmt.close();
-		connection.close();
-		
-		
-	}
-	
-	
-	/**
-	 * 유저 정보 업데이트하기
-	 * @param userTable 유저
-	 * @throws SQLException
-	 */
-	public void updateUser(UserTable userTable) throws SQLException {
-		
-		String sql = "update into user_table "
-					+ "set "
-					+ "user_password = ? "
-					+ "user_address = ? ";
-		
-		Connection connection = getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(sql);
-		pstmt.setString(1, userTable.getUserPassword());
-		pstmt.setString(2, userTable.getUserAddress());
-		
-		pstmt.executeUpdate();
-		
-		pstmt.close();
-		connection.close();
-		
-		
-		
-	}
-	
 
 	/**
 	    * 유저 번호를 통해 모든 유저 정보를 불러온다
