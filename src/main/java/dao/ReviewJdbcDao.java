@@ -345,5 +345,47 @@ public class ReviewJdbcDao implements ReviewDao {
 		connection.close();
 		return findCount;
 	}
+	
+	
+	/**
+	 * 유저 번호로 유저가 쓴 리뷰를 모두 가져오기
+	 * @param userNo 유저 번호
+	 * @return 유저의 모든 리뷰 내용
+	 * @throws SQLException
+	 */
+	public List<Review> getUserAllReviewByNo(int userNo) throws SQLException {
+		String sql = "select review_no, review_title, review_review_like_count, review_content, "
+					+ "review_created_date, review_star_point "
+					+ "from review "
+					+ "where user_no = ? ";
+		
+		List<Review> reviews = new ArrayList<>();
+		
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1, userNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Review review = new Review();
+			review.setReviewNo(rs.getInt("review_no"));
+			review.setReviewTitle(rs.getString("review_title"));
+			review.setReviewReviewLikeCount(rs.getInt("review_review_like_count"));
+			review.setReviewContent(rs.getString("review_content"));
+			review.setReviewCreatedDate(rs.getDate("review_created_date"));
+			review.setReviewStarPoint(rs.getInt("review_star_point"));
+			
+			reviews.add(review);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return reviews;
+	}
+	
+	
+	
 
 }
