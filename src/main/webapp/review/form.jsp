@@ -50,8 +50,8 @@
 				<form action="register.jsp" method="post">
 				
 					<div class="mb-3" id="text-review-1">
-						<label for="exampleFormControlInput1" class="form-label">리뷰 제목</label> 
-						<input type="text" class="form-control" name="reviewTitle">
+						<label for="exampleFormControlInput1" class="form-label">리뷰
+							제목</label> <input type="text" class="form-control" name="reviewTitle">
 					</div>
 					<div class="mb-3">
 						<label for="exampleFormControlInput1" class="form-label">작성자</label>
