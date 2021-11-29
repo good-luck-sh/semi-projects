@@ -12,9 +12,19 @@
 </head>
 <body>
 <%
-
+	//	pageContext.setAttribute("menu", "login");
 %>
 <%@ include file="../navbar/nav.jsp" %>
+<%
+	// 로그인한 사용자정보가 세션에 존재하지 않으면 마이페이지를 요청할 수 없다.
+	// 클라이언트에게 로그인 정보를 입력하는 loginform.jsp를 재요청하는 응답을 보낸다.
+	// 재요청 URL에 오류원인을 포함시킨다.
+//	if (loginUserInfo == null) {
+//		response.sendRedirect("../loginform.jsp?error=login-required");
+//		return;
+//	}
+
+%>
 <div class="container"> 
 
 <hr>
@@ -25,7 +35,8 @@
 	</div>
 <hr>
 <%
-	UserDao uDao = new UserDao();
+	UserDao uDao = UserDao.getInstance();
+	// 나중에 1을 loginUserInfo.getUserNo()로 바꾸기
 	UserTable user = uDao.getUserAllInfoByNo(1);
 
 %>
@@ -78,6 +89,23 @@
 		</div>
 	</div>
 <hr>
+<%
+	final double DIAMOND_POINT_DEPOSIT_RATE = 0.03;
+	final double GOLD_POINT_DEPOSIT_RATE = 0.02;
+	final double SILVER_POINT_DEPOSIT_RATE = 0.01;
+	
+	int pointRate = 0;
+
+	if("다이아몬드".equals(user.getUserDegree())){
+		pointRate = (int)(DIAMOND_POINT_DEPOSIT_RATE*100);
+	} else if("골드".equals(user.getUserDegree())){
+		pointRate = (int)(GOLD_POINT_DEPOSIT_RATE*100);
+	} else if("실버".equals(user.getUserDegree())){
+		pointRate = (int)(SILVER_POINT_DEPOSIT_RATE*100);
+	} else if("브론즈".equals(user.getUserDegree())){
+		pointRate = 0;
+	}
+%>
 
 	<div class="row mb-3 border border-dark">
 		<div clas="col">
@@ -90,17 +118,20 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col">
-			<h6><a href="">적립금</a></h6>
+			<h6><a href="userpointdetail.jsp">적립금</a></h6>
 			<h6><%=user.getUserOrderPoint() %> 원</h6>
 		</div>
 	</div>
 <hr>
 	<div class="row mb-3">
-		<div class="col-6">
+		<div class="col-4">
+			<a href="basket.jsp" class="btn btn-primary">장바구니</a>
+		</div>
+		<div class="col-4">
 			<a href="modifyform.jsp?no=1" class="btn btn-primary">회원 정보 수정</a>
 		</div>
-		<div class="col-6">
-			<a herf="" class="btn btn-primary">로그아웃</a>
+		<div class="col-4">
+			<a href="" class="btn btn-primary">로그아웃</a>
 		</div>
 	</div>
 <hr>
@@ -112,8 +143,10 @@
 <hr>
 	<div class="row mb-3">
 		<div class="col">
-			<a href="">나의 게시글</a>
-			<a href="myreviewlist.jsp?no=1">나의 리뷰</a>			
+			<a href="mycslist.jsp">나의 게시글</a>	<!-- ?no=1 추가  -->
+		</div>
+		<div class="col">
+			<a href="myreviewlist.jsp?no=1">나의 리뷰</a>		
 		</div>
 	</div>
 	
