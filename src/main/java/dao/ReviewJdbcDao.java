@@ -347,13 +347,18 @@ public class ReviewJdbcDao implements ReviewDao {
 	}
 	
 	
-	@Override
+	/**
+	 * 유저 번호로 유저가 쓴 리뷰를 모두 가져오기
+	 * @param userNo 유저 번호
+	 * @return 유저의 모든 리뷰 내용
+	 * @throws SQLException
+	 */
 	public List<Review> getUserAllReviewByNo(int userNo) throws SQLException {
 		String sql = "select review_no, review_title, review_review_like_count, review_content, "
-				+ "review_created_date, review_star_point "
-				+ "from review "
-				+ "where user_no = ? ";
-	
+					+ "review_created_date, review_star_point "
+					+ "from review "
+					+ "where user_no = ? ";
+		
 		List<Review> reviews = new ArrayList<>();
 		
 		Connection connection = getConnection();
@@ -379,7 +384,6 @@ public class ReviewJdbcDao implements ReviewDao {
 		
 		return reviews;
 	}
-	
 	
 	
 	

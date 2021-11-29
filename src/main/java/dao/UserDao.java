@@ -10,18 +10,7 @@ import vo.UserTable;
 
 public class UserDao {
 	
-	private static UserDao self = new UserDao();
-	private UserDao() {}
-	public static UserDao getInstance() {
-		return self;
-	}
 	
-	
-	/**
-	 * 회원탈퇴기능
-	 * @param userNo 유저번호
-	 * @throws SQLException
-	 */
 	public void deleteUser (int userNo) throws SQLException {
 		String sql = "delete from user_table "
 					+ "where user_no = ? ";
