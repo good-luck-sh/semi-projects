@@ -91,6 +91,13 @@ public interface ReviewDao {
 	 */
 	public int getAllCountReview() throws SQLException;
 	
+	/**
+	 * 유저 번호로 유저가 쓴 리뷰를 모두 가져오기
+	 * @param userNo 유저 번호
+	 * @return 유저의 모든 리뷰 내용
+	 * @throws SQLException
+	 */
+	public List<Review> getUserAllReviewByNo(int userNo) throws SQLException;
 	
 	
 }
