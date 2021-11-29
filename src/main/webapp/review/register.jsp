@@ -1,3 +1,4 @@
+<%@page import="vo.Product"%>
 <%@page import="dao.UserDao"%>
 <%@page import="dao.ProductReviewJdbcDao"%>
 <%@page import="vo.Review"%>
@@ -6,13 +7,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 
-	//UserTable loginUserInfo = (UserTable)session.getAttribute("LOGIN_USER_INFO");
+	UserTable loginUserInfo = (UserTable)session.getAttribute("LOGIN_USER_INFO");
 	//저장되어 있는 user의 객체를 저장하는 session객체이다.
+	int no = Integer.parseInt(request.getParameter("no"));
+	int cpno = Integer.parseInt(request.getParameter("cpno"));
 	
 	String title = request.getParameter("reviewTitle");
 	String text = request.getParameter("reviewText");
 	int star = Integer.parseInt(request.getParameter("star"));
-	
+	int orderProduct = 0;
+	int totalProduct = orderProduct + 1;
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
 //	if(loginUserInfo == null) {
 //		response.sendRedirect("form.jsp?error=empty");
@@ -44,11 +48,17 @@
 	review.setUserTable(users);
 	
 	reviewDao.insertReviewById(review);
-	/**
+
 	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
-	**/
-	//productDao.getAllReviewByReviewNo(review.getReviewNo());
+
+	Product product = productDao.getAllReviewByReviewNo(review.getReviewNo());
 	
+	int productReview = product.getProductReviewCount() + 1;
+	int productStar = (product.getPrdocutStarPoint() + star) / (totalProduct);
+	
+	product.setProductReviewCount(productReview);
+	product.setPrdocutStarPoint(productStar);
+	productDao.updateProductByProductNo(product);
 	
 	//UserTable users = new UserTable();//유저의 적립포인트 
 	//나중에 여기서 user의 no로 찾는 DAO를 작성한다. 나중에 user의 order의 실제 구매 point를 구해온다.
@@ -57,6 +67,6 @@
 	
 	//review.setUserTable(user);
 	
-	response.sendRedirect("detail.jsp?no=1&succes=complete");
+	response.sendRedirect("detail.jsp?no=1&succes=complete&cpno=1");
 	
 %>

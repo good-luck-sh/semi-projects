@@ -30,7 +30,7 @@ public interface CsBoardDao {
 	 * @return cs게시판의 전체 정보
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
-	public List<CsBoard> getAllcsBoardById(String userId) throws SQLException;
+	public List<CsBoard> getAllcsBoardById(int userNo) throws SQLException;
 	
 	/**
 	 * 해당하는 게시글을 클릭하면 cs게시판의 정보를 모두 출력한다.
@@ -38,7 +38,7 @@ public interface CsBoardDao {
 	 * @return 해당하는 게시글의 cs게시판의 전체 정보
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
-	public CsBoard getBoardByTitle(String csBoardTitle) throws SQLException;
+	public CsBoard getBoardByTitle(int csBoardNo) throws SQLException;
 	
 	/**
 	 * 새로 입력한 csBoard를 등록한다. 
@@ -76,12 +76,12 @@ public interface CsBoardDao {
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
 	public int getCountCsBoard(String csReplyCheck) throws SQLException;
-	
 	/**
-	 * 문의사항 게시판에서 모든 게시판 갯수를 출력한다.
-	 * @return 등록된 게시판의 갯수
+	 * 해당하는 사용자의 번호를 입력받아 해당하는 사용자의 문의사항 게시판의 갯수를 출력한다. 
+	 * @param userNo 출력받길 윈하는 사용자의 번호
+	 * @return 문의사항의 갯수
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
-	public int getAllCountCsBoard() throws SQLException;
+	public int getAllCountCsBoard(int userNo) throws SQLException;
 	
 }
