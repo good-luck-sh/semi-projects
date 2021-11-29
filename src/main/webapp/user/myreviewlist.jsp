@@ -22,7 +22,7 @@
 <hr>
 <%
 	int userNo = Integer.parseInt(request.getParameter("no"));
-	ReviewJdbcDao rvDao = new ReviewJdbcDao();
+	ReviewJdbcDao rvDao = ReviewJdbcDao.getInstance();
 	List<Review> reviewList = rvDao.getUserAllReviewByNo(userNo);
 %>
 	<div>

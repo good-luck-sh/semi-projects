@@ -42,17 +42,17 @@ public class CsBoardJdbcDao implements CsBoardDao {
 	}
 
 	@Override
-	public List<CsBoard> getAllcsBoardById(String userId) throws SQLException {
+	public List<CsBoard> getAllcsBoardById(int userNo) throws SQLException {
 		List<CsBoard> csBoards = new ArrayList<>();
 		String sql = "select C.cs_board_no, C.cs_board_title, C.user_no, C.cs_board_view_count, C.cs_board_like_count, C.cs_board_content, C.cs_created_date, "
 				+ " C.cs_update_date, C.cs_board_delete_date, C.cs_reply_content, C.cs_reply_create_date, C.cs_reply_check, "
 				+ " U.user_no, U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check "
 				+ " U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check "
 				+ " from cs_board C, user_table U "
-				+ " where U.user_id = ? ";
+				+ " where U.user_no = ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
-		ptmt.setString(1, userId);
+		ptmt.setInt(1, userNo);
 		ResultSet rs = ptmt.executeQuery();
 		
 		repeatCsBoard(csBoards, rs);
@@ -96,17 +96,17 @@ public class CsBoardJdbcDao implements CsBoardDao {
 	}
 
 	@Override
-	public CsBoard getBoardByTitle(String csBoardTitle) throws SQLException {
+	public CsBoard getBoardByTitle(int csBoardNo) throws SQLException {
 		CsBoard csBoard = null;
 		String sql = "select C.cs_board_no, C.cs_board_title, C.user_no, C.cs_board_view_count, C.cs_board_like_count, C.cs_board_content, C.cs_created_date, "
 				+ " C.cs_update_date, C.cs_board_delete_date, C.cs_reply_content, C.cs_reply_create_date, C.cs_reply_check, "
 				+ " U.user_no, U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check "
 				+ " U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check "
 				+ " from cs_board C, user_table U "
-				+ " where C.cs_board_title = ? ";
+				+ " where C.cs_board_no = ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
-		ptmt.setString(1, csBoardTitle);
+		ptmt.setInt(1, csBoardNo);
 		ResultSet rs = ptmt.executeQuery();
 		if(rs.next()) {
 			csBoard = new CsBoard();
@@ -148,9 +148,8 @@ public class CsBoardJdbcDao implements CsBoardDao {
 
 	@Override
 	public void insertCsBoard(CsBoard csBoard) throws SQLException {
-		String sql = "insert into csBoard (cs_board_no, cs_board_title, user_no, cs_board_view_count, cs_board_like_count, cs_board_content, cs_created_date,"
-				+ "	cs_update_date, cs_board_delete_date, cs_reply_content, cs_reply_create_date, cs_reply_check "
-				+ "values(board_no.nextval ,?, ?, 0, 0, ? , sysdate, null, null, null, null, null) ";
+		String sql = "insert into csBoard (cs_board_no, cs_board_title, user_no, cs_board_view_count, cs_board_like_count, cs_board_content, cs_created_date )"
+				+ "values(board_no.nextval ,?, ?, 0, 0, ? , sysdate ) ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		
@@ -174,7 +173,6 @@ public class CsBoardJdbcDao implements CsBoardDao {
 				+ " cs_board_view_count  = ? "
 				+ " cs_board_like_count  = ? "
 				+ " cs_board_content  = ? "
-				+ " cs_created_date  = ? "
 				+ "	cs_update_date  = ? "
 				+ " cs_board_delete_date  = ? "
 				+ " cs_reply_content  = ? "
@@ -188,13 +186,12 @@ public class CsBoardJdbcDao implements CsBoardDao {
 		ptmt.setInt(3, csBoard.getCsBoardViewCount());
 		ptmt.setInt(4, csBoard.getCsBoardLikeCount());
 		ptmt.setString(5, csBoard.getCsBoardContent());
-		ptmt.setDate(6, new java.sql.Date(System.currentTimeMillis()));
+		ptmt.setDate(6,  new java.sql.Date(System.currentTimeMillis()));
 		ptmt.setDate(7,  new java.sql.Date(System.currentTimeMillis()));
-		ptmt.setDate(8,  new java.sql.Date(System.currentTimeMillis()));
-		ptmt.setString(9, csBoard.getCsReplyContent());
-		ptmt.setDate(10,  new java.sql.Date(System.currentTimeMillis()));
-		ptmt.setString(11, csBoard.getCsReplyCheck());
-		ptmt.setInt(12, csBoard.getCsBoardNo());
+		ptmt.setString(8, csBoard.getCsReplyContent());
+		ptmt.setDate(9,  new java.sql.Date(System.currentTimeMillis()));
+		ptmt.setString(10, csBoard.getCsReplyCheck());
+		ptmt.setInt(11, csBoard.getCsBoardNo());
 		
 		ptmt.executeUpdate();
 		
@@ -258,11 +255,12 @@ public class CsBoardJdbcDao implements CsBoardDao {
 		return countReply;
 	}
 	@Override
-	public int getAllCountCsBoard() throws SQLException {
+	public int getAllCountCsBoard(int userNo) throws SQLException {
 		int countReply = 0;
-		String sql = "select count(*) as count from cs_board ";
+		String sql = "select count(*) as count from cs_board where cs_board_no = ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setInt(1, userNo);
 		ResultSet rs = ptmt.executeQuery();
 		rs.next();
 		countReply = rs.getInt("count");

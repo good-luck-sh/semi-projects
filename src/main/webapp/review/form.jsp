@@ -48,14 +48,14 @@
 }
 %>
 				<form action="register.jsp" method="post">
+				
 					<div class="mb-3" id="text-review-1">
 						<label for="exampleFormControlInput1" class="form-label">리뷰
 							제목</label> <input type="text" class="form-control" name="reviewTitle">
 					</div>
 					<div class="mb-3">
 						<label for="exampleFormControlInput1" class="form-label">작성자</label>
-						<input type="text" class="form-control" name=""
-							disabled="disabled" value="홍길동">
+						<input type="text" class="form-control" name="" disabled="disabled" value="홍길동">
 					</div>
 					<div class="mb-3" id="text-review-2">
 						<label class="mb-3">리뷰 내용</label>

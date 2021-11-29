@@ -1,3 +1,6 @@
+<%@page import="dao.ProductReviewJdbcDao"%>
+<%@page import="vo.Product"%>
+<%@page import="vo.Pagination"%>
 <%@page import="vo.Review"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.ReviewJdbcDao"%>
@@ -23,11 +26,14 @@
 	//	return;
 	//}
 	String text = request.getParameter("succes");
-//	int no = Integer.parseInt(request.getParameter("no"));
-//	String pageNo = request.getParameter("pageNo");
+	int cpno = Integer.parseInt(request.getParameter("cpno"));
 	
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
-//	List<Review> reviews = reviewDao.getAllReviewById(loginUserInfo.getUserNo());
+	
+
+	int countTotalReview = reviewDao.getCountReviewByUserNo(1);
+	Pagination paging = new Pagination(request.getParameter("cpno"), countTotalReview);
+	List<Review> reviews = reviewDao.getAllReviewById(1, paging.getBegin(), paging.getEnd());
 	if("complete".equals(text)) {
 %>
 	<div class="alert alert-primary">
@@ -39,54 +45,60 @@
 <div class ="container mt-3">
 	<div class="row p-3">
 		<div class="col">
-			<p><strong>작성자님</strong>의 게시글입니다.</p>
+			<p><strong>작성자님</strong>의 게시글입니다.</p><!-- 나중에 작성자님에는 loginInfo.name으로 입력하기 -->
 			<table class="table">
 				<thead>
 					<tr class="black">
 						<th>리뷰 번호</th>
 						<th>리뷰 제목</th>
-						<th>조회수</th>
+						<th>상품 이름</th><!-- 나중에 상품list연결되게 입력하기 -->
 						<th>좋아요</th>
+						<th>별점</th>
 						<th>리뷰 내용</th>
 						<th>작성일</th>
 					</tr>
 				</thead>
 				<tbody>
 <%
-//	for(Review review : reviews) {
+	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
+	
+	for(Review review : reviews) {
+		Product product = productDao.getAllReviewByReviewNo(review.getReviewNo());
 %>
 					<tr>
-						<td>100</td>
-						<td><a href="reviewUserDetail.jsp">제목</a></td><!-- 클릭시 제목으로 들어가도록 쿼리짜기 -->
-						<td>0</td>
-						<td>0</td>
-						<td>나는 그렇지 않아!</td>
-						<td>2021.11.29</td>
+						<td><%=review.getReviewNo() %></td>
+						<td><a href="reviewUserDetail.jsp?no=<%=review.getReviewNo() %>&cpno=<%=paging.getPageNo() %>"><%=review.getReviewTitle() %></a></td><!-- 클릭시 제목으로 들어가도록 쿼리짜기 -->
+						<td><a href=""><%=product.getProductName() %></a></td><!-- 클릭시 제목으로 들어가도록 쿼리짜기 -->
+						<td><%=review.getReviewReviewLikeCount() %></td><!-- 클릭시 상품list으로 들어가도록 쿼리짜기 -->
+						<td><%=review.getReviewStarPoint() %></td>
+						<td><%=review.getReviewContent() %></td>
+						<td><%=review.getReviewCreatedDate() %></td>
 					</tr>
 <%
-//	}
+	}
 %>
-					<tr>
-						<td>100</td>
-						<td>제목</td><!-- 클릭시 제목으로 들어가도록 쿼리짜기 -->
-						<td>0</td>
-						<td>0</td>
-						<td>나는 그렇지 않아!</td>
-						<td>2021.11.29</td>
-					</tr>
-					<tr>
-						<td>100</td>
-						<td>제목</td><!-- 클릭시 제목으로 들어가도록 쿼리짜기 -->
-						<td>0</td>
-						<td>0</td>
-						<td>나는 그렇지 않아!</td>
-						<td>2021.11.29</td>
-					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
+<div class="row text-center" style="justify-content: center;">
+		<div class="col ">
+			<div class="">
+				<!-- 이전페이지가 0일 경우 disable이 실행된다.  -->
+				<a href="detail.jsp?cpno=<%=paging.getPrevPage() %>" class="<%=paging.getPrevPage() == 0 ? "disable" : ""%>">이전</a>
+<%
+	for(int pno = paging.getBeginPage(); pno<=paging.getEndPage(); pno++ ) {
+%>
+				<a href="detail.jsp?cpno=<%=pno %> %>" class="<%=pno == paging.getPageNo() ? "disable" : ""%>"><%=pno%></a>
+<%
+	}
+%>
+				<!-- 다음페이지가 동일할 경우 disable이 실행된다. -->
+				<a href="detail.jsp?cpno=<%=paging.getNextPage() %>" class="<%=paging.getNextPage() == paging.getPageNo() ? "disable" : ""%>">다음</a>
+			</div>
+		</div>
+	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
 </body>
 </html>
