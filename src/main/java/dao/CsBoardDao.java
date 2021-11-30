@@ -25,12 +25,21 @@ public interface CsBoardDao {
 	public List<CsBoard> getAllcsBoardById(int userNo) throws SQLException;
 	
 	/**
+	 * 해당하는 이용자의 아이디의 cs게시판의 정보를 시작값부터 end값까지를 출력한다.
+	 * @param userNo 출력하고자 하는 user의 아이디 
+	 * @param begin cs게시판의 시작값
+	 * @param end cs게시판의 마지막 값
+	 * @return 해당하는 시작값부터 마지막 값까지의 값을 출력한다.
+	 * @throws SQLException DB Access 오류시 예외가 발생한다.
+	 */
+	public List<CsBoard> getAllcsBoardById(int userNo, int begin, int end) throws SQLException;
+	/**
 	 * 해당하는 게시글을 클릭하면 cs게시판의 정보를 모두 출력한다.
 	 * @param csBoardTitle 출력하고자 하는 게시판의 글 제목
 	 * @return 해당하는 게시글의 cs게시판의 전체 정보
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
-	public CsBoard getBoardByTitle(int csBoardNo) throws SQLException;
+	public CsBoard getBoardByCsBoardNo(int csBoardNo) throws SQLException;
 	
 	/**
 	 * 새로 입력한 csBoard를 등록한다. 

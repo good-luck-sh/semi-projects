@@ -29,7 +29,7 @@ public class ProductReviewJdbcDao implements ProductReviewDao {
 				+ " U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
 				+ "	U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check, "
 				+ "P.product_no, P.category_no, P.product_name, P.product_price , P.product_discount_price, P.product_stock, P.product_on_sale, P.product_review_count, "
-				+ "P.product_star_point, P.product_date "
+				+ "P.product_star_point, P.product_date, P.product_picture "
 				+ "	from review R, user_table U, product P, user_basket B "
 				+ "	where R.user_no = U.user_no "
 				+ "	and U.user_no = B.user_no "
@@ -75,6 +75,7 @@ public class ProductReviewJdbcDao implements ProductReviewDao {
 			product.setProductReviewCount(rs.getInt("product_review_count"));
 			product.setPrdocutStarPoint(rs.getInt("product_star_point"));
 			product.setProductDate(rs.getDate("product_date"));
+			product.setProductPicture(rs.getString("product_picture"));
 		}
 		
 		rs.close();
@@ -89,7 +90,7 @@ public class ProductReviewJdbcDao implements ProductReviewDao {
 		Product product = null;
 		String sql = "select "
 				+ " P.product_no, P.category_no, P.product_name, P.product_price , P.product_discount_price, P.product_stock, P.product_on_sale, P.product_review_count, "
-				+ " P.star_point, P.product_date "
+				+ " P.star_point, P.product_date, P.product_picture "
 				+ "	from product P "
 				+ "where P.product_no = ? ";
 		Connection connection = getConnection();
@@ -111,6 +112,7 @@ public class ProductReviewJdbcDao implements ProductReviewDao {
 			product.setProductReviewCount(rs.getInt("product_review_count"));
 			product.setPrdocutStarPoint(rs.getInt("star_point"));
 			product.setProductDate(rs.getDate("product_date"));
+			product.setProductPicture(rs.getString("product_picture"));
 		}
 		
 		rs.close();

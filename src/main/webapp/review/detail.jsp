@@ -1,3 +1,4 @@
+<%@page import="dao.UserDao"%>
 <%@page import="dao.ProductReviewJdbcDao"%>
 <%@page import="vo.Product"%>
 <%@page import="vo.Pagination"%>
@@ -16,24 +17,26 @@
 </head>
 <body>
 <%
-//	pageContext.setAttribute("menu", "login");
+	pageContext.setAttribute("menu", "login");
 	//네비바 활성화를 위하여 pageContext에서 값을 꺼내온다.
 %>
 <%@ include file="../navbar/nav.jsp" %>
 <%
-	//if(loginUserInfo == null) {
-	//	response.sendRedirect("../loginform.jsp?error=empty");	나중에 로그인유저 form확인 후 수정하기
-	//	return;
-	//}
+	if(loginUserInfo == null) {
+		response.sendRedirect("../loginform.jsp?error=empty");
+		return;
+	}
 	String text = request.getParameter("succes");
 	int cpno = Integer.parseInt(request.getParameter("cpno"));
 	
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
 	
-
-	int countTotalReview = reviewDao.getCountReviewByUserNo(1);
+	UserDao userDao = UserDao.getInstance();
+	UserTable user = userDao.getUserAllInfoByNo(loginUserInfo.getUserNo());
+	int countTotalReview = reviewDao.getCountReviewByUserNo(loginUserInfo.getUserNo());
 	Pagination paging = new Pagination(request.getParameter("cpno"), countTotalReview);
-	List<Review> reviews = reviewDao.getAllReviewById(1, paging.getBegin(), paging.getEnd());
+	
+	List<Review> reviews = reviewDao.getAllReviewById(user.getUserNo(), paging.getBegin(), paging.getEnd());
 	if("complete".equals(text)) {
 %>
 	<div class="alert alert-primary">
@@ -67,9 +70,9 @@
 %>
 					<tr>
 						<td><%=review.getReviewNo() %></td>
-						<td><a href="reviewUserDetail.jsp?no=<%=review.getReviewNo() %>&cpno=<%=paging.getPageNo() %>"><%=review.getReviewTitle() %></a></td><!-- 클릭시 제목으로 들어가도록 쿼리짜기 -->
-						<td><a href=""><%=product.getProductName() %></a></td><!-- 클릭시 제목으로 들어가도록 쿼리짜기 -->
-						<td><%=review.getReviewReviewLikeCount() %></td><!-- 클릭시 상품list으로 들어가도록 쿼리짜기 -->
+						<td><a href="reviewUserDetail.jsp?no=<%=review.getReviewNo() %>&cpno=<%=paging.getPageNo() %>"><%=review.getReviewTitle() %></a></td>
+						<td><a href="../product/list_product.jsp"><%=product.getProductName() %></a></td>
+						<td><%=review.getReviewReviewLikeCount() %></td>
 						<td><%=review.getReviewStarPoint() %></td>
 						<td><%=review.getReviewContent() %></td>
 						<td><%=review.getReviewCreatedDate() %></td>
@@ -85,17 +88,30 @@
 <div class="row text-center" style="justify-content: center;">
 		<div class="col ">
 			<div class="">
+<%
+	if(paging.getPrevPage() != 0) {
+%>
 				<!-- 이전페이지가 0일 경우 disable이 실행된다.  -->
 				<a href="detail.jsp?cpno=<%=paging.getPrevPage() %>" class="<%=paging.getPrevPage() == 0 ? "disable" : ""%>">이전</a>
 <%
+	}
+%>
+<%
 	for(int pno = paging.getBeginPage(); pno<=paging.getEndPage(); pno++ ) {
+		if(pno > 0) {
 %>
 				<a href="detail.jsp?cpno=<%=pno %> %>" class="<%=pno == paging.getPageNo() ? "disable" : ""%>"><%=pno%></a>
 <%
-	}
+	}}
+%>
+<%
+	if(paging.getEndPage() != 0 ){
 %>
 				<!-- 다음페이지가 동일할 경우 disable이 실행된다. -->
 				<a href="detail.jsp?cpno=<%=paging.getNextPage() %>" class="<%=paging.getNextPage() == paging.getPageNo() ? "disable" : ""%>">다음</a>
+<%
+	}
+%>
 			</div>
 		</div>
 	</div>

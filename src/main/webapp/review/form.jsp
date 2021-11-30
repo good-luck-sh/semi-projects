@@ -1,3 +1,4 @@
+<%@page import="dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="ko">
@@ -13,11 +14,20 @@
 	//네비바 활성화를 위하여 pageContext에서 값을 꺼내온다.
 %>
 <%@ include file="../navbar/nav.jsp" %>
+<%
+	if(loginUserInfo == null) {
+		response.sendRedirect("../loginform.jsp?error=empty");
+		return;
+	}
+
+	UserDao userDao = UserDao.getInstance();
+	UserTable user = userDao.getUserAllInfoByNo(loginUserInfo.getUserNo());
+%>
 <div class ="container">
 	<div class="row form-control mt-3">
 		<div class="col mb-3 mt-3">
 			<h3 class="mb-3">리뷰 작성 폼</h3>
-			<p class=""><strong>안녕하세요 :) 김승희 회원님</strong></p>
+			<p class=""><strong>안녕하세요 :)<%=user.getUserName() %> 회원님</strong></p>
 			<p class="">리뷰 작성시 1%를 추가 적립 받으실 수 있습니다.</p>
 		</div>
 	</div>
@@ -47,15 +57,15 @@
 <% 
 }
 %>
-				<form action="register.jsp" method="post">
-				
+				<form action="/semi-projects/review/register.jsp "method="post">
 					<div class="mb-3" id="text-review-1">
+						<input type="hidden" class="form-control" name="order" value="1">
 						<label for="exampleFormControlInput1" class="form-label">리뷰 제목</label> 
 						<input type="text" class="form-control" name="reviewTitle">
 					</div>
 					<div class="mb-3">
 						<label for="exampleFormControlInput1" class="form-label">작성자</label>
-						<input type="text" class="form-control" name="" disabled="disabled" value="홍길동">
+						<input type="text" class="form-control" name="" disabled="disabled" value="<%=loginUserInfo.getUserName()%>">
 					</div>
 					<div class="mb-3" id="text-review-2">
 						<label class="mb-3">리뷰 내용</label>
@@ -75,10 +85,7 @@
 					</div>
 					<div class="text-end">
 						<button class="btn btn-outline-primary" type="submit">등록하기</button>
-						<button class="btn btn-outline-danger">
-							<a href="">취소하기</a>
-						</button>
-						<!-- 취소하면 마이페이지.jsp로 갈 수 있도록 등록하기 -->
+						<button class="btn btn-outline-danger"><a href="myreviewlist.jsp">취소하기</a></button>
 					</div>
 				</form>
 			</div>

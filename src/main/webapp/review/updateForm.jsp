@@ -19,7 +19,10 @@
 	int no = Integer.parseInt(request.getParameter("no"));
 	int cpno = Integer.parseInt(request.getParameter("cpno"));	
 	int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
-	
+	if(loginUserInfo == null) {
+		response.sendRedirect("loginform.jsp?error=empty");
+		return;
+	}
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
 	Review review = reviewDao.getReviewById(reviewNo);
 %>
