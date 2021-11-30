@@ -40,50 +40,6 @@ public class NoticeBoardDao {
 	}
 	
 	/**
-	 * 수정된 공지사항 정보를 테이블에 반영한다.
-	 * @param noticeBoard
-	 * @throws SQLException
-	 */
-	public void updateBoard(NoticeBoard noticeBoard) throws SQLException {
-		String sql = "update notice_board "
-				   + "set "
-				   + "	board_title = ?, "
-				   + "  board_content =? "
-				   + "where board_no = ? ";
-		
-		Connection connection = getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(sql);
-		pstmt.setString(1, noticeBoard.getBoardTitle());
-		pstmt.setString(2, noticeBoard.getBoardContent());
-		pstmt.setInt(3, noticeBoard.getBooardNo());
-		
-		pstmt.executeUpdate();
-		
-		pstmt.close();
-		connection.close();
-	}
-	
-	/**
-	 * 지정된 번호의 게시글을 삭제한다.
-	 * @param no
-	 * @throws SQLException
-	 */
-	public void deleteBoard(int no) throws SQLException {
-		String sql = "update notice_board "
-				   + "set "
-				   + "where board_no = ? ";
-		
-		Connection connection = getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(sql);
-		pstmt.setInt(1, no);
-		
-		pstmt.executeUpdate();
-		
-		pstmt.close();
-		connection.close();
-	}
-	
-	/**
 	 * 테이블에 저장된 공지사항글의 갯수를 반환한다.
 	 * @return
 	 * @throws SQLException
