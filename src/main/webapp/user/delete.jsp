@@ -12,8 +12,12 @@
 	//	return;
 	//}
 
-
+	// 객체 생성
 	UserDao uDao = UserDao.getInstance();
+	
+	// 유저정보 조회하나?
+	
+	
 	uDao.deleteUser(userNo);
 	
 	

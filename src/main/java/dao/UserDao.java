@@ -16,6 +16,11 @@ public class UserDao {
 		return self;
 	}	
 	
+	/**
+	 * 회원탈퇴 기능
+	 * @param userNo 유저 번호
+	 * @throws SQLException
+	 */
 	public void deleteUser (int userNo) throws SQLException {
 		String sql = "delete from user_table "
 					+ "where user_no = ? ";
@@ -38,15 +43,18 @@ public class UserDao {
 	 */
 	public void updateUser(UserTable userTable) throws SQLException {
 		
-		String sql = "update into user_table "
+		// 여기 수정하기~
+		String sql = "update user_table "
 					+ "set "
-					+ "user_password = ? "
-					+ "user_address = ? ";
+					+ " user_password = ? "
+					+ " user_address = ? "
+					+ "where user_no = ? ";
 		
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
 		pstmt.setString(1, userTable.getUserPassword());
 		pstmt.setString(2, userTable.getUserAddress());
+		pstmt.setInt(3, userTable.getUserNo());
 		
 		pstmt.executeUpdate();
 		

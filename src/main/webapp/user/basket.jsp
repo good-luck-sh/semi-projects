@@ -28,9 +28,9 @@
 %>
 <div class="container">
 <%
-//	int userNo = Integer.parseInt(request.getParameter("no"));
-//	UserBasketDao basketDao = UserBasketDao.getInstance();
-//	List<UserBasket> basketList = basketDao.getAllUserBasketItemByNo(userNo);
+	int userNo = Integer.parseInt(request.getParameter("no"));
+	UserBasketDao basketDao = UserBasketDao.getInstance();
+	List<UserBasket> basketList = basketDao.getAllUserBasketItemByNo(userNo);
 %>
 <hr>
 	<div class="row mb-3">
@@ -39,14 +39,26 @@
 		</div>
 	</div>
 <hr>
+<%
+	String error = request.getParameter("error");
+	if("deny-delete".equals(error)){
+%>
+		<div class="alert alert-danger">
+			<strong>상품 삭제 실패!!</strong> 본인의 장바구니가 아닙니다.
+		</div>
+
+<%
+	}
+
+%>
+<!-- 사진 추가하기. 근데 사진 추가는 어떻게 추가 되는거?? -->
  	<div>
  		<form method="get" action="">
  			<table class="table" id="table-basket">
 	 			<thead>
 	 				<tr>
 	 					<th><input type="checkbox" id="ck-all" onchange="toggleCheckbox()"></th>
-	 					<th>장바구니 번호</th>
-	 					<th>제품 번호</th>
+	 					<th>상품 번호</th>
 	 					<th>상품 이름</th>
 	 					<th>수량</th>
 	 					<th>정상 가격</th>
@@ -55,33 +67,35 @@
 	 				</tr>
 	 			</thead>
 	 			<tbody>
+<%
+	for(UserBasket basket : basketList ){
+
+%>
 	 				<tr>
-	 					<td><input type="checkbox" id="ch-1" name="no" value="1"></td>
-	 					<td>1</td>
-	 					<td>121</td>
-	 					<td>폭신 스웨터</td>
-	 					<td>1 개</td>
-	 					<td>10000 원</td>
-	 					<td>10000 원</td>
-	 					<td><a href="deletebasket.jsp?no=1" class="btn btn-danger btn-sm">삭제</a></td>
+	 					<td><input type="checkbox" id="ch-1" name="basket" value="1"></td>
+	 					<td><%=basket.getProduct().getProductNo() %></td>
+	 					<td><%=basket.getProduct().getProductName() %></td>
+	 					<td><%=basket.getBasketAmount() %> 개</td>
+	 					<td><%=basket.getProduct().getProductPrice() %> 원</td>
+	 					<td><%=basket.getProduct().getProductDiscountPrice() %> 원</td>
+	 					<td><a href="deletebasket.jsp?no=<%=basket.getUserTable().getUserNo() %>&basketNo=<%=basket.getUserBasketNo() %>" class="btn btn-danger btn-sm">삭제</a></td>
 	 				</tr>
-	 				<tr>
-	 					<td><input type="checkbox" id="ch-2" name="no" value="2"></td>
-	 					<td>2</td>
-	 					<td>111</td>
-	 					<td>블링블링 목걸이</td>
-	 					<td>2 개</td>
-	 					<td>20000 원</td>
-	 					<td>20000 원</td>
-	 					<td><a href="deletebasket.jsp?no=2" class="btn btn-danger btn-sm">삭제</a></td>
-	 				</tr>
+<%
+	}
+%>
 	 			</tbody>
 	 		</table>
 <hr>
  			<div class="row mb-3">
 	 			<div class="col">
 	 				<h4>총 상품 금액</h4>
-	 				<h3>30000 원</h3>
+<%
+	int totalPrice = 0;
+	for(UserBasket basket : basketList ){
+		totalPrice += basket.getProduct().getProductDiscountPrice() * basket.getBasketAmount();
+	}
+%>
+	 				<h3><%=totalPrice %> 원</h3>
 	 			</div>
  			</div>
 <hr>
@@ -111,7 +125,7 @@
 		// 		 	 선택된 엘리먼트의 자손 tbody를 선택한다.
 		// 		 	 tbody의 자손 input을 선택한다.
 		// 			 input중에서 name이 no인 엘리먼트를 선택한다.
-		var checkboxes = document.querySelectorAll("#table-basket tbody input[name=no]");
+		var checkboxes = document.querySelectorAll("#table-basket tbody input[name=basket]");
 		// 		2-2. 선택된 모든 체크박스를 순서대로 하나씩 꺼낸다.
 		for (var i=0; i<checkboxes.length; i++){
 			var checkbox = checkboxes[i];

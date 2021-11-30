@@ -14,6 +14,7 @@ public class Product {
 	private int productReviewCount;
 	private int prdocutStarPoint;
 	private Date productDate;
+	private String productPicture;
 	
 	public Product() {}
 
@@ -95,6 +96,14 @@ public class Product {
 
 	public void setProductDate(Date productDate) {
 		this.productDate = productDate;
+	}
+	
+	public void setProductPicture(String productPicture) {
+		this.productPicture = productPicture;
+	}
+
+	public String getProductPicture() {
+		return productPicture;
 	}
 	
 	
