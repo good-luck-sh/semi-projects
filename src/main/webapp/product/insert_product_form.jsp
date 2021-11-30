@@ -138,7 +138,8 @@
   						
   						<div class="mb-3">
   							<label for="formFile" class="form-label">등록할 사진을 선택하세요</label>
-  							<input class="form-control" type="file" id="formFile">
+  							<input class="form-control" type="file" id="formFile" name="formFile" onchange="ImgName()">
+  							<input type="text" class="form-control" id="img" name="img">
 						</div>
 						
   						<div class="col-12 text-end">
@@ -151,5 +152,12 @@
 	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+	function ImgName(e){
+		var name = document.getElementById("img");
+		var formFile = document.getElementById("formFile");
+		name.value = "../product/resource/"+formFile.value.slice(12);
+	}
+</script>
 </body>
 </html>

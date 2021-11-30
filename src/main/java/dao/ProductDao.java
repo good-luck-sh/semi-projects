@@ -141,8 +141,8 @@ public class ProductDao {
 	 * @throws SQLException
 	 */
 	public void insertProduct(Product product) throws SQLException{
-		String sql = "insert into product (product_no, product_name, category_no, product_price, product_discount_price, product_stock, product_on_sale) "
-					+"values (product_no.nextval, ?, ?, ?, ?, ?, ?) ";
+		String sql = "insert into product (product_no, product_name, category_no, product_price, product_discount_price, product_stock, product_on_sale, product_picture) "
+					+"values (product_no.nextval, ?, ?, ?, ?, ?, ?, ?) ";
 		
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -152,6 +152,7 @@ public class ProductDao {
 		pstmt.setInt(4, product.getProductDiscountPrice());
 		pstmt.setInt(5, product.getProductStock());
 		pstmt.setString(6, product.getProductOnSale());
+		pstmt.setString(7, product.getProductPicture());
 		
 		pstmt.executeUpdate();
 		
@@ -218,7 +219,10 @@ public class ProductDao {
 	
 	
 	
-
+	
+	
+	
+	
 	
 	
 	
