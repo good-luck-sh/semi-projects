@@ -103,5 +103,3 @@ public class Product {
 		return productPicture;
 	}
 
-	
-

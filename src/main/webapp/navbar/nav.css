@@ -27,9 +27,7 @@ li {
     font-weight: 3px;
     text-decoration: none;
 }
-a {
-    text-decoration-line: none;
-}
+
 .icon {
    height: 30px;
    margin: 20px;
@@ -46,4 +44,7 @@ a {
     text-align: center;
     margin: 0 30px 50px 0px;
     padding: 0 30 0 0px;
+}
+a {
+    text-decoration-line: none;
 }

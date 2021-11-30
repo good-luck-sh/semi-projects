@@ -194,7 +194,7 @@ public class ReviewJdbcDao implements ReviewDao {
 	@Override
 	public List<Review> getAllReview(int productNo, int begin, int end) throws SQLException {
 		List<Review> reviews = new ArrayList<>();
-		String sql = "select review_no, review_title, user_no, review_review_like_count, review_content, review_created_date, review_star_point, "
+		String sql = "select review_no, review_title, user_no, review_review_like_count, review_content, review_created_date, review_star_point, product_picture, "
 				+ "	 user_no, user_id, user_password, user_name, user_age, user_gender, manager_check, "
 				+ "	 user_address, user_order_point, user_degree, user_created_date, user_delete_check, "
 				+ "	 product_no, category_no, product_name, product_price , product_discount_price, product_stock, product_on_sale, product_review_count "
@@ -204,7 +204,7 @@ public class ReviewJdbcDao implements ReviewDao {
 				+ " R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point, "
 				+ " U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
 				+ "	U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check, "
-				+ "	P.product_no, P.category_no, P.product_name, P.product_price , P.product_discount_price, P.product_stock, P.product_on_sale, P.product_review_count, "
+				+ "	P.product_no, P.category_no, P.product_name, P.product_price , P.product_discount_price, P.product_stock, P.product_on_sale, P.product_review_count, P.product_picture, "
 				+ " P.product_star_point, P.product_date "
 				+ "	from review R, user_table U, product P , user_basket B "
 				+ "	where R.user_no = U.user_no "
@@ -264,6 +264,7 @@ public class ReviewJdbcDao implements ReviewDao {
 			product.setProductReviewCount(rs.getInt("product_review_count"));
 			product.setPrdocutStarPoint(rs.getInt("product_star_point"));
 			product.setProductDate(rs.getDate("product_date"));
+			product.setProductPicture(rs.getString("product_picture"));
 			reviews.add(review);
 			
 		}

@@ -62,6 +62,7 @@ public class CsBoardJdbcDao implements CsBoardDao {
 		
 		return csBoards;
 	}
+	
 	private void repeatCsBoard(List<CsBoard> csBoards, ResultSet rs) throws SQLException {
 		while (rs.next()) {
 			CsBoard csBoard = new CsBoard();
@@ -96,7 +97,7 @@ public class CsBoardJdbcDao implements CsBoardDao {
 	}
 
 	@Override
-	public CsBoard getBoardByTitle(int csBoardNo) throws SQLException {
+	public CsBoard getBoardByCsBoardNo(int csBoardNo) throws SQLException {
 		CsBoard csBoard = null;
 		String sql = "select C.cs_board_no, C.cs_board_title, C.user_no, C.cs_board_view_count, C.cs_board_like_count, C.cs_board_content, C.cs_created_date, "
 				+ " C.cs_update_date, C.cs_board_delete_date, C.cs_reply_content, C.cs_reply_create_date, C.cs_reply_check, "
@@ -269,6 +270,37 @@ public class CsBoardJdbcDao implements CsBoardDao {
 		ptmt.close();
 		connection.close();
 		return countReply;
+	}
+	@Override
+	public List<CsBoard> getAllcsBoardById(int userNo, int begin, int end) throws SQLException {
+		List<CsBoard> csBoards = new ArrayList<>();
+		String sql = "cs_board_no, cs_board_title, user_no, cs_board_view_count, cs_board_like_count, cs_board_content, cs_created_date, "
+				+ "	 cs_update_date, cs_board_delete_date, cs_reply_content, cs_reply_create_date, cs_reply_check, "
+				+ "	 user_id, user_password, user_name, user_age, user_gender, manager_check, "
+				+ "	 user_address, user_order_point, user_degree, user_created_date, user_delete_check "
+				+ "(select row_number() over(order by by C.cs_board_no desc) rn,"
+				+ " C.cs_board_no, C.cs_board_title, C.user_no, C.cs_board_view_count, C.cs_board_like_count, C.cs_board_content, C.cs_created_date, "
+				+ " C.cs_update_date, C.cs_board_delete_date, C.cs_reply_content, C.cs_reply_create_date, C.cs_reply_check, "
+				+ " U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
+				+ " U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check "
+				+ " from cs_board C, user_table U "
+				+ " where C.user_no = U.user_no "
+				+ ") "
+				+ "where rn >= ? and rn <= ? "
+				+ "and U.user_no = ? ";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setInt(1, begin);
+		ptmt.setInt(2, end);
+		ptmt.setInt(3, userNo);
+		ResultSet rs = ptmt.executeQuery();
+		repeatCsBoard(csBoards, rs);
+		
+		rs.close();
+		ptmt.close();
+		connection.close();
+		
+		return csBoards;
 	}
 
 }
