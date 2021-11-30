@@ -38,9 +38,9 @@
 			<table class="table">
 				<thead>
 					<tr class="d-flex">
-						<th class="col-2">번호</th>
+						<th class="col-1">번호</th>
 						<th class="col-10">제목</th>
-						<th class="col-2">작성일</th>
+						<th class="col-1">작성일</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -51,8 +51,21 @@
 						<td class="text-center" colspan="6">공지사항이 존재하지 않습니다.</td>
 					</tr>
 <%
-	} 
+	} else {
+		for (NoticeBoard noticeBoard : boardList) {
 %>
+					<tr class="d-flex">
+						<td class="col-1"><%=noticeBoard.getBooardNo() %></td>
+						<td class="col-10">
+							<a href="detail.jsp?no=<%=noticeBoard.getBooardNo()%>&pageNo=<%=pagination.getPageNo()%>"><%=noticeBoard.getBoardTitle() %></a>
+						</td>
+						<td class="col-1"><%=noticeBoard.getCreateDate() %></td> 
+					</tr>	
+<%
+		}
+	}	
+%>				
+				
 				</tbody>
 			</table>
 		</div>

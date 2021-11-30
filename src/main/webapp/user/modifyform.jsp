@@ -41,9 +41,26 @@
 		<div class="col-2">
 			<h6><span class="badge bg-secondary"><%=user.getUserDegree() %></span>등급</h6>
 		</div>
+<%
+	final double DIAMOND_POINT_DEPOSIT_RATE = 0.03;
+	final double GOLD_POINT_DEPOSIT_RATE = 0.02;
+	final double SILVER_POINT_DEPOSIT_RATE = 0.01;
+	
+	int pointRate = 0;
+
+	if("다이아몬드".equals(user.getUserDegree())){
+		pointRate = (int)(DIAMOND_POINT_DEPOSIT_RATE*100);
+	} else if("골드".equals(user.getUserDegree())){
+		pointRate = (int)(GOLD_POINT_DEPOSIT_RATE*100);
+	} else if("실버".equals(user.getUserDegree())){
+		pointRate = (int)(SILVER_POINT_DEPOSIT_RATE*100);
+	} else if("브론즈".equals(user.getUserDegree())){
+		pointRate = 0;
+	}
+%>
 		<div class="col-10">
 			<h6>안녕하세요! <%=user.getUserName() %>님은 <Strong><%=user.getUserDegree() %></Strong> 등급 입니다.</h6>
-			<h6>0원 이상 구매시 1%할인을 받으실 수 있습니다.</h6>
+			<h6> <%=pointRate%>%할인을 받으실 수 있습니다.</h6>
 		</div>
 	</div>
 
@@ -77,11 +94,11 @@
 			<form class="border p-3 bg-light" method="post" action="update.jsp">
 				<div class="mb-3">
 					<label class="form-label" for="no">회원번호</label>
-					<input type="number" name="no" id="no" value="<%=user.getUserNo() %>" readonly="readonly" disabled/>
+					<input type="number" name="no" id="no" value="<%=user.getUserNo() %>" readonly="readonly"/>
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="id">아이디</label>
-					<input type="text" name="id" id="id" value="<%=user.getUserId() %>" readonly="readonly" disabled/>
+					<input type="text" name="id" id="id" value="<%=user.getUserId() %>" readonly="readonly"/>
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="pwd">비밀번호</label>
@@ -89,7 +106,7 @@
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="name">이름</label>
-					<input type="text" name="name" id="name" value="<%=user.getUserName() %>" readonly="readonly" disabled/>
+					<input type="text" name="name" id="name" value="<%=user.getUserName() %>" readonly="readonly"/>
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="address">주소</label>
@@ -97,12 +114,12 @@
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="createdDate">가입일</label>
-					<input type="text" name="createdDate" id="createdDate" value="<%=user.getUserCreateDate() %>"  readonly="readonly" disabled/>
+					<input type="text" name="createdDate" id="createdDate" value="<%=user.getUserCreateDate() %>"  readonly="readonly"/>
 				</div>
 				<div class="text-right">
 					<input class="btn btn-primary" type="submit" value="회원정보수정"/>
 					<a href="detail.jsp?no=1" class="btn btn-secondary">취소</a>
-					<a href="delete.jsp" class="btn btn-danger">회원탈퇴</a>
+					<a href="delete.jsp?no=1" class="btn btn-danger">회원탈퇴</a>
 				</div>
 			</form>
 		</div>

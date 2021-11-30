@@ -32,24 +32,24 @@
 		<div class="col">
 			<table class="table">
 				<tbody>
-					<tr class="d-flex">
-						<th class="col-2">번호</th>
-						<td class="col-4"><%=noticeBoard.getBooardNo() %></td>
-					</tr>
+					
 					<tr class="d-flex">
 						<th class="col-2">제목</th>
-						<td class="col-4"><%=noticeBoard.getBoardTitle() %></td>
+						<td class="col-10"><%=noticeBoard.getBoardTitle() %></td>
 					</tr>
 					<tr class="d-flex">
 						<th class="col-2">작성일</th>
-						<td class="col-4"><%=noticeBoard.getCreateDate() %></td>
+						<td class="col-10"><%=noticeBoard.getCreateDate() %></td>
 					</tr>
-					<tr>
 					<tr class="d-flex">
 						<th class="col-2">내용</th>
 						<td class="col-10"><%=noticeBoard.getBoardContent() %></td>
+					</tr>
 				</tbody>
 			</table>
+			<div class="col-6 text-end">
+				<a href="notice.jsp" class="btn btn-outline-primary">목록</a>
+			</div>
 		</div>
 	</div>
 </div>

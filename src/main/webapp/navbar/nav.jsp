@@ -1,3 +1,4 @@
+
 <%@page import="vo.UserTable"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
@@ -10,6 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="../navbar/nav.css">
     <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
     <title>커먼 유니크</title>
@@ -24,6 +26,7 @@
             <div>
                 <ul class="nav-font">
                     <li><a href="">best</a></li>
+
                     <li><a href="">top</a></li>
                     <li><a href="">pants</a></li>
                     <li><a href="">shirt</a></li>
@@ -34,17 +37,20 @@
 					<li><a href="http://localhost/semi-projects/loginform.jsp" class="btn btn-primary btn-sm<%="login".equals(menu) ? "active" : "" %>">login</a></li>
                     <!-- 로그인이 안되어 있으면 활성화 시켜서 로그인 jsp로 이동하도록 입력한다. -->
                     <li><a href="http://localhost/semi-projects/registerform.jsp" class="btn btn-secondary btn-sm<%="register".equals(menu) ? "active" : "" %>">join</a></li>
+
                     <!-- 로그인이 안되어 있으면 활성화 시켜서 회원가입 jsp로 이동하도록 입력한다. -->
 <%
 	} else {
 %>      
                  	<li><a href="http://localhost/semi-projects/user/detail.jsp"><img src="../navbar/resource/ico_headuser.png" alt="" class="userIcon <%="login".equals(menu) ? "active" : "" %>" id="icon-1" ></a></li>
                     <!-- 로그인이 되어있으면 활성화 시켜서 마이페이지 jsp로 이동하도록 입력한다. -->
+
                     <li><a href="http://localhost/semi-projects/user/mycslist.jsp"><img src="../navbar/resource/ico_headsearch.png" alt="" class="userIcon <%="login".equals(menu) ? "active" : "" %>"id="icon-2" ></a></li>
                     <!-- 로그인이 되어있으면 활성화 시켜서 cs게시판 jsp로 이동하도록 입력한다. -->
                     <li><a href="http://localhost/semi-projects/catelist.jsp"><img src="../navbar/resource/ico_headhm.png" alt="" class="userIcon <%="login".equals(menu) ? "active" : "" %>"id="icon-3" ></a></li>
                 	<!-- 로그인이 되어있지 않으면 icon을 누르면 카테고리의 별 상품정보가 출력되도록 한다.  -->
 					<li><a href="http://localhost/semi-projects/semi-projects/logout.jsp" class="btn btn-primary btn-sm">out</a></li>
+
 <%
 	}
 %>
