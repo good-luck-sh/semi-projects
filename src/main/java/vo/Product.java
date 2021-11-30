@@ -1,4 +1,3 @@
-
 package vo;
 
 import java.util.Date;
@@ -18,6 +17,14 @@ public class Product {
 	private String productPicture;
 	
 	public Product () {}
+
+	public String getProductPicture() {
+		return productPicture;
+	}
+
+	public void setProductPicture(String productPicture) {
+		this.productPicture = productPicture;
+	}
 
 	public int getProductNo() {
 		return productNo;
@@ -99,7 +106,6 @@ public class Product {
 		this.productDate = productDate;
 	}
 	
-	public String getProductPicture() {
-		return productPicture;
-	}
-
+	
+	
+}

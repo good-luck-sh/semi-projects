@@ -1,11 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="service.Service"%>
 <%@page import="vo.Categorys"%>
 <%@page import="vo.Product"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%
 	Service service = Service.getInstance();
 	Boolean validation = true;
-
+	
 	String productName = request.getParameter("product_name");
 	int productPrice = 0;
 	int productDiscountPrice = 0;
@@ -13,6 +14,8 @@
 	String productOnSale = request.getParameter("product_on_sale");
 	String temp_categorysNo = request.getParameter("categorys_no");
 	int categorysNo = 0;
+	
+	String productPicture = request.getParameter("img");
 	
 	//int 값 체크
 	Boolean checked = service.isNum(request.getParameter("product_price"));
@@ -84,10 +87,12 @@
 		response.sendRedirect("insert_product_form.jsp?error=empty-product_on_sale");
 		return;
 	}
+	
 
 	
 	
 	
+	//insert
 	Categorys categorys = service.getCategoryByNo(categorysNo);
 	
 	Product product = new Product();
@@ -97,8 +102,9 @@
 	product.setProductDiscountPrice(productDiscountPrice);
 	product.setProductStock(productStock);
 	product.setProductOnSale(productOnSale);
+	product.setProductPicture(productPicture);
 	
 	service.addNewProduct(product);
-	
+	 
 	response.sendRedirect("insert_product_form.jsp?success=commit");
 %>
