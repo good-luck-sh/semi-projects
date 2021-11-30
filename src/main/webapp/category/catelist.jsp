@@ -30,8 +30,7 @@
 					<tr>
 						<th>카테고리 번호</th>
 						<th>카테고리 이름</th>
-						<th>카테고리 번호1</th>
-					</tr>	
+						</tr>	
 				</thead>
 				<tbody>
 <%
@@ -39,7 +38,6 @@
 %>
 					<tr>
 						<td><%=category.getCategorysNo() %></td>
-						<td><a href="../product/list.jsp?categorysNo=<%=category.getCategorysNo() %>"><%=category.getCategorysName() %></a></td>
 					</tr>
 <%
 	}
