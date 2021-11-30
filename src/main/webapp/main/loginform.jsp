@@ -12,7 +12,6 @@
 <%
 	pageContext.setAttribute("menu", "login");
 %>
-<%@ include file="navbar/nav.jsp" %>
 <div class="container">    
 <%	
 	String error = request.getParameter("error");
@@ -43,15 +42,18 @@
 <%
 	}
 %>
+	<div style="display; inline-block;float:left;">
+    	<a href="index.jsp" class="btn btn-link">뒤로가기</a>
+    </div>	
 	<div style="text-align:center;">
-		<img src="navbar/resource/logo.png">	
+		<img src="../navbar/resource/logo.png">	
 		<hr>
 		<div>
 			<h1 class="fs-3">로그인</h1>
 		</div>
 	</div>
 	<div style="text-align:center;">
-		<img src="navbar/resource/login.png">
+		<img src="../navbar/resource/login.png">
 	</div>
 	<hr>
 	<form class="" method="post" action="login.jsp">
