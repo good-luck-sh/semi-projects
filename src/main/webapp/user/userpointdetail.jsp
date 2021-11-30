@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="dto.UserDto"%>
+<%@page import="dao.UserPointHistoryDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -25,8 +28,10 @@
 %>
 <div class="container">
 <%
-	// dao를 order by history_no로 하면 될듯?
-	// 포인트가 리뷰, 주문으로적립되고 주문으로 차감되는데 연결 고리가 ???
+	// dao를 order by history_no(혹은 order_no)로 하면 될듯? +
+	// int userNo = Integer.parseInt(request.getParameter("no"));
+	// UserPointHistoryDao historyDao = UserPointHistoryDao.getInstance();
+	// List<UserDto> pointList = historyDao.getAllPointHistoryByNo(userNo);
 
 %>
 

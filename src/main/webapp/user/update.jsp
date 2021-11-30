@@ -37,10 +37,10 @@
 	user.setUserPassword(secretPassword);
 	user.setUserAddress(address);
 	
-//	uDao.updateUser(user);
+	uDao.updateUser(user);
 	
 	
-//	response.sendRedirect("datail.jsp");
+	response.sendRedirect("datail.jsp");
 	
 	
 	

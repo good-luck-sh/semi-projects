@@ -110,10 +110,7 @@
 	<div class="row mb-3 border border-dark">
 		<div clas="col">
 			<h6><Strong>안녕하세요 :) <%=user.getUserName() %> 회원님</Strong></h6>
-			<%--
-				1%, 2% 데이터베이스로 변경해야함
-			 --%>
-			<h6>상품 구매시 0%을 추가적립 받으실 수 있습니다.</h6>
+			<h6>상품 구매시 <%=pointRate %>%을 추가적립 받으실 수 있습니다.</h6>
 		</div>
 	</div>
 	<div class="row mb-3">
@@ -125,7 +122,7 @@
 <hr>
 	<div class="row mb-3">
 		<div class="col-4">
-			<a href="basket.jsp" class="btn btn-primary">장바구니</a>
+			<a href="basket.jsp?no=1" class="btn btn-primary">장바구니</a>
 		</div>
 		<div class="col-4">
 			<a href="modifyform.jsp?no=1" class="btn btn-primary">회원 정보 수정</a>

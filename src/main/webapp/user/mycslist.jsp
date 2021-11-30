@@ -28,6 +28,7 @@
 %>
 <div class="container">
 <hr>
+<!-- 페이지네이션 삽입 -->
 	<div class="row mb-3">
 		<div class="col">
 			<h4>my post</h4>
@@ -36,7 +37,7 @@
 <hr>
 <%
 	// int userNo = Integer.parseInt(request.getParameter("no"));
-	CsBoardJdbcDao boardDao = CsBoardJdbcDao.getInstance();
+	// CsBoardJdbcDao boardDao = CsBoardJdbcDao.getInstance();
 	// List<CsBoard> boardList = boardDao.getBoardInfoByNo(userNo); 
 %>
 	<div class="row mb-3">

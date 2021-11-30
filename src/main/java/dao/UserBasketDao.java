@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +23,88 @@ public class UserBasketDao {
 	}
 	
 	/**
+	 * 장바구니에 상품 추가하기
+	 * @param userBasket 장바구니 상품
+	 * @throws SQLException
+	 */
+	public void insertUserBasket (UserBasket userBasket) throws SQLException {
+		String sql = "insert into user_basket(user_basket_no, user_no, product_no, basket_amount ) "
+					+ "values "
+					+ "(user_basket_no.nextval, ?, ?, ? ) ";
+		
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1,userBasket.getUserTable().getUserNo());
+		pstmt.setInt(2, userBasket.getProduct().getProductNo());
+		pstmt.setInt(3, userBasket.getBasketAmount());
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+		
+	}
+	
+	
+	/**
+	 * 장바구니 번호를 통해 장바구니에 들어 있는 상품 정보 찾기
+	 * @param basketNo 장바구니 번호
+	 * @return 장바구니에 들어있는 상품 정보
+	 * @throws SQLException
+	 */
+	public UserBasket getUserBasketByNo (int basketNo) throws SQLException {
+		String sql = "select user_basket_no, user_no, product_no, basket_amount "
+					+ "from user_basket "
+					+ "where user_basket_no = ? ";
+		UserBasket basket = new UserBasket();
+		
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1, basketNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			basket.setUserBasketNo(rs.getInt("user_basket_no"));
+			basket.setBasketAmount(rs.getInt("basket_amount"));
+			
+			UserTable user = new UserTable();
+			user.setUserNo(rs.getInt("user_no"));
+			
+			Product product = new Product();
+			product.setProductNo(rs.getInt("product_no"));
+			
+			basket.setUserTable(user);
+			basket.setProduct(product);
+			
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		
+		return basket;
+	}
+	
+	/**
+	 * 장바구니에 있는 제품을 삭제한다.
+	 * @param basketNo 장바구니 번호
+	 * @throws SQLException
+	 */
+	public void deleteBasketProduct(int basketNo) throws SQLException {
+		String sql = "delete from user_basket "
+					+ "where user_basket_no = ? ";
+		
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1, basketNo);
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+		
+	}
+	
+	/**
 	 * 유저 번호로 장바구니 속 상품의 모든 정보 구하기
 	 * @param userNo 유저 번호
 	 * @return 장바구니 상품 정보
@@ -29,7 +112,7 @@ public class UserBasketDao {
 	 */
 	public List<UserBasket> getAllUserBasketItemByNo(int userNo) throws SQLException {
 		String sql = "select B.user_basket_no, B.user_no, B.product_no, B.basket_amount, "
-					+ "P.product_name, P.product_price, P.product_discount_price "
+					+ "P.product_name, P.product_picture, P.product_price, P.product_discount_price "
 					+ "from user_basket B, product P "
 					+ "where B.product_no = P.product_no "
 					+ "and B.user_no = ? ";
@@ -52,6 +135,7 @@ public class UserBasketDao {
 			Product product = new Product();
 			product.setProductNo(rs.getInt("product_no"));
 			product.setProductName(rs.getString("product_name"));
+			product.setProductPicture(rs.getString("product_picture"));
 			product.setProductPrice(rs.getInt("product_price"));
 			product.setProductDiscountPrice(rs.getInt("product_discount_price"));
 			
