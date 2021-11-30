@@ -102,12 +102,5 @@ public class Product {
 		return productPicture;
 	}
 
-	public void setProductPicture(String productPicture) {
-		this.productPicture = productPicture;
-	}
-
-
-}
-
 	
 	

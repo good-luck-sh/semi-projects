@@ -19,7 +19,7 @@
 <%
 	ProductDao productDao = new ProductDao();
 	List<Product> products = productDao.selectAllProduct();
-
+ 
 	String success = request.getParameter("success");
 	if ("commit".equals(success)) {
 %>
