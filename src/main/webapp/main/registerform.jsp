@@ -12,7 +12,7 @@
 <%
 	pageContext.setAttribute("menu", "register");
 %>
-<%@ include file="navbar/nav.jsp" %>
+<%@ include file="../navbar/nav.jsp" %>
 <div class="container">
 
 <%
