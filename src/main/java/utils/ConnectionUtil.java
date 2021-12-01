@@ -14,7 +14,7 @@ public class ConnectionUtil {
 
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
 	private static final String USER_NAME = "hta";
-	private static final String PASSWORD = "zxcv1234";
+	private static final String PASSWORD = "ZXCV1234";
 	
 	// 정적 초기화 블록
 	// 객체 생성과 상관없이 클래스가 메모리에 로딩되는 즉시 실행된다.
