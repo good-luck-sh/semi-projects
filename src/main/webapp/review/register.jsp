@@ -1,9 +1,17 @@
+<%@page import="java.sql.Connection"%>
+<%@page import="dto.ProductDto"%>
+<%@page import="vo.Orders"%>
+<%@page import="vo.UserPointHistory"%>
+<%@page import="dao.UserPointHistoryDao"%>
+<%@page import="java.util.List"%>
+<%@page import="dto.UserDto"%>
 <%@page import="vo.Product"%>
 <%@page import="dao.UserDao"%>
 <%@page import="dao.ProductReviewJdbcDao"%>
 <%@page import="vo.Review"%>
 <%@page import="vo.UserTable"%>
 <%@page import="dao.ReviewJdbcDao"%>
+<%@page import="static utils.ConnectionUtil.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 
@@ -18,7 +26,7 @@
 	order += 1;
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
 	if(loginUserInfo == null) {
-		response.sendRedirect("../loginform.jsp?error=empty");
+		response.sendRedirect("../main/loginform.jsp?error=empty");
 		return;
 	}
 	if(title != null && title.isBlank()) {//title이 null이 아니고,title의 값이 비어있으면
@@ -39,20 +47,37 @@
 	review.setReviewContent(text);
 	review.setReviewStarPoint(star);
 
+	
 	UserDao user = UserDao.getInstance();
+	UserTable findUser = user.getUserAllInfoByNo(loginUserInfo.getUserNo());
 	
-	UserTable findUser = user.getUserAllInfoByNo(loginUserInfo.getUserNo());  
-	
-	UserTable users = new UserTable();
-	users.setUserNo(loginUserInfo.getUserNo());
-	review.setUserTable(users);
+	review.setUserTable(findUser);
 	reviewDao.insertReviewById(review);
+	Connection connection = getConnection();
+	int reviewNo = reviewDao.getReviewSequence(connection);
+	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
+	productDao.getAllReviewByReviewNo(reviewNo)
 	
-	//나중에 여기서 user의 no로 찾는 DAO를 작성한다. 나중에 user의 order의 실제 구매 point를 구해온다.
-	int getPoint = (int)(users.getUserOrderPoint() * 0.01);
-	users.setUserOrderPoint(getPoint);
+	UserDto users = reviewDao.getOrderUserByUserNo(findUser.getUserNo());
+	UserPointHistory point = new UserPointHistory();
+	point.setUserTable(findUser);
+	String check = "적립";
+	String reason = "리뷰 작성";
+	point.setHistoryPointCheck(check);
+	point.setHistoryReason(reason);
+	int getPoint = (int)(users.getOrderRealTotalPrice()*0.01);
+	point.setHistoryTotalPoint(getPoint);
 	
-	review.setUserTable(users);
+	reviewDao.insertReviewByUserPointHistory(point);
+	
+	
+	Orders orders = new Orders();
+	findUser.setUserOrderPoint(findUser.getUserOrderPoint() + getPoint);
+	orders.setUserTable(findUser);
+	orders.setOrderNo(users.getOrderNo());
+	orders.setOrderTotalPoint(users.getOrderTotalPoint() + getPoint);
+	
+	reviewDao.updateOrderByUserOrderTotalPoint(orders);
 	
 	response.sendRedirect("detail.jsp?succes=complete&cpno=1");
 	

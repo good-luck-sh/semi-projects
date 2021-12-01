@@ -28,7 +28,6 @@
 					<select class="form-select form-select-lg mb-3" name="manager">
 						<option selected="selected" disabled="disabled">매니저 설정하기</option>
 						<option value="매니저">매니저</option>
-						<option value="일반사용자">일반사용자</option>
 					</select>
 					<div class="text-end">
 						<button class="btn btn-outline-primary" type="submit">등록하기</button>

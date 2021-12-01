@@ -37,7 +37,7 @@
 	ProductDao productDao = new ProductDao();
 	CategorysDao cateDao = new CategorysDao();
 	List<Categorys> categorysList = cateDao.selectCategoryByCateNoList(categorysNo);
-	List<Product> productList = productDao.getAllProductByCategorysNo(categorysNo);
+	List<Product> productList = productDao.selectProductByCategorys();
 	
 %>
 	<div class="row mb-3">
