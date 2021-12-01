@@ -69,7 +69,7 @@
        		<button type="submit" class="btn btn-primary">로그인 </button>
        	 </div>
        	 <div style="display; inline-block;float:right;">
-       	 	<a href="registerform.jsp" class="btn btn-link">가입하기</a>
+       	 	<a href="registerform.jsp" class="btn btn-link">회원가입</a>
        	 </div>
    </form>  	 	
 </div>

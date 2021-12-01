@@ -12,6 +12,13 @@
 <%
 	pageContext.setAttribute("menu", "noticeBoard");
 %>
+<%@ include file="/navbar/nav.jsp" %>
+<%
+	if (loginUserInfo == null) {
+		response.sendRedirect("../main/loginform.jsp?error=login-required");
+		return;
+	}
+%>
 <div class="container">      
 	<div class="row mb-3">
 		<div class="col">

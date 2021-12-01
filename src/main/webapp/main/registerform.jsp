@@ -28,9 +28,6 @@
 <%
 	} 
 %>
-			
-	
-	
 	<div class="row mb-3">
 		<div class="col">
 			<h1 class="fs-3">회원가입폼</h1>
@@ -67,7 +64,8 @@
 				<div class="row mb-3">
 					<label class="col-2 col-form-label text-left">성별</label>
 					<div class="col-4">
-						<input type="text" class="form-control" name="gender" id="user-gender">
+						<input type="radio" name="gender" value="남자" checked="checked"/>남자
+						<input type="radio" name="gender" value="여자" />여자
 					</div>
 				</div>
 				<hr>
