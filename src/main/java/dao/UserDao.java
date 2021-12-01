@@ -43,11 +43,9 @@ public class UserDao {
 	 * @throws SQLException
 	 */
 	public void updateUser(UserTable userTable) throws SQLException {
-		
-		// 여기 수정하기~
 		String sql = "update user_table "
 					+ "set "
-					+ " user_password = ? "
+					+ "	user_password = ?, "
 					+ " user_address = ? "
 					+ "where user_no = ? ";
 		

@@ -9,6 +9,15 @@ import vo.Review;
 
 public interface CsBoardDao {
 	
+	
+	/**
+	 * 유저 번호를 이용해 유저의 간략한 cs게시판 정보 출력하기
+	 * @param userNo 유저 번호
+	 * @return 유저의 cs게시판 리스트
+	 * @throws SQLException
+	 */
+	public List<CsBoard> getBoardInfoByNo(int userNo) throws SQLException;
+	
 	/**
 	 * cs게시판의 정보를 모두 출력한다.
 	 * @return cs게시판의 정보
