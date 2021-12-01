@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<div class="container">
+<div class="container p-3">
 	<%@ include file="../navbar/nav.jsp" %>
 <%
 	Service service = Service.getInstance();
