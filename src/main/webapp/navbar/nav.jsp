@@ -1,5 +1,8 @@
 
 
+<%@page import="vo.Categorys"%>
+<%@page import="java.util.List"%>
+<%@page import="dao.CategorysDao"%>
 <%@page import="vo.UserTable"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
@@ -17,21 +20,29 @@
     <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
     <title>커먼 유니크</title>
 </head>
-    
+<%
+	CategorysDao categorysDao = new CategorysDao();
+	List<Categorys> cateList = categorysDao.selectAllCategories();
+	
+%>   
     <nav>
         <div class=" container m-2">
-            <a href="../main/index.jsp">
+            <a href="index.jsp">
                 <img src="../navbar/resource/logo.png" alt="로고메세지" style="float: left;" class="icon">
             </a>
                 <span class=""></span>
             <div>
                 <ul class="nav-font">
-                    <li><a href="">best</a></li>
+                    <li><a href="../product/sample2.jsp">best</a></li>
+<%
+	for (Categorys category : cateList) {
+		
+%>
+                    <li><a href="../product/productlist.jsp?categorysNo=<%=category.getCategorysNo() %>"><%=category.getCategorysName() %></a></li>
+<%
+	}
+%>
 
-                    <li><a href="">top</a></li>
-                    <li><a href="">pants</a></li>
-                    <li><a href="">shirt</a></li>
-                    <li><a href="">shoes</a></li>
 <%
 	if(loginUserInfo == null) {
 %>          

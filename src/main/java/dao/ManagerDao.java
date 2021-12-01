@@ -14,6 +14,11 @@ import dto.GenderDto;
 
 public class ManagerDao {
 
+	/**
+	 * 나이별로 가입자 수 구하기
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<AgeDto> countUsersByAge() throws SQLException {
 		String sql = "select trunc(user_age, -1) as age, count(*) as cnt "
 				+ "from user_table "
@@ -41,6 +46,11 @@ public class ManagerDao {
 		return ageList;
 	}
 
+	/**
+	 * 성별로 가입자 수 구하기
+	 * @return
+	 * @throws SQLException
+	 */
 		public List<GenderDto> countAllUsersByGender() throws SQLException {
 			String sql = "select user_gender, count(*) as cnt "
 					+ "from user_table "
