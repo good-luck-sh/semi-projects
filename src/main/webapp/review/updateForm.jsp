@@ -19,18 +19,20 @@
 	int no = Integer.parseInt(request.getParameter("no"));
 	int cpno = Integer.parseInt(request.getParameter("cpno"));	
 	int reviewNo = Integer.parseInt(request.getParameter("reviewNo"));
+	
 	if(loginUserInfo == null) {
-		response.sendRedirect("loginform.jsp?error=empty");
+		response.sendRedirect("../main/loginform.jsp?error=empty");
 		return;
 	}
+	
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
-	Review review = reviewDao.getReviewById(reviewNo);
+	Review review  = reviewDao.getReviewByReviewNo(reviewNo);
 %>
 <div class ="container">
 	<div class="row form-control mt-3">
 		<div class="col mb-3 mt-3">
 			<h3 class="mb-3">리뷰 수정 폼</h3>
-			<p class=""><strong>안녕하세요 :) 김승희 회원님</strong></p>
+			<p class=""><strong>안녕하세요 :) <%=review.getUserTable().getUserName() %> 회원님</strong></p>
 			<p class="">리뷰를 수정하는 입력 폼 입니다.</p>
 		</div>
 	</div>
@@ -60,16 +62,17 @@
 <% 
 }
 %>
-				<form class="well" method="post">
-				<input type="hidden" name="no" value="<%=no %>>">
-				<input type="hidden" name="reviewNo" value="<%=reviewNo %>>">
+				<form class="well" method="post" action="update.jsp">
+				<input type="hidden" name="no" value="<%=no %>">
+				<input type="hidden" name="cpno" value="<%=cpno %>">
+				<input type="hidden" name="reviewNo" value="<%=reviewNo %>">
 					<div class="mb-3" id="text-review-1">
 						<label for="exampleFormControlInput1" class="form-label">리뷰제목</label> 
 						<input type="text" class="form-control" name="reviewTitle" value="<%=review.getReviewTitle()%>">
 					</div>
 					<div class="mb-3">
 						<label for="exampleFormControlInput1" class="form-label">작성자</label>
-						<input type="text" class="form-control" name="" disabled="disabled" value="<%=review.getUserTable().getUserName()%>">
+						<input type="text" class="form-control" name="" value="<%=review.getUserTable().getUserName()%>">
 					</div>
 					<div class="mb-3" id="text-review-2">
 						<label class="mb-3">리뷰 내용</label>

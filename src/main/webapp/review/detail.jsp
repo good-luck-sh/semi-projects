@@ -23,24 +23,36 @@
 <%@ include file="../navbar/nav.jsp" %>
 <%
 	if(loginUserInfo == null) {
-		response.sendRedirect("../loginform.jsp?error=empty");
+		response.sendRedirect("../main/loginform.jsp?error=empty");
 		return;
 	}
+
 	String text = request.getParameter("succes");
+	String error = request.getParameter("error");
 	int cpno = Integer.parseInt(request.getParameter("cpno"));
 	
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
-	
 	UserDao userDao = UserDao.getInstance();
+	
 	UserTable user = userDao.getUserAllInfoByNo(loginUserInfo.getUserNo());
 	int countTotalReview = reviewDao.getCountReviewByUserNo(loginUserInfo.getUserNo());
 	Pagination paging = new Pagination(request.getParameter("cpno"), countTotalReview);
 	
 	List<Review> reviews = reviewDao.getAllReviewById(user.getUserNo(), paging.getBegin(), paging.getEnd());
+	
+	
 	if("complete".equals(text)) {
 %>
 	<div class="alert alert-primary">
 		<strong>리뷰 등록 성공</strong>구매금액의 1%을 적립했습니다.
+	</div>
+<%
+	}
+
+	if("complete".equals(error)) {
+%>
+	<div class="alert alert-primary">
+		<strong>리뷰 삭제 성공</strong>리뷰를 삭제했습니다.
 	</div>
 <%
 	}
@@ -64,9 +76,9 @@
 				<tbody>
 <%
 	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
-	
+					
 	for(Review review : reviews) {
-		Product product = productDao.getAllReviewByReviewNo(review.getReviewNo());
+	Product product = productDao.getAllReviewByReviewByreviewNo(review.getReviewNo());
 %>
 					<tr>
 						<td><%=review.getReviewNo() %></td>
@@ -100,7 +112,7 @@
 	for(int pno = paging.getBeginPage(); pno<=paging.getEndPage(); pno++ ) {
 		if(pno > 0) {
 %>
-				<a href="detail.jsp?cpno=<%=pno %> %>" class="<%=pno == paging.getPageNo() ? "disable" : ""%>"><%=pno%></a>
+				<a href="detail.jsp?cpno=<%=pno %>" class="<%=pno == paging.getPageNo() ? "disable" : ""%>"><%=pno%></a>
 <%
 	}}
 %>
