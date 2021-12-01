@@ -12,17 +12,17 @@
 </head>
 <body>
 <%
-	//	pageContext.setAttribute("menu", "login");
+		pageContext.setAttribute("menu", "login");
 %>
 <%@ include file="../navbar/nav.jsp" %>
 <%
 	// 로그인한 사용자정보가 세션에 존재하지 않으면 마이페이지를 요청할 수 없다.
 	// 클라이언트에게 로그인 정보를 입력하는 loginform.jsp를 재요청하는 응답을 보낸다.
-	// 재요청 URL에 오류원인을 포함시킨다.
-//	if (loginUserInfo == null) {
-//		response.sendRedirect("../loginform.jsp?error=login-required");
-//		return;
-//	}
+	// 재요청 URL에 오류원인을 포함시킨다. board-app user/detail 참고
+	if (loginUserInfo == null) {
+		response.sendRedirect("../main/loginform.jsp?error=login-required");
+		return;
+	}
 
 %>
 <div class="container"> 
@@ -36,8 +36,7 @@
 <hr>
 <%
 	UserDao uDao = UserDao.getInstance();
-	// 나중에 1을 loginUserInfo.getUserNo()로 바꾸기
-	UserTable user = uDao.getUserAllInfoByNo(1);
+	UserTable user = uDao.getUserAllInfoByNo(loginUserInfo.getUserNo());
 
 %>
 	<div class="row mb-3">
@@ -122,13 +121,13 @@
 <hr>
 	<div class="row mb-3">
 		<div class="col-4">
-			<a href="basket.jsp?no=1" class="btn btn-primary">장바구니</a>
+			<a href="basket.jsp?no=<%=user.getUserNo() %>" class="btn btn-primary">장바구니</a>
 		</div>
 		<div class="col-4">
-			<a href="modifyform.jsp?no=1" class="btn btn-primary">회원 정보 수정</a>
+			<a href="modifyform.jsp?no=<%=user.getUserNo() %>" class="btn btn-primary">회원 정보 수정</a>
 		</div>
 		<div class="col-4">
-			<a href="" class="btn btn-primary">로그아웃</a>
+			<a href="../main/logout.jsp" class="btn btn-primary">로그아웃</a>
 		</div>
 	</div>
 <hr>
@@ -140,10 +139,10 @@
 <hr>
 	<div class="row mb-3">
 		<div class="col">
-			<a href="mycslist.jsp">나의 게시글</a>	<!-- ?no=1 추가  -->
+			<a href="mycslist.jsp?no=<%=user.getUserNo() %>">나의 게시글</a>
 		</div>
 		<div class="col">
-			<a href="myreviewlist.jsp?no=1">나의 리뷰</a>		
+			<a href="myreviewlist.jsp?no=<%=user.getUserNo() %>">나의 리뷰</a>		
 		</div>
 	</div>
 	

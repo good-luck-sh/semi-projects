@@ -11,17 +11,17 @@
 </head>
 <body>
 <%
-	//	pageContext.setAttribute("menu", "login");
+	pageContext.setAttribute("menu", "login");
 %>
 <%@ include file="../navbar/nav.jsp" %>
 <%
 	//로그인한 사용자정보가 세션에 존재하지 않으면 마이페이지를 요청할 수 없다.
 	// 클라이언트에게 로그인 정보를 입력하는 loginform.jsp를 재요청하는 응답을 보낸다.
 	// 재요청 URL에 오류원인을 포함시킨다.
-	//if (loginUserInfo == null) {
-	//	response.sendRedirect("../loginform.jsp?error=login-required");
-	//	return;
-	//}
+	if (loginUserInfo == null) {
+		response.sendRedirect("../main/loginform.jsp?error=login-required");
+		return;
+	}
 
 %>
 <div class="container">
@@ -72,6 +72,7 @@
 	<div class="row mb-3">
 		<div class="col">
 <%
+	String success = request.getParameter("success");
 	String error = request.getParameter("error");
 
 	if("empty-password".equals(error)){
@@ -89,7 +90,13 @@
 		</div>
 <%	
 	}
-
+	if("complete".equals(success)){
+%>
+		<div class="alert alert-primary">
+			<strong>회원정보 변경 성공!!</strong> 정상 완료 되었습니다.
+		</div>
+<%
+	}
 %>
 			<form class="border p-3 bg-light" method="post" action="update.jsp">
 				<div class="mb-3">
@@ -118,8 +125,8 @@
 				</div>
 				<div class="text-right">
 					<input class="btn btn-primary" type="submit" value="회원정보수정"/>
-					<a href="detail.jsp?no=1" class="btn btn-secondary">취소</a>
-					<a href="delete.jsp?no=1" class="btn btn-danger">회원탈퇴</a>
+					<a href="detail.jsp?no=<%=user.getUserNo() %>" class="btn btn-secondary">취소</a>
+					<a href="delete.jsp?no=<%=user.getUserNo() %>" class="btn btn-danger">회원탈퇴</a>
 				</div>
 			</form>
 		</div>

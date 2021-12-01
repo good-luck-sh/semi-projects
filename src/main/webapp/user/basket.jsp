@@ -13,17 +13,17 @@
 </head>
 <body>
 <%
-	//	pageContext.setAttribute("menu", "login");
+	pageContext.setAttribute("menu", "login");
 %>
 <%@ include file="../navbar/nav.jsp" %>
 <%
 	//로그인한 사용자정보가 세션에 존재하지 않으면 마이페이지를 요청할 수 없다.
 	// 클라이언트에게 로그인 정보를 입력하는 loginform.jsp를 재요청하는 응답을 보낸다.
 	// 재요청 URL에 오류원인을 포함시킨다.
-	//if (loginUserInfo == null) {
-	//	response.sendRedirect("../loginform.jsp?error=login-required");
-	//	return;
-	//}
+	if (loginUserInfo == null) {
+		response.sendRedirect("../main/loginform.jsp?error=login-required");
+		return;
+	}
 
 %>
 <div class="container">
