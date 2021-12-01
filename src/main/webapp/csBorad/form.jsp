@@ -16,7 +16,7 @@
 <%
 	String error = request.getParameter("error");
 	if(loginUserInfo == null) {
-		response.sendRedirect("../loginform.jsp?error=empty");
+		response.sendRedirect("..../main/loginform.jsp?error=empty");
 		return;
 	}
 	if("nomanager".equals(error)) {

@@ -16,7 +16,7 @@
 <%@ include file="../navbar/nav.jsp" %>
 <%
 	if(loginUserInfo == null) {
-		response.sendRedirect("../loginform.jsp?error=empty");
+		response.sendRedirect("../main/loginform.jsp?error=empty");
 		return;
 	}
 

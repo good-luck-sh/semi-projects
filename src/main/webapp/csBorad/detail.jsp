@@ -22,6 +22,10 @@
 	int cpno = Integer.parseInt(request.getParameter("cpno"));
 	int userNo = Integer.parseInt(request.getParameter("userNo"));
 	String error = request.getParameter("error");
+	if(loginUserInfo == null) {
+		response.sendRedirect("..../main/loginform.jsp?error=empty");
+		return;
+	}
 	if("nomanager".equals(error)) {
 %>
 	<div class="alert alert-danger">
@@ -104,7 +108,7 @@
 		<div>
 <%
 	
-	if("매니저".equals(loginUserInfo.getManagerCheck())) {
+	if(loginUserInfo.getManagerCheck() != null) {
 %>
 			<form class="well" method="post" action="replyrRegister.jsp">
 				<input type="hidden" name="no" value="<%=no %>">
@@ -142,7 +146,7 @@
 						<td>매니저</td>
 						<td><%=csBoard.getCsReplyCreateDate() %></td>
 <%
-	if("매니저".equals(loginUserInfo.getManagerCheck())) {
+	if(loginUserInfo.getManagerCheck() != null) {
 		
 %>
 						<td class="text-center"><a href="delete.jsp?no=<%=no %>&cpno=<%=cpno %>">삭제</a></td>

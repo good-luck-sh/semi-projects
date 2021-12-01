@@ -1,3 +1,4 @@
+<%@page import="vo.UserTable"%>
 <%@page import="vo.UserBasket"%>
 <%@page import="dao.UserBasketDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,11 +9,11 @@
 	int basketNo = Integer.parseInt(request.getParameter("basketNo"));
 	
 	// 로그인한 사용자정보가 세션에 존재하지 않으면 장바구니 제품을 삭제할 수 없다.
-	// UserTable loginUserInfo = (UserTable)session.getAttribute("LOGIN_USER_INFO");
-	//if (loginUserInfo == null) {
-	//	response.sendRedirect("../loginform.jsp?error=login-required");
-	//	return;
-	//}
+	UserTable loginUserInfo = (UserTable)session.getAttribute("LOGIN_USER_INFO");
+	if (loginUserInfo == null) {
+		response.sendRedirect("../main/loginform.jsp?error=login-required");
+		return;
+	}
 	
 	
 	UserBasketDao basketDao = UserBasketDao.getInstance();
@@ -28,7 +29,7 @@
 	//	return;
 	//}
 	
-	//basketDao.deleteBasketProduct(basketNo);
+	basketDao.deleteBasketProduct(basketNo);
 	
-	//response.sendRedirect("basket.jsp?no="+userNo);
+	response.sendRedirect("basket.jsp?no="+userNo);
 %>

@@ -6,7 +6,7 @@
 <%
 	UserTable loginUserInfo = (UserTable)session.getAttribute("LOGIN_USER_INFO");
 	if(loginUserInfo == null) {
-		response.sendRedirect("loginform.jsp?error=empty");
+		response.sendRedirect("../main/loginform.jsp?error=empty");
 		return;
 	}
 	

@@ -13,25 +13,25 @@
 </head>
 <body>
 <%
-	//	pageContext.setAttribute("menu", "login");
+		pageContext.setAttribute("menu", "login");
 %>
 <%@ include file="../navbar/nav.jsp" %>
 <%
 	//로그인한 사용자정보가 세션에 존재하지 않으면 마이페이지를 요청할 수 없다.
 	// 클라이언트에게 로그인 정보를 입력하는 loginform.jsp를 재요청하는 응답을 보낸다.
 	// 재요청 URL에 오류원인을 포함시킨다.
-	//if (loginUserInfo == null) {
-	//	response.sendRedirect("../loginform.jsp?error=login-required");
-	//	return;
-	//}
+	if (loginUserInfo == null) {
+		response.sendRedirect("../main/loginform.jsp?error=login-required");
+		return;
+	}
 
 %>
 <div class="container">
 <%
 	// dao를 order by history_no(혹은 order_no)로 하면 될듯? +
-	// int userNo = Integer.parseInt(request.getParameter("no"));
-	// UserPointHistoryDao historyDao = UserPointHistoryDao.getInstance();
-	// List<UserDto> pointList = historyDao.getAllPointHistoryByNo(userNo);
+	 int userNo = Integer.parseInt(request.getParameter("no"));
+	 UserPointHistoryDao historyDao = UserPointHistoryDao.getInstance();
+	 List<UserDto> pointList = historyDao.getAllPointHistoryByNo(userNo);
 
 %>
 
@@ -47,18 +47,35 @@
 			<thead>
 				<tr>
 					<th>날짜</th>
-					<th>번호</th>
 					<th>차감/적립</th>
 					<th>이유</th>
+					<th>최종포인트</th>
 				</tr>
 			</thead>
 			<tbody>
+<%
+	for(UserDto point : pointList){
+%>
 				<tr>
-					<td>2021-11-11</td>
-					<td>1</td>
-					<td>+1000</td>
+					<td><%=point.getHistoryCreateDate() %></td>
+					<td><%=point.getHistoryPointCheck() %>
+<%
+//		int minusPoint = point.getOrderUsePoint();
+//		int plusPoint = point.getOrderTotalPoint();
+//		for(minusPoint == null) {
+//			
+//		} else {
+//			
+//		}
+%>
+					
+					<%=point.getOrderTotalPoint() %></td>
 					<td>상품 구매</td>
+					<td>10000</td>
 				</tr>
+<%
+	}
+%>
 			</tbody>
 		</table>
 	</div>
