@@ -28,5 +28,5 @@
 	session.setAttribute("LOGIN_USER_INFO", userTable);
 	
 	response.sendRedirect("index.jsp");
-
+	
 %>

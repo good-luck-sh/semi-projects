@@ -20,6 +20,13 @@
 		return;
 	}
 	
+	UserTable loginUserInfo = (UserTable)session.getAttribute("LOGIN_USER_INFO");
+	
+	if (loginUserInfo == null) {
+		response.sendRedirect("../main/loginform.jsp?error=login-required");
+		return;
+	}
+	
 	// NoticeBoard객체생성. 생성한 NoticeBoard객체에 제목, 내용을 저장한다.
 	NoticeBoard noticeBoard = new NoticeBoard();
 	noticeBoard.setBoardTitle(title);

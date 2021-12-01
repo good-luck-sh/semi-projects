@@ -16,7 +16,7 @@
 <%
 	pageContext.setAttribute("menu", "noticeboard");
 %>
-
+<%@ include file="../navbar/nav.jsp" %>
 <div class="container">    
 	<div class="row mb-3">
 		<div class="col">
@@ -87,7 +87,13 @@
 			</nav>
 		</div>
 		<div class="col-3 text-end">
+<%
+	if (loginUserInfo != null) { 
+%>			
 			<a href="form.jsp" class="btn btn-outline-primary">새 공지사항 작성</a>
+<%
+	}
+%>		
 		</div>
 	</div>
 </div>
