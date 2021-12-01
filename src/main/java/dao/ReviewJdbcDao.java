@@ -2,17 +2,23 @@ package dao;
 
 import java.sql.Connection;
 
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dto.UserDto;
+
 import static utils.ConnectionUtil.*;
 
 import vo.Categorys;
+import vo.Orders;
 import vo.Product;
 import vo.Review;
+import vo.UserPointHistory;
 import vo.UserTable;
 
 
@@ -139,7 +145,7 @@ public class ReviewJdbcDao implements ReviewDao {
 
 	@Override
 	public void deleteReviewById(int reviewNo) throws SQLException {
-		String sql = "delete from review where reviewNo = ? ";
+		String sql = "delete from review where review_no = ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setInt(1, reviewNo);
@@ -149,42 +155,21 @@ public class ReviewJdbcDao implements ReviewDao {
 		ptmt.close();
 		connection.close();
 	}
+	
 
 	@Override
-	public Review getReviewById(int reviewNo) throws SQLException {
+	public Review getReviewById(int userNo) throws SQLException {
 		Review review = null;
 		String sql = "select R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point, "
 				+ " U.user_no, U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
 				+ "	U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check "
 				+ "from review R, user_table U "
-				+ "where R.review_no = ? ";
+				+ "where R.user_no = ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
-		ptmt.setInt(1, reviewNo);
+		ptmt.setInt(1, userNo);
 		ResultSet rs = ptmt.executeQuery();
-		if(rs.next()) {
-			review = new Review();
-			review.setReviewNo(rs.getInt("review_no"));
-			review.setReviewTitle(rs.getString("review_title"));
-			UserTable findUser = new UserTable();
-			findUser.setUserNo(rs.getInt("user_no"));
-			findUser.setUserId(rs.getString("user_id"));
-			findUser.setUserPassword(rs.getString("user_password"));
-			findUser.setUserName(rs.getString("user_name"));
-			findUser.setUserAge(rs.getInt("user_age"));
-			findUser.setUserGender(rs.getString("user_gender"));
-			findUser.setManagerCheck(rs.getString("manager_check"));
-			findUser.setUserAddress(rs.getString("user_address"));
-			findUser.setUserOrderPoint(rs.getInt("user_order_point"));
-			findUser.setUserDegree(rs.getString("user_degree"));
-			findUser.setUserCreateDate(rs.getDate("user_created_date"));
-			findUser.setUserDeleteCheck(rs.getString("user_delete_check"));
-			review.setUserTable(findUser);
-			review.setReviewReviewLikeCount(rs.getInt("review_review_like_count"));
-			review.setReviewContent(rs.getString("review_content"));
-			review.setReviewCreatedDate(rs.getDate("review_created_date"));
-			review.setReviewStarPoint(rs.getInt("review_star_point"));
-		}
+		review = repeateReview(review, rs);
 		rs.close();
 		ptmt.close();
 		connection.close();
@@ -384,6 +369,196 @@ public class ReviewJdbcDao implements ReviewDao {
 		connection.close();
 		
 		return reviews;
+	}
+	@Override
+	public void updateReviewByUserNo(UserTable userTable) throws SQLException {
+		String sql = "update user_table "
+				+ "set "
+				+ " user_order_point = ? "
+				+ "where user_no = ? ";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setInt(1, userTable.getUserOrderPoint());
+		ptmt.setInt(2, userTable.getUserNo());
+		
+		ptmt.executeUpdate();
+		
+		ptmt.close();
+		connection.close();
+		
+	}
+	@Override
+	public UserDto getOrderUserByUserNo(int userNo) throws SQLException {
+		UserDto userDto = null;
+		String sql = "select U.user_no, U.user_id, U.user_password, U.user_name, U.user_age ,U.user_gender, U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.manager_check, "
+				+ "U.user_delete_check, O.order_no, O.order_total_price, O.order_total_point, O.order_use_Point, O.order_real_total_price, O.order_state, O.order_date, O.order_cancel_date, O.order_address, "
+				+ "O.order_phone_number, O.order_name, "
+				+ "H.history_no, H.history_point_check, H.history_reason, H.history_create_date ,H.history_total_point "
+				+ "from User_point_history H, user_table U, orders O "
+				+ "where H.user_no(+) = U.user_no "
+				+ "and U.user_no = O.user_no(+) "
+				+ "and U.user_no = ? ";
+	      Connection connection = getConnection();
+	      PreparedStatement ptmt = connection.prepareStatement(sql);
+	      ptmt.setInt(1, userNo);
+	      ResultSet rs = ptmt.executeQuery();
+	      if(rs.next()){
+	    	  userDto = new UserDto();
+	    	  userDto.setUserNo(rs.getInt("user_no"));
+	    	  userDto.setUserId(rs.getString("user_id"));
+	    	  userDto.setUserPassword(rs.getString("user_password"));
+	    	  userDto.setUserName(rs.getString("user_name"));
+	    	  userDto.setUserAge(rs.getInt("user_age"));
+	    	  userDto.setUserGender(rs.getString("user_gender"));
+	    	  userDto.setUserAddress(rs.getString("user_address"));
+	    	  userDto.setUserOrderPoint(rs.getInt("user_order_point"));
+	    	  userDto.setUserDegree(rs.getString("user_degree"));
+	    	  userDto.setUserCreateDate(rs.getDate("user_created_date"));
+	    	  userDto.setManagerCheck(rs.getString("manager_check"));
+	    	  userDto.setUserDeleteCheck(rs.getString("user_delete_check"));
+	    	  userDto.setOrderNo(rs.getInt("order_no"));
+	    	  userDto.setOrderTotalPoint(rs.getInt("order_total_point"));
+	    	  userDto.setOrderTotalPrice(rs.getInt("order_total_price"));
+	    	  userDto.setOrderUsePoint(rs.getInt("order_use_Point"));
+	    	  userDto.setOrderRealTotalPrice(rs.getInt("order_real_total_price"));
+	    	  userDto.setOrderState(rs.getString("order_state"));
+	    	  userDto.setOrderDate(rs.getDate("order_date"));
+	    	  userDto.setOrderCancelDate(rs.getDate("order_cancel_date"));
+	    	  userDto.setOrderAddress(rs.getString("order_address"));
+	    	  userDto.setOrderPhoneNumber(rs.getString("order_phone_number"));
+	    	  userDto.setOrderName(rs.getString("order_name"));
+	    	  userDto.setHistoryNo(rs.getInt("history_no"));
+	    	  userDto.setHistoryPointCheck(rs.getString("history_point_check"));
+	    	  userDto.setHistoryReason(rs.getString("history_reason"));
+	    	  userDto.setHistoryCreateDate(rs.getDate("history_create_date"));
+	    	  userDto.setHistoryTotalPoint(rs.getInt("history_total_point"));
+	    	  
+	      }
+	      
+		rs.close();
+		ptmt.close();
+		connection.close();
+		
+		return userDto;
+	}
+	@Override
+	public void updateOrderByUserOrderTotalPoint(Orders orders) throws SQLException {
+		String sql = "update orders "
+				+ "set "
+				+ " order_total_point = ? "
+				+ "where user_no = ? ";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setInt(1, orders.getOrderTotalPoint());
+		ptmt.setInt(2, orders.getUserTable().getUserNo());
+		
+		ptmt.executeUpdate();
+		
+		ptmt.close();
+		connection.close();
+		
+	}
+	@Override
+	public void insertReviewByUserPointHistory(UserPointHistory point) throws SQLException {
+		String sql = "insert into user_point_history (history_no, user_no, history_point_check, history_reason , history_create_date, history_total_point ) "
+				+ " values(history_no.nextval, ?, ?, ?, sysdate, ? ) ";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setInt(1, point.getUserTable().getUserNo());
+		ptmt.setString(2,point.getHistoryPointCheck());
+		ptmt.setString(3, point.getHistoryReason());
+		ptmt.setInt(4, point.getHistoryTotalPoint());
+		ptmt.executeUpdate();
+		
+		ptmt.close();
+		connection.close();
+
+	}
+	@Override
+	public Review getReviewByReviewNo(int reviewNo) throws SQLException {
+		Review review = null;
+		String sql ="select R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point,"
+				+ " U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
+				+ "	U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check "
+				+ "	from review R, user_table U"
+				+ "	where R.review_no = ? "
+				+ "	and R.user_no = U.user_no";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setInt(1, reviewNo);
+		ResultSet rs = ptmt.executeQuery();
+		review = repeateReview(review, rs);
+		rs.close();
+		ptmt.close();
+		connection.close();
+		return review;
+	}
+	private Review repeateReview(Review review, ResultSet rs) throws SQLException {
+		if(rs.next()) {
+			review = new Review();
+			review.setReviewNo(rs.getInt("review_no"));
+			review.setReviewTitle(rs.getString("review_title"));
+			UserTable findUser = new UserTable();
+			findUser.setUserNo(rs.getInt("user_no"));
+			findUser.setUserId(rs.getString("user_id"));
+			findUser.setUserPassword(rs.getString("user_password"));
+			findUser.setUserName(rs.getString("user_name"));
+			findUser.setUserAge(rs.getInt("user_age"));
+			findUser.setUserGender(rs.getString("user_gender"));
+			findUser.setManagerCheck(rs.getString("manager_check"));
+			findUser.setUserAddress(rs.getString("user_address"));
+			findUser.setUserOrderPoint(rs.getInt("user_order_point"));
+			findUser.setUserDegree(rs.getString("user_degree"));
+			findUser.setUserCreateDate(rs.getDate("user_created_date"));
+			findUser.setUserDeleteCheck(rs.getString("user_delete_check"));
+			review.setUserTable(findUser);
+			review.setReviewReviewLikeCount(rs.getInt("review_review_like_count"));
+			review.setReviewContent(rs.getString("review_content"));
+			review.setReviewCreatedDate(rs.getDate("review_created_date"));
+			review.setReviewStarPoint(rs.getInt("review_star_point"));
+		}
+		return review;
+	}
+	@Override
+	public int getReviewSequence(Connection connection) throws SQLException {
+		int ReviewSequence = 0;
+		String sql = "select review_no.nextval as review_no from dual";
+		
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ResultSet rs = ptmt.executeQuery();
+		
+		rs.next();
+		ReviewSequence = rs.getInt("review_no");
+		
+		rs.close();
+		ptmt.close();
+		
+		return ReviewSequence;
+	}
+	@Override
+	public Review getReview(int reviewNo, Connection connection) throws SQLException {
+		Review review = null;
+		String sql = "select review_no, review_title, user_no, review_review_like_count, review_content, review_created_date, review_star_point "
+				+ "from review "
+				+ "where review_no = ? ";
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setInt(1, reviewNo);
+		ResultSet rs = ptmt.executeQuery();
+		if(rs.next()) {
+			review = new Review();
+			review.setReviewNo(rs.getInt("review_no"));
+			review.setReviewTitle(rs.getString("review_title"));
+			UserTable user = new UserTable();
+			user.setUserNo(rs.getInt("user_no"));
+			review.setUserTable(user);
+			review.setReviewReviewLikeCount(rs.getInt("review_review_like_count"));
+			review.setReviewContent(rs.getString("review_content"));
+			review.setReviewCreatedDate(rs.getDate("review_created_date"));
+			review.setReviewStarPoint(rs.getInt("review_star_point"));
+		}
+		rs.close();
+		ptmt.close();
+		return review;
 	}
 	
 	

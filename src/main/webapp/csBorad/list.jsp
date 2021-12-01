@@ -22,7 +22,7 @@
 <%
 
 	if(loginUserInfo == null) {
-		response.sendRedirect("../loginform.jsp?error=empty");
+		response.sendRedirect("../main/loginform.jsp?error=empty");
 		return;
 	}
 	int cpno = Integer.parseInt(request.getParameter("cpno"));
@@ -86,7 +86,7 @@
 <%
 	for(int pno = paging.getBeginPage(); pno<=paging.getEndPage(); pno++ ) {
 %>
-				<a href="detail.jsp?cpno=<%=pno %> %>" class="<%=pno == paging.getPageNo() ? "disable" : ""%>"><%=pno%></a>
+				<a href="detail.jsp?cpno=<%=pno %>" class="<%=pno == paging.getPageNo() ? "disable" : ""%>"><%=pno%></a>
 <%
 	}
 %>

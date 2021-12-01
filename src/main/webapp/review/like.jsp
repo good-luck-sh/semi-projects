@@ -12,12 +12,12 @@
 	int ReviewNo = Integer.parseInt(request.getParameter("reviewNo"));
 	
 	if(loginUserInfo == null) {
-		response.sendRedirect("../loginform.jsp?error=empty");
+		response.sendRedirect("../main/loginform.jsp?error=empty");
 		return;
 	}
 	
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
-	Review review = reviewDao.getReviewById(ReviewNo);
+	Review review = reviewDao.getReviewById(loginUserInfo.getUserNo());
 	int like = review.getReviewReviewLikeCount() + 1;
 	review.setReviewReviewLikeCount(like);
 	reviewDao.updateReviewById(review);

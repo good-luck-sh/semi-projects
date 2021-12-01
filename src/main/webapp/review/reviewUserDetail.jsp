@@ -14,15 +14,19 @@
 <%
 	int no = Integer.parseInt(request.getParameter("no"));
 	int cpno = Integer.parseInt(request.getParameter("cpno"));
+	String error = request.getParameter("error");
 	
 	if(loginUserInfo == null) {
-		response.sendRedirect("../loginform.jsp?error=empty");
+		response.sendRedirect("../main/loginform.jsp?error=empty");
 		return;
-	} //나중에 loginform을 입력한다. 
+	} 
+	if("complete".equals(error)) {
+		response.sendRedirect("../main/loginform.jsp?error=empty");
+		return;
+	} 
 	
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
 	Review review = reviewDao.getReviewById(loginUserInfo.getUserNo());
-	//loginUser를 받으면 int부분에 no를 넣기 지금은 test용
 	
 %>
 <div class ="container mt-3">
@@ -45,8 +49,18 @@
 						<tr>
 							<th>별점</th>
 							<td><%=review.getReviewStarPoint() %></td>
+<%
+	if(loginUserInfo.getUserNo() != (review.getUserTable().getUserNo())) {
+%>							
  							<th><a href="like.jsp?reviewNo=<%=review.getReviewNo()%>&no=<%=no%>&cpno=<%=cpno%>">좋아요</a></th>
-							<td><%=review.getReviewReviewLikeCount() %></td>
+ <%
+	} else {
+%>
+							<th>좋아요</th>
+<% 
+	}
+ %>						
+ 							<td><%=review.getReviewReviewLikeCount() %></td>
 						</tr>
 						<tr>
 							<th>생성일</th>
@@ -63,15 +77,15 @@
 				</table>
 				<div class="text-right">
 <%
-	//if(loginUserInfo.getUserNo() == review.getUserTable().getUserNo()) { 나중에 login정보받으면 해제하기
+	if(loginUserInfo.getUserNo() == review.getUserTable().getUserNo()) {
 		
 %>
-					<a href="update.jsp?no=<%=no %>&reviewNo=<%=review.getReviewNo() %>&cpno=<%=cpno %>" class="btn warning">수정</a> 
-					<a href="delete.jsp?no=<%=no %>&reviewNo=<%=review.getReviewNo() %>&cpno=<%=cpno %>" class="btn danger">삭제</a>
+					<a href="updateForm.jsp?no=<%=no %>&reviewNo=<%=review.getReviewNo() %>&cpno=<%=cpno %>" class="btn btn-warning">수정</a> 
+					<a href="delete.jsp?no=<%=no %>&reviewNo=<%=review.getReviewNo() %>&cpno=<%=cpno %>" class="btn btn-danger">삭제</a>
 <%
-//	}
+	}
 %>
-					<a href="detail.jsp?no=<%=no %>" class="btn primary">목록</a>
+					<a href="detail.jsp?cpno=<%=cpno %>" class="btn btn-primary">목록</a>
 				</div>
 			</div>
 		</div>

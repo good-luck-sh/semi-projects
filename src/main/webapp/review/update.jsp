@@ -26,7 +26,7 @@
 	return;
 	}
 	
-	Review review = reviewDao.getReviewById(reviewNo);
+	Review review = reviewDao.getReviewByReviewNo(reviewNo);
 	review.setReviewTitle(title);
 	review.setReviewContent(text);
 	reviewDao.updateReviewById(review);
