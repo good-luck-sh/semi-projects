@@ -23,7 +23,7 @@
 	String text = request.getParameter("reviewText");
 	int star = Integer.parseInt(request.getParameter("star"));
 	
-	order += 1;
+	order += 1;	//주문한번씩 진행시 order이 1씩 증가가 된다.
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
 	if(loginUserInfo == null) {
 		response.sendRedirect("../main/loginform.jsp?error=empty");
@@ -56,7 +56,14 @@
 	Connection connection = getConnection();
 	int reviewNo = reviewDao.getReviewSequence(connection);
 	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
-	productDao.getAllReviewByReviewNo(reviewNo)
+	Product product = productDao.getAllReviewByReviewByreviewNo(reviewNo);
+	
+	int productReview = product.getProductReviewCount() + 1;
+	int productStar = (int)( product.getPrdocutStarPoint() + star / order );
+	//평균을 구하는 계산방법 
+	product.setProductReviewCount(productReview);
+	product.setPrdocutStarPoint(productStar);
+	productDao.updateProductByProductNo(product);
 	
 	UserDto users = reviewDao.getOrderUserByUserNo(findUser.getUserNo());
 	UserPointHistory point = new UserPointHistory();

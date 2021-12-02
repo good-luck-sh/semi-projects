@@ -6,6 +6,7 @@ import vo.UserTable;
 
 public class UserDto {
 
+	
 	private int userNo;
 	private String userId;
 	private String userPassword;
