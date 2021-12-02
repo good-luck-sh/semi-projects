@@ -21,6 +21,43 @@ public class ProductDao {
 	}
 	
 	
+	public Product getProductByProductNo(int productNo) throws SQLException {
+		String sql = "select product_no , category_no, product_name, product_price, "
+				+ "product_discount_price, product_stock, product_on_sale, product_picture "
+				+ "from product "
+				+ "where product_no = ? "
+				+ "order by product_no asc ";
+		Product product = new Product();
+		
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1, productNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			
+			product.setProductNo(rs.getInt("product_no"));
+			product.setProductName(rs.getString("product_name"));
+			product.setProductPrice(rs.getInt("product_price"));
+			product.setProductDiscountPrice(rs.getInt("product_discount_price"));
+			product.setProductStock(rs.getInt("product_stock"));
+			product.setProductOnSale(rs.getString("product_on_sale"));
+			product.setProductPicture(rs.getString("product_picture"));
+			
+			Categorys category = new Categorys();
+			category.setCategorysNo(rs.getInt("category_no"));
+			product.setCategorys(category);
+			
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return product;
+	}
+	
+	
 	/**
 	 * 해당상품번호에 해당하는 상품정보 가져오기
 	 * @param productNo
