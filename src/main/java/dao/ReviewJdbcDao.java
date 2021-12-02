@@ -556,6 +556,7 @@ public class ReviewJdbcDao implements ReviewDao {
 			review.setReviewCreatedDate(rs.getDate("review_created_date"));
 			review.setReviewStarPoint(rs.getInt("review_star_point"));
 		}
+		
 		rs.close();
 		ptmt.close();
 		return review;
