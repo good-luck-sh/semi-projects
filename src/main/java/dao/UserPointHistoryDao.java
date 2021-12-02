@@ -22,6 +22,12 @@ public class UserPointHistoryDao {
 	}
 	
 	
-
+	
+	public List<UserDto> getAllPointHistoryByNo(int userNo) throws SQLException {
+		
+		
+		
+		return null;
+	}
 
 }
