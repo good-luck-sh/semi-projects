@@ -3,6 +3,7 @@ nav{
     height: 60px;
     position: sticky;
     width: 100%;
+   
 
 }
 ul {
@@ -47,4 +48,8 @@ li {
 }
 a {
     text-decoration-line: none;
+}
+img {
+	vertical-align : bottom;
+	display: block;
 }
