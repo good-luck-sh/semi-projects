@@ -23,6 +23,30 @@ public class UserBasketDao {
 	}
 	
 	/**
+	 * 장바구니의 수량 변경하기
+	 * @param userBasket 장바구니
+	 * @throws SQLException
+	 */
+	public void updateBasket (UserBasket userBasket) throws SQLException {
+		String sql = "update user_basket "
+					+ "set "
+					+ "	basket_amount = ? "
+					+ "where user_no = ? "
+					+ "and product_no = ? ";
+		
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1, userBasket.getBasketAmount());
+		pstmt.setInt(2, userBasket.getUserTable().getUserNo());
+		pstmt.setInt(3, userBasket.getProduct().getProductNo());
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+		
+	}
+	
+	/**
 	 * 장바구니에 상품 추가하기
 	 * @param userBasket 장바구니 상품
 	 * @throws SQLException
@@ -46,23 +70,27 @@ public class UserBasketDao {
 	
 	
 	/**
-	 * 장바구니 번호를 통해 장바구니에 들어 있는 상품 정보 찾기
-	 * @param basketNo 장바구니 번호
-	 * @return 장바구니에 들어있는 상품 정보
+	 * 유저 번호와 상품 번호를 통해 장바구니에 들어 있는 상품 정보 찾기
+	 * @param userNo 유저번호
+	 * @param productNo 상품번호
+	 * @return
 	 * @throws SQLException
 	 */
-	public UserBasket getUserBasketByNo (int basketNo) throws SQLException {
+	public UserBasket getUserBasketByuserNoandProductNo (int userNo, int productNo) throws SQLException {
 		String sql = "select user_basket_no, user_no, product_no, basket_amount "
 					+ "from user_basket "
-					+ "where user_basket_no = ? ";
-		UserBasket basket = new UserBasket();
+					+ "where user_no = ? "
+					+ "and product_no = ?";
+		UserBasket basket = null;
 		
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
-		pstmt.setInt(1, basketNo);
+		pstmt.setInt(1, userNo);
+		pstmt.setInt(2, productNo);
 		ResultSet rs = pstmt.executeQuery();
 		
 		if(rs.next()) {
+			basket = new UserBasket();
 			basket.setUserBasketNo(rs.getInt("user_basket_no"));
 			basket.setBasketAmount(rs.getInt("basket_amount"));
 			

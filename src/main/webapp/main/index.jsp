@@ -17,6 +17,7 @@
 <div class="container-fluid" style="display: block"> 
 <%
 	String register = request.getParameter("register");
+	String success = request.getParameter("success");
 	if ("completed".equals(register)) {
 %>
 	<div class="row">
@@ -29,7 +30,20 @@
 	</div>
 <% 		
 	}
-%>	
+	
+	if ("complete-cancelMembership".equals(success)){
+%>
+	<div class="row">
+		<div class="col">
+			<div class="alert alert-primary">
+				<strong>회원탈퇴 완료</strong>
+				<P>그동안 감사했습니다.</P>
+			</div>
+		</div>
+	</div>
+<% 
+	}
+%>
 	<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
   		<div class="carousel-inner">
     		<div class="carousel-item active">
