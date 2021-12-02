@@ -20,6 +20,7 @@ public class ProductDao {
 		return productList;
 	}
 	
+	
 	/**
 	 * 해당상품번호에 해당하는 상품정보 가져오기
 	 * @param productNo

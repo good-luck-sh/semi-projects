@@ -14,6 +14,7 @@
 <%@include file="../navbar/nav.jsp" %>
 <div class="container">
 <h3>상품상세정보</h3>
+
 <%
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	ProductDao productDao = new ProductDao();
