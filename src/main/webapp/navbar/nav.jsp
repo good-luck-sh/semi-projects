@@ -33,12 +33,12 @@
                 <span class=""></span>
             <div>
                 <ul class="nav-font">
-                    <li><a href="../product/sample2.jsp">best</a></li>
+                    <li><a href="../product/list_best.jsp">best</a></li>
 <%
 	for (Categorys category : cateList) {
 		
 %>
-                    <li><a href="../product/productlist.jsp?categorysNo=<%=category.getCategorysNo() %>"><%=category.getCategorysName() %></a></li>
+                    <li><a href="../product/list.jsp?categorysNo=<%=category.getCategorysNo() %>"><%=category.getCategorysName() %></a></li>
 <%
 	}
 %>

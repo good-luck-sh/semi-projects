@@ -19,12 +19,13 @@
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	ProductDao productDao = new ProductDao();
 	List<Product> productList = productDao.selectProductByProductNo(productNo);
+	int sale = 0;
 %>
 	<div class="container">
 		<div class="row">
 <%
 	for (Product products : productList) {
-
+		sale = (products.getProductPrice() - products.getProductDiscountPrice());
 %>		
 			<div class="image col-md-3">
 			<p class="text-muted" >제품 상세 사진</p>
@@ -34,13 +35,23 @@
 				<h2><strong><%=products.getProductName() %></strong></h2>
 				<p class="text-muted"><%=products.getProductName() %></p>
 				<hr class="col-md-5">
-				<p><b>상품코드</b> : <span class="badge bg-danger "><%=products.getProductNo() %></span></p>
+				<p><span class="badge bg-danger ">No.<%=products.getProductNo() %></span></p>
 				<p><b>상품가격</b> : <%=products.getProductPrice() %> 원</p>
 				<p><b>할인된 가격</b> : <%=products.getProductDiscountPrice() %> 원</p>
 				<p><b>재고</b> : <%=products.getProductStock() %> 개</p>
+<%
+		if (sale == 0) {
+%>
+				<span class="badge p-1 bg-secondary text-white"><strong>정상가 </strong></span>
+<%		
+		} else {
+%>				
 				<span class="badge p-1 bg-success"><strong> 세일중 </strong></span>
 				<span class="badge p-1 bg-primary text-white"><strong><%=products.getProductOnSale() %> </strong></span>
-				<span class="badge p-1 bg-secondary" >-<%=products.getProductPrice() - products.getProductDiscountPrice() %> 원</span>
+				<span class="badge p-1 bg-dark" >-<%=products.getProductPrice() - products.getProductDiscountPrice() %> 원</span>
+<%
+			}
+%>
 			</div>
 <%
 	}
