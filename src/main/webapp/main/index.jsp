@@ -14,7 +14,7 @@
 	pageContext.setAttribute("menu","home");
 %>
 <%@ include file="../navbar/nav.jsp" %>
-<div class="container"> 
+<div class="container-fluid" style="display: block"> 
 <%
 	String register = request.getParameter("register");
 	if ("completed".equals(register)) {

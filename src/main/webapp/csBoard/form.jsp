@@ -16,7 +16,7 @@
 <%
 	String error = request.getParameter("error");
 	if(loginUserInfo == null) {
-		response.sendRedirect("..../main/loginform.jsp?error=empty");
+		response.sendRedirect("../main/loginform.jsp?error=empty");
 		return;
 	}
 	if("nomanager".equals(error)) {
@@ -37,7 +37,7 @@
 					</div>
 					<div class="mt-3">
 						<label for="exampleFormControlInput1" class="form-label">작성자</label>
-						<input type="text" class="form-control" name="userName" disabled="disabled" value="<%=loginUserInfo.getUserNo()%>">
+						<input type="text" class="form-control" name="userName" disabled="disabled" value="<%=loginUserInfo.getUserName()%>">
 					</div>
 					<div class="mt-3" id="text-review-2">
 						<label class="mb-3">문의 사항 게시판 내용</label>

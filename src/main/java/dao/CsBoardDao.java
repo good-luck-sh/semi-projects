@@ -23,7 +23,7 @@ public interface CsBoardDao {
 	 * @return cs게시판의 정보
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
-	public List<CsBoard> getAllcsBoard() throws SQLException;
+	public List<CsBoard> getAllcsBoard(int begin, int end) throws SQLException;
 	
 	/**
 	 * 해당하는 이용자의 아이디의 cs게시판의 정보를 모두 출력한다.
@@ -93,5 +93,23 @@ public interface CsBoardDao {
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
 	public int getAllCountCsBoard(int userNo) throws SQLException;
+	/**
+	 * 해당하는 게시물을 수정할 때 날짜까지 수정되게 한다. 
+	 * @param csBoard 수정하고자 하는 게시판 내용
+	 * @throws SQLException DB Access 오류시 예외가 발생한다.
+	 */
+	public void updateCsBoardByRevise(CsBoard csBoard) throws SQLException;
+	/**
+	 * 해당하는 게시물에 댓글을 달면 날짜와 게시물댓글이 수정되게 한다. 
+	 * @param csBoard 수정하고자 하는 게시판 내용
+	 * @throws SQLException DB Access 오류시 예외가 발생한다.
+	 */
+	public void updateCsBoardByReply(CsBoard csBoard) throws SQLException;
 	
+	/**
+	 * 전체적인 Cs게시판의 갯수를 나타내는 값을 나타낸다.
+	 * @return 전체적인 cs게시판의 갯수
+	 * @throws SQLException DB Access 오류시 예외가 발생한다.
+	 */
+	public int getAllCountCsBoard() throws SQLException;
 }
