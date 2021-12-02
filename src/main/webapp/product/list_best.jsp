@@ -1,3 +1,5 @@
+<%@page import="dao.UserOrderDao"%>
+<%@page import="dto.BestItemDto"%>
 <%@page import="vo.Categorys"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.CategorysDao"%>
@@ -22,50 +24,37 @@
 	   .detail {
 		font-size: 14px;	   
 	   }
-   
-   
    </style>
-   
    <title></title>
 </head>
 <body>
 <%@include file="../navbar/nav.jsp" %>
 <div class="container">
 <% 
-	int categorysNo = Integer.parseInt(request.getParameter("categorysNo"));
-	ProductDao productDao = new ProductDao();
-	CategorysDao cateDao = new CategorysDao();
-	List<Categorys> categorysList = cateDao.selectCategoryByCateNoList(categorysNo);
-	List<Product> productList = productDao.getAllProductByCategorysNo(categorysNo);
+	UserOrderDao userOrderDao = new UserOrderDao();
+	List<BestItemDto> bestList = userOrderDao.getProductRankingByAmount();
 	int sale = 0;
-
 %>
 	<div class="row mb-3">
 		<div class="col text-center">
-<%
-	for (Categorys categorys : categorysList) {
-%>
 			<div>
-				<strong class="display-5"><%=categorys.getCategorysName() %></strong> 
+				<strong class="display-5">best</strong> 
 			</div>
-<%
-	}
-%>
-
 		</div>
 	</div>
+
 	<div class="row mb-3">
 <%
-	for (Product products : productList) {
-		sale = (products.getProductPrice() - products.getProductDiscountPrice());
-%>
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<div class="card mb-3 border border-light($black)">
-				<a href="detail.jsp?productNo=<%=products.getProductNo() %>"><img class="card-img-top" src="<%=products.getProductPicture() %>"></a>
-				<div class="card-body">
-					<h5 class="fw-bold card-title border-bottom "><small><%=products.getProductName() %></small></h5>
-					<p class="card-text mb-2"><strong><%=products.getProductDiscountPrice() %> 원</strong></p>
-					<p class="detail card-text text-muted mb-2 "><%=products.getProductName() %></p>
+	for (BestItemDto best : bestList) {
+		sale = (best.getPrice() - best.getDiscountPrice());
+%>	
+		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+			<div class="card mb-3 border ">
+				<a href="detail.jsp?productNo=<%=best.getProductNo() %>"><img class="card-img-top " src="<%=best.getPicture() %>" border="0" height="350"></a>
+				<div class="card-body h-100">
+					<h5 class="fw-bold card-title border-bottom "><small><%=best.getProductName() %></small></h5>
+					<p class="card-text mb-2"><strong><%=best.getPrice() %> 원</strong></p>
+					<p class="detail card-text text-muted mb-2 "><%=best.getProductName() %></p>
 					<div>
 <%
 		if (sale == 0) {
@@ -73,12 +62,12 @@
 						<span class="badge p-1 bg-secondary text-white"><strong>정상가 </strong></span>
 <%		
 		} else {
-%>	
-						<span class="badge p-1 bg-dark" >-<%=products.getProductPrice() - products.getProductDiscountPrice() %> 원</span>
-						<span class="badge p-1 bg-primary text-white"><strong><%=products.getProductOnSale() %> </strong></span>
+%>					
+						<span class="badge p-1 bg-dark" >-<%=best.getPrice() - best.getDiscountPrice() %> 원</span>
+						<span class="badge p-1 bg-primary text-white"><strong>세일중 </strong></span>
 <%
-			}
-%>
+		}
+%>						
 					</div>
 				</div>
 			</div>

@@ -58,7 +58,7 @@
 
 %>
 					<tr>
-						<td class="col-6"><a href=""><%=board.getCsBoardTitle() %></a> (new)</td> <!-- 게시글 상세보기 연결 -->
+						<td class="col-6"><a href="../csBoard/detail.jsp?no=<%=board.getCsBoardNo() %>&userNo=<%=loginUserInfo.getUserNo() %>"><%=board.getCsBoardTitle() %></a> (new)</td> <!-- 게시글 상세보기 연결,페이지네이션후 cpno추가 -->
 						<td class="col-2"><%=board.getUserTable().getUserName() %></td>
 						<td class="col-1"><%=board.getCsBoardLikeCount() %> 개</td>
 						<td class="col-1"><%=board.getCsBoardViewCount() %></td>

@@ -1,4 +1,3 @@
-
 package dao;
 
 import static utils.ConnectionUtil.getConnection;
@@ -14,64 +13,6 @@ import vo.Categorys;
 import vo.Product;
 
 public class ProductDao {
-	
-	public void deleteProduct(int productNo) throws SQLException {
-		String sql = "delete "
-					+"from product "
-					+"where product_no = ? ";
-		
-		Connection connection = getConnection();
-	    PreparedStatement pstmt = connection.prepareStatement(sql);
-	    pstmt.setInt(1, productNo);
-	    pstmt.executeQuery();
-	    
-	    pstmt.close();
-	    connection.close();
-	}
-	
-	/**
-	    * 해당상품번호에 해당하는 상품정보 가져오기
-	    * @param productNo
-	    * @return
-	    * @throws SQLException
-	    */
-	   public List<Product> selectProductByProductNo(int productNo) throws SQLException {
-	      String sql = "select product_no , category_no, product_name, product_price, "
-	            + "product_discount_price, product_stock, product_on_sale, product_picture "
-	            + "from product "
-	            + "where product_no = ? "
-	            + "order by product_no asc ";
-	      
-	      List<Product> productList = new ArrayList<>();
-	      
-	      Connection connection = getConnection();
-	      PreparedStatement pstmt = connection.prepareStatement(sql);
-	      pstmt.setInt(1, productNo);
-	      ResultSet rs = pstmt.executeQuery();
-	      
-	      while(rs.next()) {
-	         Product product = new Product();
-	         Categorys category = new Categorys();
-	         
-	         product.setProductNo(rs.getInt("product_no"));
-	         product.setProductName(rs.getString("product_name"));
-	         product.setProductPrice(rs.getInt("product_price"));
-	         product.setProductDiscountPrice(rs.getInt("product_discount_price"));
-	         product.setProductStock(rs.getInt("product_stock"));
-	         product.setProductOnSale(rs.getString("product_on_sale"));
-	         product.setProductPicture(rs.getString("product_picture"));
-	         
-	         category.setCategorysNo(rs.getInt("category_no"));
-	         product.setCategorys(category);
-	         
-	         productList.add(product);
-	      }
-	         rs.close();
-	         pstmt.close();
-	         connection.close();
-	      
-	      return productList;
-	   }
 	
 	public Product selectProductByCategorys(int cateogorys_no) throws SQLException {
 		Product product = null;
@@ -143,7 +84,7 @@ public class ProductDao {
 	public Product selectProductByNo(int productNo) throws SQLException {
 		Product product = null;
 		String sql = "select P.product_no, P.product_name, P.product_price, P.product_discount_price, P.product_stock, P.Product_on_sale, "
-					+"		 P.category_no, C.categorys_name, P.product_picture "
+					+"		 P.category_no, C.categorys_name "
 					+"from product P, categorys C "
 					+"where P.category_no = C.categorys_no "
 					+"and P.product_no = ? ";
@@ -227,14 +168,14 @@ public class ProductDao {
 	 */
 	public void updateProduct(Product product) throws SQLException {
 		String sql = "update product "
-					+" set "
-					+" 	product_name = ?, "
-					+" 	product_price = ?, "
-					+"  product_discount_price = ?, "
-					+"  product_stock = ?, "
-					+"  product_on_sale = ?, "
-					+"  product_picture = ? "
-					+" where product_no = ? ";
+					+"set "
+					+" 	product_name = ? "
+					+" 	product_price = ? "
+					+"  product_discount_price = ? "
+					+"  product_stock = ? "
+					+"  product_on_sale = ? "
+					+"  category_no = ? "
+					+"where product_no = ? ";
 		
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -243,10 +184,10 @@ public class ProductDao {
 		pstmt.setInt(3, product.getProductDiscountPrice());
 		pstmt.setInt(4, product.getProductStock());
 		pstmt.setString(5, product.getProductOnSale());
-		pstmt.setString(6, product.getProductPicture());
+		pstmt.setInt(6, product.getCategorys().getCategorysNo());
 		pstmt.setInt(7, product.getProductNo());
-		pstmt.executeUpdate();
-			
+		pstmt.executeQuery();
+		
 		pstmt.close();
 		connection.close();
 	}
@@ -267,11 +208,10 @@ public class ProductDao {
 		product.setProductDiscountPrice(rs.getInt("product_discount_price"));
 		product.setProductStock(rs.getInt("product_stock"));
 		product.setProductOnSale(rs.getString("product_on_sale"));
-		product.setProductPicture(rs.getString("product_picture"));
 		
 		Categorys category = new Categorys();
-		category.setCategorysNo(rs.getInt("category_no"));
-		category.setCategorysName(rs.getString("categorys_name"));
+		category.setCategorysNo(rs.getInt("categorys_no"));
+		category.setCategorysName(rs.getNString("categorys_name"));
 		product.setCategorys(category);
 		
 		return product;
@@ -287,4 +227,3 @@ public class ProductDao {
 	
 	
 }
-

@@ -137,6 +137,9 @@
 		</div>
 	</div>
 <hr>
+<%
+	if(loginUserInfo.getManagerCheck() == null) {	//사용자가 일반사용자인 경우 
+%>
 	<div class="row mb-3">
 		<div class="col">
 			<a href="mycslist.jsp?no=<%=user.getUserNo() %>">나의 게시글</a>
@@ -145,7 +148,20 @@
 			<a href="myreviewlist.jsp?no=<%=user.getUserNo() %>">나의 리뷰</a>		
 		</div>
 	</div>
-	
+<%
+	} else {	//매니저의 경우 
+%>
+	<div class="row mb-3">
+		<div class="col">
+			<a href="../csBoard/managercsboard.jsp?cpno=1">cs 전체 게시물 확인하기</a>
+		</div>
+		<div class="col">
+			<a href="../manager/managerlist.jsp">매니저 메뉴 확인하기</a>		
+		</div>
+	</div>
+<%
+	}
+%>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

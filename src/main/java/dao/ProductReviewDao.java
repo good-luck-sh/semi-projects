@@ -17,9 +17,9 @@ public interface ProductReviewDao {
 	public ProductDto getAllReviewByReviewNo(int reviewNo) throws SQLException;
 	/**
 	 * 해당하는 리뷰의 번호를 입력하여 해당하는 product를 출력한다. 
-	 * @param reviewNo
-	 * @return
-	 * @throws SQLException
+	 * @param reviewNo 찾고자하는 리뷰 번호 
+	 * @return 해당하는 상품
+	 * @throws SQLException DB Access 오류시 예외가 발생한다. 
 	 */
 	public Product getAllReviewByReviewByreviewNo(int reviewNo) throws SQLException;
 	

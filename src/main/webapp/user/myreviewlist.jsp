@@ -46,7 +46,7 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th>제목</th>
 					<th>별점</th>
 					<th>리뷰</th>
 					<th>좋아요</th>
@@ -58,7 +58,8 @@
 	for (Review rv : reviewList){
 %>
 				<tr>
-					<td><%=rv.getReviewNo() %></td>
+					<td><a href="../review/detail.jsp?no=<%=rv.getReviewNo()%>"><%=rv.getReviewTitle() %></a></td>
+					<!--  페이지네이션 완성되면 cpno입력하기  -->
 					<td><%=rv.getReviewStarPoint() %> 점</td>
 					<td><Strong><%=rv.getReviewTitle() %></Strong>     <%=rv.getReviewContent() %></td>
 					<td><%=rv.getReviewReviewLikeCount() %> 개</td>

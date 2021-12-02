@@ -1,3 +1,4 @@
+<%@page import="dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="ko">
@@ -8,7 +9,11 @@
     <title></title>
 </head>
 <body>
-<!-- 나중에 매니저마이리스트에서 출력되게 만든다. -->
+<%
+	pageContext.setAttribute("menu", "login");
+	//네비바 활성화를 위하여 pageContext에서 값을 꺼내온다.
+%>
+<%@ include file="../navbar/nav.jsp" %>
 <%
 	String error = request.getParameter("error");
 	if("empty".equals(error)) {
@@ -23,15 +28,23 @@
 		<div class="row">
 			<div class="col">
 				<h1>매니저 관리 폼</h1>
+<%
+	UserDao user = UserDao.getInstance();
+	List<UserTable> users= user.getAllUser();
+	for(UserTable finduser : users) {
+%>
 				<form action="userSystemRegister.jsp" method="post">
-					<label class="mb-3">별점 입력</label> 
+					<input type="hidden" name="userNo" value="<%=finduser.getUserNo() %>">
 					<select class="form-select form-select-lg mb-3" name="manager">
-						<option selected="selected" disabled="disabled">매니저 설정하기</option>
+						<option selected="selected" disabled="disabled"></option>
 						<option value="매니저">매니저</option>
 					</select>
+<%
+	}
+%>
 					<div class="text-end">
 						<button class="btn btn-outline-primary" type="submit">등록하기</button>
-						<button class="btn btn-outline-danger"><a href="">취소하기</a></button><!-- 매니저 마이리스트 -->
+						<button class="btn btn-outline-danger"><a href="managerlist.jsp">취소하기</a></button><!-- 매니저 마이리스트 -->
 					</div>
 				</form>
 			</div>

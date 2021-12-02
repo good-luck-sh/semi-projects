@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import static utils.ConnectionUtil.*;
 import vo.UserTable;
 
@@ -165,6 +168,47 @@ public class UserDao {
 		pstmt.close();
 		connection.close();
  	}
+	
+	/**
+	 * 등록되어 있는 모든 사용자의 객체를 출력한다. 
+	 * @return 등록되어 있는 사용자의 객체 
+	 * @throws SQLException 
+	 */
+	public List<UserTable> getAllUser() throws SQLException {
+		List<UserTable> users = new ArrayList<>();
+		String sql ="select user_no, user_password, user_name, user_age, user_gender, user_address, "
+				+ " user_order_point, user_degree, user_created_date, manager_check, user_delete_check "
+				+ " from user_table ";
+		 Connection connection = getConnection();
+		 PreparedStatement pstmt = connection.prepareStatement(sql);
+
+		 ResultSet rs = pstmt.executeQuery();
+		      
+		 while(rs.next()) {
+			UserTable user = new UserTable();
+			user = new UserTable();
+		    user.setUserNo(rs.getInt("user_no"));
+		    user.setUserId(rs.getString("user_id"));
+		    user.setUserPassword(rs.getString("user_password"));
+		    user.setUserName(rs.getString("user_name"));
+		    user.setUserAge(rs.getInt("user_age"));
+		    user.setUserGender(rs.getString("user_gender"));
+		    user.setUserAddress(rs.getString("user_address"));
+		    user.setUserOrderPoint(rs.getInt("user_order_point"));
+		    user.setUserDegree(rs.getString("user_degree"));
+		    user.setUserCreateDate(rs.getDate("user_created_date"));
+		    user.setUserDeleteCheck(rs.getString("user_delete_check"));
+		    user.setManagerCheck(rs.getString("manager_check"));
+		    users.add(user);
+		 	}
+		      
+		  rs.close();
+		  pstmt.close();
+		  connection.close();
+	      
+	      return users;
+
+	}
 	
 	
 }
