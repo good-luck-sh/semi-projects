@@ -8,7 +8,7 @@
 	int cpno = Integer.parseInt(request.getParameter("cpno"));
 		
 	if(loginUserInfo == null) {
-		response.sendRedirect("..../main/loginform.jsp?error=empty");
+		response.sendRedirect("../main/loginform.jsp?error=empty");
 		return;
 	}
 	

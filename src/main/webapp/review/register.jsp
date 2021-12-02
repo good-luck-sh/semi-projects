@@ -53,17 +53,21 @@
 	
 	review.setUserTable(findUser);
 	reviewDao.insertReviewById(review);
-	Connection connection = getConnection();
-	int reviewNo = reviewDao.getReviewSequence(connection);
-	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
-	Product product = productDao.getAllReviewByReviewByreviewNo(reviewNo);
+	//mybatis 배울 때 사용해야하는 부분
+	//Connection connection = getConnection();
+	//int reviewNo = reviewDao.getReviewSequence(connection);
+	//Review findReivew = reviewDao.getReview(reviewNo, connection);
 	
-	int productReview = product.getProductReviewCount() + 1;
-	int productStar = (int)( product.getPrdocutStarPoint() + star / order );
+	//ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
+	//Product product = productDao.getAllReviewByReviewByreviewNo(findReivew.getReviewNo());
+	
+	//int productReview = product.getProductReviewCount() + 1;
+	//int productStar = (int)( product.getPrdocutStarPoint() + star / order );
 	//평균을 구하는 계산방법 
-	product.setProductReviewCount(productReview);
-	product.setPrdocutStarPoint(productStar);
-	productDao.updateProductByProductNo(product);
+	//product.setProductReviewCount(productReview);
+	//product.setPrdocutStarPoint(productStar);
+	//productDao.updateProductByProductNo(product);
+	//리뷰번호와 이미 격차가 많이 나서 사용 불가 코딩
 	
 	UserDto users = reviewDao.getOrderUserByUserNo(findUser.getUserNo());
 	UserPointHistory point = new UserPointHistory();
