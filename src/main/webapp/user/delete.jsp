@@ -13,17 +13,17 @@
 		return;
 	}
 
+	
 	// 객체 생성
 	UserDao uDao = UserDao.getInstance();
 	
 
-	
 	uDao.deleteUser(userNo);
 	
 	//세션객체 무효화
 	session.invalidate();
 		
-	response.sendRedirect("../main/index.jsp");
+	response.sendRedirect("../main/index.jsp?success=complete-cancelMembership");
 
 
 

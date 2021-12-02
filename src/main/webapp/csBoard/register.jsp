@@ -7,17 +7,16 @@
 	UserTable loginUserInfo = (UserTable)session.getAttribute("LOGIN_USER_INFO");
 	
 	String userCheck = request.getParameter("managercheck");
-	int no = Integer.parseInt(request.getParameter("no"));
-	int cpno = Integer.parseInt(request.getParameter("cpno"));
 	
 	if(loginUserInfo == null) {
 		response.sendRedirect("../main/loginform.jsp?error=empty");
 		return;
 	}
-	if("매니저".equals(loginUserInfo.getManagerCheck())) {
+	if(loginUserInfo.getManagerCheck() != null) {
 		response.sendRedirect("form.jsp?error=nomanager");
 		return;
 	}
+	
 	String title = request.getParameter("title");
 	String text = request.getParameter("text");
 	
@@ -32,5 +31,5 @@
 	
 	csBoardDao.insertCsBoard(csBoard);
 	
-	response.sendRedirect("detail.jsp?no=" + no + "&cpno=" + cpno+"&error=complete");
+	response.sendRedirect("list.jsp?cpno=1&error=complete");
 %>
