@@ -15,6 +15,13 @@ import vo.Product;
 
 public class ProductDao {
 	
+
+	
+	/**
+	 * 
+	 * @param productNo
+	 * @throws SQLException
+	 */
 	public void deleteProduct(int productNo) throws SQLException {
 		String sql = "delete "
 					+"from product "
@@ -29,8 +36,54 @@ public class ProductDao {
 	    connection.close();
 	}
 	
+	
 	/**
-	    * 해당상품번호에 해당하는 상품정보 가져오기
+	 * 카테고리 번호에 해당하는 상품정보 리스트
+	 * @param categorysNo 카테고리번호
+	 * @return 상품정보
+	 * @throws SQLException
+	 */
+	public List<Product> getAllProductByCategorysNo(int categorysNo) throws SQLException {
+		String sql = "select product_no, category_no, product_name, product_price, "
+				+ "product_discount_price, product_stock, product_on_sale, product_picture "
+				+ "from product "
+				+ "where category_no = ? "
+				+ "order by product_no asc ";
+		List<Product> productList = new ArrayList<>();
+		
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1, categorysNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			Product product = new Product();
+			Categorys category = new Categorys();
+			
+			product.setProductNo(rs.getInt("product_no"));
+			product.setProductName(rs.getString("product_name"));
+			product.setProductPrice(rs.getInt("product_price"));
+			product.setProductDiscountPrice(rs.getInt("product_discount_price"));
+			product.setProductStock(rs.getInt("product_stock"));
+			product.setProductOnSale(rs.getString("product_on_sale"));
+			product.setProductPicture(rs.getString("product_picture"));
+			
+			category.setCategorysNo(rs.getInt("category_no"));
+			product.setCategorys(category);
+			
+			productList.add(product);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return productList;
+		
+	}
+	
+	/**
+	    * 해당상품번호에 해당하는 상품정보 리스트
 	    * @param productNo
 	    * @return
 	    * @throws SQLException
@@ -73,31 +126,37 @@ public class ProductDao {
 	      return productList;
 	   }
 	
-	public Product selectProductByCategorys(int cateogorys_no) throws SQLException {
-		Product product = null;
-		String sql = "select P.product_no, P.product_name, P.product_price, P.product_discount_price, P.product_stock, P.Product_on_sale, "
-					+"		 P.category_no, C.categorys_name "
-					+"from product P, categorys C "
-					+"where P.category_no = C.categorys_no "
-					+"and P.category_no = ? ";
-		
-		Connection connection = getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(sql);
-		pstmt.setInt(1, cateogorys_no);
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
+	   /**
+	    * 카테고리번호에 해당하는 상품정보 반환 
+	    * @param cateogorys_no
+	    * @return
+	    * @throws SQLException
+	    */
+		public Product selectProductByCategorys(int cateogorys_no) throws SQLException {
+			Product product = null;
+			String sql = "select P.product_no, P.product_name, P.product_price, P.product_discount_price, P.product_stock, P.Product_on_sale, "
+						+"		 P.category_no, C.categorys_name "
+						+"from product P, categorys C "
+						+"where P.category_no = C.categorys_no "
+						+"and P.category_no = ? ";
+			
+			Connection connection = getConnection();
+			PreparedStatement pstmt = connection.prepareStatement(sql);
+			pstmt.setInt(1, cateogorys_no);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
 			product = rowToProduct(rs);
+			}
+			
+			rs.close();
+			pstmt.close();
+			connection.close();
+			
+			return product;
 		}
-		
-		rs.close();
-		pstmt.close();
-		connection.close();
-		
-		return product;
-	}
 	
 	/**
-	 * 모든 상품정보를 가져온다.
+	 * 모든 상품정보 리스트를 가져온다.
 	 * @return	상품정보
 	 * @throws SQLException
 	 */

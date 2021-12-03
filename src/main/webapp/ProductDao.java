@@ -14,6 +14,12 @@ import vo.Product;
 
 public class ProductDao {
 	
+	/**
+	 * 카테고리번호로 상품가져오기
+	 * @param cateogorys_no
+	 * @return
+	 * @throws SQLException
+	 */
 	public Product selectProductByCategorys(int cateogorys_no) throws SQLException {
 		Product product = null;
 		String sql = "select P.product_no, P.product_name, P.product_price, P.product_discount_price, P.product_stock, P.Product_on_sale, "
