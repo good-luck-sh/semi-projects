@@ -22,8 +22,7 @@
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	ProductDao productDao = new ProductDao();
 	List<Product> productList = productDao.selectProductByProductNo(productNo);
-	Product product = productDao.getProductByProductNo(productNo);
-	
+	Product product = productDao.selectProductByNo(productNo);
 %>
 <%
 	String success = request.getParameter("success");
