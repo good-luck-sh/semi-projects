@@ -88,6 +88,7 @@
 %>   
       </div>
    </div>
+   <a href="modify_product_form.jsp?productNo=<%=request.getParameter("productNo")%>" class="btn btn-outline-secondary btn-lg" tabindex="-1" role="button" aria-disabled="true">수정</a>    
 </div>
 <div class="container">
    <hr>
