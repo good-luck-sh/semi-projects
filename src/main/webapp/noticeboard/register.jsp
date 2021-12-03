@@ -3,7 +3,6 @@
 <%@page import="vo.UserTable"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% 
-
 	// noticeboard/form.jsp에서 noticeboard/register.jsp로 제출한 폼 입력값 조회하기
 	String title = request.getParameter("title");
 	String content = request.getParameter("content");

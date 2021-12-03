@@ -14,6 +14,7 @@
 <%
 	pageContext.setAttribute("menu", "noticeboard");
 %>
+<%@ include file="../navbar/nav.jsp" %>
 <div class="container">    
 <div class="row mb-3">
 		<div class="col">
