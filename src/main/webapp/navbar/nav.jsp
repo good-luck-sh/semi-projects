@@ -33,12 +33,12 @@
                 <span class=""></span>
             <div>
                 <ul class="nav-font">
-                    <li><a href="../product/list_best.jsp">best</a></li>
+                    <li class="nav-li"><a href="../product/list_best.jsp">best</a></li>
 <%
 	for (Categorys category : cateList) {
 		
 %>
-                    <li><a href="../product/list.jsp?categorysNo=<%=category.getCategorysNo() %>"><%=category.getCategorysName() %></a></li>
+                    <li class="nav-li"><a href="../product/list.jsp?categorysNo=<%=category.getCategorysNo() %>"><%=category.getCategorysName() %></a></li>
 <%
 	}
 %>
@@ -46,14 +46,17 @@
 <%
 	if(loginUserInfo == null) {
 %>          
+
 					<li><a href="http://localhost/semi-projects/main/loginform.jsp" class="btn btn-primary btn-sm<%="login".equals(menu) ? "active" : "" %>">login</a></li>
                     <!-- 로그인이 안되어 있으면 활성화 시켜서 로그인 jsp로 이동하도록 입력한다. -->
                     <li><a href="http://localhost/semi-projects/main/registerform.jsp" class="btn btn-secondary btn-sm<%="register".equals(menu) ? "active" : "" %>">join</a></li>
+
 
                     <!-- 로그인이 안되어 있으면 활성화 시켜서 회원가입 jsp로 이동하도록 입력한다. -->
 <%
 	} else {
 %>      
+
                  	<li><a href="http://localhost/semi-projects/user/detail.jsp"><img src="../navbar/resource/ico_headuser.png" alt="" class="userIcon <%="login".equals(menu) ? "active" : "" %>" id="icon-1" ></a></li>
                     <!-- 로그인이 되어있으면 활성화 시켜서 마이페이지 jsp로 이동하도록 입력한다. -->
 

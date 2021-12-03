@@ -35,16 +35,18 @@
 %>
 				<form action="userSystemRegister.jsp" method="post">
 					<input type="hidden" name="userNo" value="<%=finduser.getUserNo() %>">
+					<label>회원 아이디</label>
+					<input type="text" name="" value="<%=finduser.getUserId() %>" disabled="disabled">
 					<select class="form-select form-select-lg mb-3" name="manager">
-						<option selected="selected" disabled="disabled"></option>
-						<option value="매니저">매니저</option>
+						<option selected="selected" disabled="disabled">매니저 설정하세요</option>
+						<option value="manager">매니저</option>
 					</select>
 <%
 	}
 %>
 					<div class="text-end">
 						<button class="btn btn-outline-primary" type="submit">등록하기</button>
-						<button class="btn btn-outline-danger"><a href="managerlist.jsp">취소하기</a></button><!-- 매니저 마이리스트 -->
+						<button class="btn btn-outline-danger"><a href="managerlist.jsp">취소하기</a></button>
 					</div>
 				</form>
 			</div>
