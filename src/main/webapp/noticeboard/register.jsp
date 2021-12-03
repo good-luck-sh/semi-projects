@@ -36,6 +36,6 @@
 	// 공지사항 정보를 테이블에 저장한다.
 	noticeBoardDao.insertNotice(noticeBoard);
 	// 클라이언트에게 공지사항 목록을 요청하게 하는 응답을 보낸다.
-	response.sendRedirect("list.jsp");
+	response.sendRedirect("notice.jsp");
 	
 %>

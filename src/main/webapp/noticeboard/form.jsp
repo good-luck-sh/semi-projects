@@ -53,7 +53,7 @@
 					<textarea rows="6" class="form-control" name="content"></textarea>
 				</div>
 				<div class="mb-3 text-end">
-					<a href="list.jsp" class="btn btn-secondary">취소</a>
+					<a href="notice.jsp" class="btn btn-secondary">취소</a>
 					<button type="submit" class="btn btn-primary">등록</button>
 				</div>
 			</form>
