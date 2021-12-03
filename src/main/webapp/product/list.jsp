@@ -67,6 +67,7 @@
 					<p class="card-text mb-2"><strong><%=products.getProductDiscountPrice() %> 원</strong></p>
 					<p class="detail card-text text-muted mb-2 "><%=products.getProductName() %></p>
 					<div>
+						<span class="badge p-1 bg-primary text-white"><strong><%=products.getProductOnSale() %> </strong></span>
 <%
 		if (sale == 0) {
 %>
@@ -74,8 +75,8 @@
 <%		
 		} else {
 %>	
+						<span class="badge p-1 bg-success text-white"><strong>세일중 </strong></span>
 						<span class="badge p-1 bg-dark" >-<%=products.getProductPrice() - products.getProductDiscountPrice() %> 원</span>
-						<span class="badge p-1 bg-primary text-white"><strong><%=products.getProductOnSale() %> </strong></span>
 <%
 			}
 %>
