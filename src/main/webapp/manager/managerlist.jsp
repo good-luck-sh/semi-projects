@@ -35,6 +35,7 @@
 				<li><a class="dropdown-item" href="#">연령별 가입 현황 조회</a></li>
 				<li><a class="dropdown-item" href="#">성별 가입 현황 조회</a></li>
 				<li><a class="dropdown-item" href="userSystem.jsp">매니저 등록하기</a></li>
+				<li><a class="dropdown-item" href="totalordereview.jsp?cpno=1">주문 리뷰 보기</a></li>
 			</ul>
 			</div>
 			<div class="text-right mt-3">
