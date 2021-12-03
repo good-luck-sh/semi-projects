@@ -3,7 +3,6 @@
 <%@page import="vo.UserTable"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% 
-
 	// noticeboard/form.jsp에서 noticeboard/register.jsp로 제출한 폼 입력값 조회하기
 	String title = request.getParameter("title");
 	String content = request.getParameter("content");
@@ -37,6 +36,6 @@
 	// 공지사항 정보를 테이블에 저장한다.
 	noticeBoardDao.insertNotice(noticeBoard);
 	// 클라이언트에게 공지사항 목록을 요청하게 하는 응답을 보낸다.
-	response.sendRedirect("notice.jsp");
+	response.sendRedirect("list.jsp");
 	
 %>

@@ -14,6 +14,7 @@
 <%
 	pageContext.setAttribute("menu", "noticeboard");
 %>
+<%@ include file="../navbar/nav.jsp" %>
 <div class="container">    
 <div class="row mb-3">
 		<div class="col">
@@ -48,7 +49,7 @@
 				</tbody>
 			</table>
 			<div class="col-6 text-end">
-				<a href="notice.jsp" class="btn btn-outline-primary">목록</a>
+				<a href="list.jsp" class="btn btn-outline-primary">목록</a>
 			</div>
 		</div>
 	</div>
