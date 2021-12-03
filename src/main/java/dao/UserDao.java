@@ -196,7 +196,7 @@ public class UserDao {
 	 */
 	public List<UserTable> getAllUser() throws SQLException {
 		List<UserTable> users = new ArrayList<>();
-		String sql ="select user_no, user_password, user_name, user_age, user_gender, user_address, "
+		String sql ="select user_no, user_id, user_password, user_name, user_age, user_gender, user_address, "
 				+ " user_order_point, user_degree, user_created_date, manager_check, user_delete_check "
 				+ " from user_table ";
 		 Connection connection = getConnection();

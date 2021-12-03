@@ -38,4 +38,12 @@ public interface ProductReviewDao {
 	 * @throws SQLException DB Access 오류시 예외가 발생한다. 
 	 */
 	public void updateProductByProductNo(Product product) throws SQLException;
+	
+	/**
+	 * 해당하는 상품의 번호를 입력받아서 해당하는 상품의 리뷰를 출력한다. 상품디테일부분에 입력할 것이다. 
+	 * @param productNo 해당하는 상품의 번호 
+	 * @return 해당하는 상품의 리뷰 
+	 * @throws SQLException DB Access 오류시 예외가 발생한다. 
+	 */
+	public List<ProductDto> getAllReviewByProductNo(int productNo) throws SQLException;
 }
