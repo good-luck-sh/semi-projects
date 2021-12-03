@@ -15,7 +15,7 @@ nav{
     display: flex;
 
 }
-.nav-font  > .nav-li {
+.nav-font>.nav-li {
     width: 20%;
 }
 .nav-li {

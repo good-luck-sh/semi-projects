@@ -21,7 +21,7 @@
 	UserTable user = userDao.getUserAllInfoByNo(userNo);
 	user.setManagerCheck(manager);
 	
-	userDao.updateUser(user);
+	userDao.updateUserByManagerCheck(user);
 	
 	response.sendRedirect("managerlist.jsp?error=complete");
 	
