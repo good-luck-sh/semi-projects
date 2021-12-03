@@ -1,3 +1,4 @@
+
 <%@page import="vo.UserTable"%>
 <%@page import="dao.UserDao"%>
 <%@page import="org.apache.commons.codec.digest.DigestUtils"%>
@@ -13,6 +14,7 @@
 	UserDao userDao = UserDao.getInstance();
 	
 	UserTable savedUser = userDao.getUserById(id);
+
 	if (savedUser != null) {
 		response.sendRedirect("registerform.jsp?error=id-exists");
 		return;
@@ -32,4 +34,5 @@
 	userDao.insertUser(user);
 	
 	response.sendRedirect("index.jsp?register=completed");
+
 %>
