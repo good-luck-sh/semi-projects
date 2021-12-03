@@ -114,7 +114,7 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col">
-			<h6><a href="userpointdetail.jsp">적립금</a></h6>
+			<h6><a href="userpointdetail.jsp?no=<%=user.getUserNo() %>">적립금</a></h6>
 			<h6><%=user.getUserOrderPoint() %> 원</h6>
 		</div>
 	</div>

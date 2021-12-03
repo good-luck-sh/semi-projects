@@ -1,3 +1,4 @@
+<%@page import="vo.UserPointHistory"%>
 <%@page import="java.util.List"%>
 <%@page import="dto.UserDto"%>
 <%@page import="dao.UserPointHistoryDao"%>
@@ -28,11 +29,10 @@
 %>
 <div class="container">
 <%
-	// dao를 order by history_no(혹은 order_no)로 하면 될듯? +
 	 int userNo = Integer.parseInt(request.getParameter("no"));
 	 UserPointHistoryDao historyDao = UserPointHistoryDao.getInstance();
-	 List<UserDto> pointList = historyDao.getAllPointHistoryByNo(userNo);
-
+	 List<UserPointHistory> historyList = historyDao.getAllPointHistoryByNo(userNo);
+	 
 %>
 
 <hr>
@@ -48,30 +48,19 @@
 				<tr>
 					<th>날짜</th>
 					<th>차감/적립</th>
+					<th>포인트</th>
 					<th>이유</th>
-					<th>최종포인트</th>
 				</tr>
 			</thead>
 			<tbody>
 <%
-	for(UserDto point : pointList){
+	for(UserPointHistory history : historyList){
 %>
 				<tr>
-					<td><%=point.getHistoryCreateDate() %></td>
-					<td><%=point.getHistoryPointCheck() %>
-<%
-//		int minusPoint = point.getOrderUsePoint();
-//		int plusPoint = point.getOrderTotalPoint();
-//		for(minusPoint == null) {
-//			
-//		} else {
-//			
-//		}
-%>
-					
-					<%=point.getOrderTotalPoint() %></td>
-					<td>상품 구매</td>
-					<td>10000</td>
+					<td><%=history.getHistoryCreateDate() %></td>
+					<td><%=history.getHistoryPointCheck() %></td>
+					<td><%=history.getHistoryTotalPoint() %>원</td>
+					<td><%=history.getHistoryReason() %></td>
 				</tr>
 <%
 	}
@@ -82,12 +71,12 @@
 <hr>
 	<div class="row mb-3">
 		<div class="col">
-			<h2>총 포인트: 10000 원</h2>
+			<h2>총 포인트: <%=loginUserInfo.getUserOrderPoint() %> 원</h2>
 		</div>
 	</div>
 	<div class="row mb-3">
 		<div class="col">
-			<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
+			<a href="detail.jsp?no=<%=loginUserInfo.getUserNo() %>" class="btn btn-primary">되돌아가기</a>
 		</div>
 	</div>
 </div>

@@ -22,6 +22,44 @@ public class UserBasketDao {
 		return self;
 	}
 	
+	
+	
+	public UserBasket getUserBasketBybasketNo(int basketNo) throws SQLException {
+		UserBasket basket = null;
+		String sql = "select user_basket_no, user_no, product_no, basket_amount "
+					+ "from user_basket "
+					+ "where user_basket_no = ? ";
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1, basketNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			basket = new UserBasket();
+			basket.setUserBasketNo(rs.getInt("user_basket_no"));
+			basket.setBasketAmount(rs.getInt("basket_amount"));
+			
+			UserTable user = new UserTable();
+			user.setUserNo(rs.getInt("user_no"));
+			
+			Product product = new Product();
+			product.setProductNo(rs.getInt("product_no"));
+			
+			basket.setUserTable(user);
+			basket.setProduct(product);
+			
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		
+		return basket;
+	}
+	
+	
+	
 	/**
 	 * 장바구니의 수량 변경하기
 	 * @param userBasket 장바구니
