@@ -67,6 +67,26 @@ public class UserDao {
 		
 	}
 	
+	/**
+	 * 해당하는 사용자의 번호를 입력받아 사용자의 매니저를 설정하는 부분이다. 
+	 * @param userTable 해당하는 사용자 객체
+	 * @throws SQLException DB Access 오류시 예외가 발생한다.
+	 */
+	public void updateUserByManagerCheck(UserTable userTable) throws SQLException {
+		String sql = "update user_table "
+				+ "set "
+				+ "	manager_check = ? "
+				+ "where user_no = ? ";
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setString(1, userTable.getManagerCheck());
+		pstmt.setInt(2, userTable.getUserNo());
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
 
 	/**
 	    * 유저 번호를 통해 모든 유저 정보를 불러온다
