@@ -19,7 +19,7 @@
 	UserBasketDao basketDao = UserBasketDao.getInstance();
 	
 	// 해당 장바구니 제품 조회
-	UserBasket basket = basketDao.getUserBasketByNo(basketNo);
+	UserBasket basket = basketDao.getUserBasketBybasketNo(basketNo);
 	
 	// 장바구니 유저와 삭제요청할 유저의 번호가 서로 다른 경우 장바구니를 삭제할 수 없다.
 	// 클라이언트에게 자신의 장바구니 basket.jsp를 재요청하는 응답을 보낸다.
