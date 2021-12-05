@@ -15,8 +15,23 @@ public class Product {
 	private int prdocutStarPoint;
 	private Date productDate;
 	private String productPicture;
+	private int productStatus;
 	
 	public Product () {}
+	
+	
+
+	public int getProductStatus() {
+		return productStatus;
+	}
+
+
+
+	public void setProductStatus(int productStatus) {
+		this.productStatus = productStatus;
+	}
+
+
 
 	public String getProductPicture() {
 		return productPicture;
