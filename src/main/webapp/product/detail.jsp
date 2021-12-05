@@ -1,4 +1,6 @@
 
+<%@page import="dto.ProductDto"%>
+<%@page import="dao.ProductReviewJdbcDao"%>
 <%@page import="vo.Product"%>
 <%@page import="dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -113,6 +115,48 @@
       </div>
    </div>
 </div>
+<!-- 리뷰 부분 구현 -->
+<div class="row">
+			<div class="col">
+				<table class="table">
+					<colgroup>
+						<col width="10%">
+						<col width="20%">
+						<col width="10%">
+						<col width="20%">
+						<col width="10%">
+						<col width="10%">
+						<col width="5%">
+					</colgroup>
+					<tbody>
+<%
+	ProductReviewJdbcDao productReviewDao = ProductReviewJdbcDao.getInstance();
+	List<ProductDto> findReviews = productReviewDao.getAllReviewByProductNo(product.getProductNo());
+%>
+					
+<% 
+		for(ProductDto findReview : findReviews) {
+			//size를 이용하여, 리뷰수 적고, 별점을 입력하는 total창만들기 
+			
+%>						
+						<tr>
+							<td>리뷰 제목</td>
+							<td><a href="../review/reviewUserDetail.jsp?no=<%=findReview.getReviewNo()%>&cpno=1"><%=findReview.getReviewTitle() %></a></td>
+							<!-- cpno어케할지 확인하기 -->
+							<td>리뷰 내용</td>
+							<td><%=findReview.getReviewContent() %></td>
+							<td>작성자</td>
+							<td><%=findReview.getUserName() %></td>
+							<td>별점</td>
+							<td><%=findReview.getReviewStarPoint() %></td>
+						</tr>
+<%
+		}
+%>						
+					</tbody>
+				</table>
+			</div>
+		</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
    function addToBasket(){

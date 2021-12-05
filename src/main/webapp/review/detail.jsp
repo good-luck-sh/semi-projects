@@ -83,7 +83,7 @@
 					<tr>
 						<td><%=review.getReviewNo() %></td>
 						<td><a href="reviewUserDetail.jsp?no=<%=review.getReviewNo() %>&cpno=<%=paging.getPageNo() %>"><%=review.getReviewTitle() %></a></td>
-						<td><a href="../product/list_product.jsp"><%=product.getProductName() %></a></td>
+						<td><a href="../product/detail.jsp?productNo=<%=product.getProductNo()%>"><%=product.getProductName() %></a></td>
 						<td><%=review.getReviewReviewLikeCount() %></td>
 						<td><%=review.getReviewStarPoint() %></td>
 						<td><%=review.getReviewContent() %></td>
