@@ -14,6 +14,44 @@ import vo.Categorys;
 import vo.Product;
 
 public class ProductDao {
+	
+	/**
+	 * 상품의 활성화 비활성화
+	 * @param productNo
+	 * @throws SQLException
+	 */
+	public void activeProduct(Product product) throws SQLException {
+		String sql = "update product "
+					+"set product_status = ? "
+					+"where product_no = ? ";
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1, product.getProductStatus());
+		pstmt.setInt(2, product.getProductNo());
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		connection.close();
+	}
+	
+	/**
+	 * 해당번호 상품의 물리적인 DB삭제
+	 * @param productNo
+	 * @throws SQLException
+	 */
+	public void deleteProduct(int productNo) throws SQLException {
+		String sql = "delete "
+					+"from product "
+					+"where product_no = ? ";
+		
+		Connection connection = getConnection();
+	    PreparedStatement pstmt = connection.prepareStatement(sql);
+	    pstmt.setInt(1, productNo);
+	    pstmt.executeQuery();
+	    
+	    pstmt.close();
+	    connection.close();
+	}
    
 	
 	/**
@@ -58,27 +96,6 @@ public class ProductDao {
 	      return product;
 	   }
 
-
-   
-   /**
-    * 
-    * @param productNo
-    * @throws SQLException
-    */
-   public void deleteProduct(int productNo) throws SQLException {
-      String sql = "delete "
-               +"from product "
-               +"where product_no = ? ";
-      
-      Connection connection = getConnection();
-       PreparedStatement pstmt = connection.prepareStatement(sql);
-       pstmt.setInt(1, productNo);
-       pstmt.executeQuery();
-       
-       pstmt.close();
-       connection.close();
-   }
-   
    
    /**
     * 카테고리 번호에 해당하는 상품정보 리스트
@@ -245,7 +262,7 @@ public class ProductDao {
    public Product selectProductByNo(int productNo) throws SQLException {
       Product product = null;
       String sql = "select P.product_no, P.product_name, P.product_price, P.product_discount_price, P.product_stock, P.Product_on_sale, "
-               +"       P.category_no, C.categorys_name, P.product_picture "
+               +"       P.category_no, C.categorys_name, P.product_picture, P.product_status "
                +"from product P, categorys C "
                +"where P.category_no = C.categorys_no "
                +"and P.product_no = ? ";
@@ -335,7 +352,8 @@ public class ProductDao {
                +"  product_discount_price = ?, "
                +"  product_stock = ?, "
                +"  product_on_sale = ?, "
-               +"  product_picture = ? "
+               +"  product_picture = ?, "
+               +"  product_status = ? "
                +" where product_no = ? ";
       
       Connection connection = getConnection();
@@ -346,7 +364,8 @@ public class ProductDao {
       pstmt.setInt(4, product.getProductStock());
       pstmt.setString(5, product.getProductOnSale());
       pstmt.setString(6, product.getProductPicture());
-      pstmt.setInt(7, product.getProductNo());
+      pstmt.setInt(7, product.getProductStatus());
+      pstmt.setInt(8, product.getProductNo());
       pstmt.executeUpdate();
          
       pstmt.close();
@@ -370,6 +389,7 @@ public class ProductDao {
       product.setProductStock(rs.getInt("product_stock"));
       product.setProductOnSale(rs.getString("product_on_sale"));
       product.setProductPicture(rs.getString("product_picture"));
+      product.setProductStatus(rs.getInt("product_status"));
       
       Categorys category = new Categorys();
       category.setCategorysNo(rs.getInt("category_no"));

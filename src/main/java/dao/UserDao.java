@@ -162,7 +162,7 @@ public class UserDao {
 		rs.close();
 		pstmt.close();
 		connection.close();
-		
+			
 		return user;
 	}
 	

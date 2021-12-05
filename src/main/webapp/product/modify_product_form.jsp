@@ -13,6 +13,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../navbar/nav.css">
     <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <title>커먼 유니크</title>
 </head>
 
@@ -101,7 +104,12 @@
 							</select>
   						</div>
   						
-  						<div class="mb-3">
+  						<div class="image col-md-3">
+         					<p class="text-muted" >제품 상세 사진</p>
+         					<img class="card-img-top" src="<%=product.getProductPicture()%>">
+        				 </div>
+  						
+  						<div class="col-md-9">
   							<label for="formFile" class="form-label">등록할 사진을 선택하세요</label>
   							<input class="form-control" type="file" id="formFile" name="formFile" onchange="ImgName()">
   							<input value=<%= product.getProductPicture()%> type="text" class="form-control" id="product_picture" name="product_picture">
@@ -110,9 +118,23 @@
 						
   						<div class="col-12 text-end">
   							<input type="hidden" id="productNo" value="<%= request.getParameter("productNo")%>">
-  							<button type="button" class="btn btn-danger" id="deleteBtn" onClick="deleteBtnClick();">삭제</button>
-    						<button type="submit" class="btn btn-primary">수정</button>
+							<input type="hidden" id="productStatus" name="productStatus" value="<%=product.getProductStatus()%>">
+<%
+// 0 or 1     0일때 checked, 1일때 else
+	if (product.getProductStatus() == 0) {
+%>
+							<input type="checkbox" id="status" checked data-toggle="toggle" data-on="활성화" data-off="비활성화" onChange="Status()">
+<% 
+	} else {
+%>
+							<input type="checkbox" id="status" data-toggle="toggle" data-on="활성화" data-off="비활성화" onChange="Status()">
+<%
+	}
+%>
+    						
+    						<button type="submit" class="btn btn-warning">수정</button>
   						</div>
+  						
 					</form>
 				</div>
 			</div>
@@ -126,18 +148,17 @@
 		var formFile = document.getElementById("formFile");
 		name.value = "../product/resource/"+formFile.value.slice(12);
 	}
-	
-	function deleteBtnClick(){
-		var productNo = document.getElementById("productNo");
-		var bool = confirm("해당상품을 삭제하시겠습니까?");
-		
-		if(bool == true){
-			location.href = 'delete_product.jsp?productNo='+productNo.value;
-		} else {
-			return false;
+
+	function Status(){
+		var status = document.getElementById('status').checked;
+		var input = document.getElementById('productStatus');
+		if(status === false){ //비활성의경우
+			input.value = 1;
+		} else { //활성의경우
+			input.value = 0;
 		}
-		
 	}
+	
 </script>
 </body>
 </html>

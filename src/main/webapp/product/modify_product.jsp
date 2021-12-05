@@ -10,6 +10,7 @@
 	int productStock = Integer.parseInt(request.getParameter("product_stock"));
 	String productOnSale = request.getParameter("product_on_sale");
 	String productPicture = request.getParameter("product_picture");
+	int productStatus = Integer.parseInt(request.getParameter("productStatus"));
 	
 	Product product = new Product();
 	product.setProductName(productName);
@@ -19,6 +20,7 @@
 	product.setProductOnSale(productOnSale);
 	product.setProductPicture(productPicture);
 	product.setProductNo(productNo);
+	product.setProductStatus(productStatus);
 	ProductDao productDao = new ProductDao();
 	productDao.updateProduct(product);
 	
