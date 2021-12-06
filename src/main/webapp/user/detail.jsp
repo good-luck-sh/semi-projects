@@ -138,11 +138,10 @@
 			<h4>my menu</h4>
 		</div>
 	</div>
-<hr>
 <%
 	if(loginUserInfo.getManagerCheck() == null) {	//사용자가 일반사용자인 경우 
 %>
-	<div class="row mb-3">
+	<div class="row mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
 		<div class="col">
 			<a href="mycslist.jsp?no=<%=user.getUserNo() %>" class="text-black">나의 게시글 ></a>
 		</div>
