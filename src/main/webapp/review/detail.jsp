@@ -60,13 +60,13 @@
 <div class ="container mt-3">
 	<div class="row p-3">
 		<div class="col">
-			<p><strong>작성자님</strong>의 게시글입니다.</p><!-- 나중에 작성자님에는 loginInfo.name으로 입력하기 -->
+			<p><strong><%=loginUserInfo.getUserName() %>님</strong>의 게시글입니다.</p>
 			<table class="table">
 				<thead>
 					<tr class="black">
 						<th>리뷰 번호</th>
 						<th>리뷰 제목</th>
-						<th>상품 이름</th><!-- 나중에 상품list연결되게 입력하기 -->
+						<th>상품 이름</th>
 						<th>좋아요</th>
 						<th>별점</th>
 						<th>리뷰 내용</th>
@@ -83,7 +83,7 @@
 					<tr>
 						<td><%=review.getReviewNo() %></td>
 						<td><a href="reviewUserDetail.jsp?no=<%=review.getReviewNo() %>&cpno=<%=paging.getPageNo() %>"><%=review.getReviewTitle() %></a></td>
-						<td><a href="../product/list_product.jsp"><%=product.getProductName() %></a></td>
+						<td><a href="../product/detail.jsp?productNo=<%=product.getProductNo()%>"><%=product.getProductName() %></a></td>
 						<td><%=review.getReviewReviewLikeCount() %></td>
 						<td><%=review.getReviewStarPoint() %></td>
 						<td><%=review.getReviewContent() %></td>

@@ -29,7 +29,6 @@
 		<div class="col">
 <%
 	String error = request.getParameter("error");	
-
 	if ("empty-title".equals(error)) {
 %>
 			<div class="alert alert-danger">

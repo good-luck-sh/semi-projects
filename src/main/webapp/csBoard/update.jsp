@@ -25,7 +25,7 @@
 					<input type="hidden" name="cpno">
 					<div class="mt-3 " id="text-review-1">
 						<label for="exampleFormControlInput1" class="form-label">문의사항 게시글 제목</label> 
-						<input type="text" class="form-control" name="title" value="<%=csBoard.getCsBoardTitle() %>>">
+						<input type="text" class="form-control" name="title" value="<%=csBoard.getCsBoardTitle() %>">
 					</div>
 					<div class="mt-3">
 						<label for="exampleFormControlInput1" class="form-label">작성자</label>
@@ -33,11 +33,11 @@
 					</div>
 					<div class="mt-3" id="text-review-2">
 						<label class="mb-3">문의 사항 게시판 내용</label>
-						<textarea class="form-control col-sm-5" rows="5" name="text" placeholder="<%=csBoard.getCsBoardContent() %>>"></textarea>
+						<textarea class="form-control col-sm-5" rows="5" name="text" placeholder="<%=csBoard.getCsBoardContent() %>"></textarea>
 					</div>
 					<div class="text-end mt-3">
 						<button class="btn btn-outline-primary m-3" type="submit">등록하기</button>
-						<button class="btn btn-outline-danger ml-3"><a href="../user/mycslist.jsp">취소하기</a></button>
+						<button class="btn btn-outline-danger m-3"><a href="../user/mycslist.jsp">취소하기</a></button>
 					</div>
 				</form>
 			</div>

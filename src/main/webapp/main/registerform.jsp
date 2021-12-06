@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -30,8 +29,16 @@
 %>
 	<div class="row mb-3">
 		<div class="col">
-			<h1 class="fs-3">회원가입폼</h1>
-			
+			<p class="fs-3">회원가입</p>
+			<hr style="border: solid 2px brown;">
+			<div class="row mb-3">
+				<p class="col-2">회원구분</p>
+				<div class="col">
+					<input type="radio"checked="checked"/>개인회원
+				</div>
+			</div>
+			<h4 style="line-height:200%;">기본정보</h4>
+			<hr style="border: solid 2px brown;">
 			<form class="form-horizontal" method="post" action="register.jsp">
 				<div class="row mb-3">
 					<label class="col-2 col-form-label text-left">아이디</label>
@@ -80,8 +87,6 @@
 					<button type="submit" class="btn btn-primary">회원가입</button>
 				</div>
 			</form>	
-
-			
 		</div>
 	</div>	
 </div>

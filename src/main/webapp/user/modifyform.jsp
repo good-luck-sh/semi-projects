@@ -42,12 +42,13 @@
 			<h6><span class="badge bg-secondary"><%=user.getUserDegree() %></span>등급</h6>
 		</div>
 <%
-	final double DIAMOND_POINT_DEPOSIT_RATE = 0.03;
-	final double GOLD_POINT_DEPOSIT_RATE = 0.02;
-	final double SILVER_POINT_DEPOSIT_RATE = 0.01;
+	final double DIAMOND_POINT_DEPOSIT_RATE = 0.04;
+	final double GOLD_POINT_DEPOSIT_RATE = 0.03;
+	final double SILVER_POINT_DEPOSIT_RATE = 0.02;
+	final double BRONZE_POINT_DEPOSIT_RATE = 0.01;
 	
 	int pointRate = 0;
-
+	
 	if("다이아몬드".equals(user.getUserDegree())){
 		pointRate = (int)(DIAMOND_POINT_DEPOSIT_RATE*100);
 	} else if("골드".equals(user.getUserDegree())){
@@ -55,7 +56,7 @@
 	} else if("실버".equals(user.getUserDegree())){
 		pointRate = (int)(SILVER_POINT_DEPOSIT_RATE*100);
 	} else if("브론즈".equals(user.getUserDegree())){
-		pointRate = 0;
+		pointRate = (int)(BRONZE_POINT_DEPOSIT_RATE*100);
 	}
 %>
 		<div class="col-10">
@@ -109,7 +110,7 @@
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="pwd">비밀번호</label>
-					<input type="text" name="pwd" id="pwd"/>
+					<input type="password" name="pwd" id="pwd"/>
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="name">이름</label>

@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -7,7 +6,7 @@
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-    <title></title>   
+    <title></title>
 </head>
 <body>
 <%
@@ -73,6 +72,7 @@
 	<hr>
 	<h4 style="line-height:400%; text-indent:10em;">best</h4>
 	<div class="row">
+
 		<div class="col" style="width:180px; padding-left:355px;">
 			<div class="space" style="width: 290px;">
 	    		<a href=""><img src="../navbar/resource/images/main/best1.png" alt="상품 섬네일" title="상품 섬네일"/></a>
@@ -112,6 +112,7 @@
                		<div class="prd-price"><span class="consumer">24,500 won</span></div> 
             	</div>
            </div>
+
 		</div>
 	</div>
 	<h4 style="line-height:400%; text-indent:10em;">top</h4>

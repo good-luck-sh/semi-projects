@@ -1,3 +1,4 @@
+<%@page import="dao.ProductDao"%>
 <%@page import="dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
@@ -28,7 +29,7 @@
 		<div class="col mb-3 mt-3">
 			<h3 class="mb-3">리뷰 작성 폼</h3>
 			<p class=""><strong>안녕하세요 :)<%=user.getUserName() %> 회원님</strong></p>
-			<p class="">리뷰 작성시 1%를 추가 적립 받으실 수 있습니다.</p>
+			<p class="">리뷰 작성시 주문금액의 1%를 추가 적립 받으실 수 있습니다.</p>
 		</div>
 	</div>
 	<div class="row mt-3">
@@ -57,6 +58,9 @@
 <% 
 }
 %>
+<%
+	ProductDao productDao = new ProductDao();
+%>
 				<form action="/semi-projects/review/register.jsp "method="post">
 					<div class="mb-3" id="text-review-1">
 						<input type="hidden" class="form-control" name="order" value="1">
@@ -66,6 +70,14 @@
 					<div class="mb-3">
 						<label for="exampleFormControlInput1" class="form-label">작성자</label>
 						<input type="text" class="form-control" name="" disabled="disabled" value="<%=loginUserInfo.getUserName()%>">
+					</div>
+					<div class="mb-3" id="text-review-2">
+						<select class="form-select form-select-lg mb-3" name="star">
+						<option selected="selected" disabled="disabled">리뷰 상품 클릭하기</option>
+<%
+
+%>						
+						<option value="1">1</option>
 					</div>
 					<div class="mb-3" id="text-review-2">
 						<label class="mb-3">리뷰 내용</label>

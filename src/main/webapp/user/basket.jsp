@@ -99,15 +99,15 @@
 	 			</div>
  			</div>
 <hr>
-	 		<div class="mt-3">
-	      		<button type="submit" class="btn btn-primary">상품주문</button>
-	      	</div>
+ 			<div class="row mb-3">
+	 			<div class="col">
+	 				<div class="d-flex justify-content-between">
+	 					<button type="submit" class="btn btn-primary">상품주문</button>
+	 					<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
+	 				</div>
+				</div>
+ 			</div>
  		</form>
-	</div>
-	<div class="row mb-3">
-		<div class="col">
-			<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
-		</div>
 	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

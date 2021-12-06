@@ -1,3 +1,5 @@
+<%@page import="vo.Pagination"%>
+<%@page import="vo.UserPointHistory"%>
 <%@page import="java.util.List"%>
 <%@page import="dto.UserDto"%>
 <%@page import="dao.UserPointHistoryDao"%>
@@ -28,11 +30,20 @@
 %>
 <div class="container">
 <%
-	// dao를 order by history_no(혹은 order_no)로 하면 될듯? +
-	 int userNo = Integer.parseInt(request.getParameter("no"));
-	 UserPointHistoryDao historyDao = UserPointHistoryDao.getInstance();
-	 List<UserDto> pointList = historyDao.getAllPointHistoryByNo(userNo);
 
+	// 요청파라미터에서 pageNo값을 조회한다.
+	// 요청파라미터에 pageNo값이 존재하지 않으면 Pagination객체에서 1페이지로 설정한다.
+	String pageNo = request.getParameter("pageNo");
+	
+	UserPointHistoryDao historyDao = UserPointHistoryDao.getInstance();
+	// 총 데이터 갯수를 조회한다.
+	int totalRecords = historyDao.getTotalRecord();
+	
+	// 페이징 처리 필요한 값을 계산하는 Paginatition객체를 생성한다.
+	Pagination pagination = new Pagination(pageNo, totalRecords);
+	
+	List<UserPointHistory> historyList = historyDao.getAllPointHistoryByNo(loginUserInfo.getUserNo(), pagination.getBegin(), pagination.getEnd());
+	 
 %>
 
 <hr>
@@ -47,33 +58,30 @@
 			<thead>
 				<tr>
 					<th>날짜</th>
-					<th>차감/적립</th>
 					<th>이유</th>
-					<th>최종포인트</th>
+					<th>차감/적립 포인트</th>
 				</tr>
 			</thead>
 			<tbody>
 <%
-	for(UserDto point : pointList){
+	if(historyList.isEmpty()){
+%>
+						<tr>
+							<td class="text-center" colspan="6">포인트 사용 내역이 존재하지 않습니다.</td>
+						</tr>
+						
+<%
+	} else{
+
+	for(UserPointHistory history : historyList){
 %>
 				<tr>
-					<td><%=point.getHistoryCreateDate() %></td>
-					<td><%=point.getHistoryPointCheck() %>
-<%
-//		int minusPoint = point.getOrderUsePoint();
-//		int plusPoint = point.getOrderTotalPoint();
-//		for(minusPoint == null) {
-//			
-//		} else {
-//			
-//		}
-%>
-					
-					<%=point.getOrderTotalPoint() %></td>
-					<td>상품 구매</td>
-					<td>10000</td>
+					<td><%=history.getHistoryCreateDate() %></td>
+					<td><%=history.getHistoryReason() %></td>
+					<td><%=history.getHistoryPointCheck() %><%=history.getHistoryTotalPoint() %>원</td>
 				</tr>
 <%
+	}
 	}
 %>
 			</tbody>
@@ -82,12 +90,36 @@
 <hr>
 	<div class="row mb-3">
 		<div class="col">
-			<h2>총 포인트: 10000 원</h2>
+			<h2>총 포인트: <%=loginUserInfo.getUserOrderPoint() %> 원</h2>
 		</div>
 	</div>
 	<div class="row mb-3">
-		<div class="col">
-			<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
+		<div class="col-6 offset-3">
+			<ul class="pagination justify-content-center">
+					<!-- 
+						Pagination객체가 제공하는 isExistPrev()는 이전 블록이 존재하는 경우 true를 반환한다.
+						Pagination객체가 제공하는 getPrevPage()는 이전 블록의 마지막 페이지값을 반환한다.
+					 -->
+				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="list.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
+<%
+	// Pagination 객체로부터 해당 페이지 블록의 시작 페이지번호와 끝 페이지번호만큼 페이지내비게이션 정보를 표시한다.
+	for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
+%>					
+				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="list.jsp?pageNo=<%=num%>"><%=num %></a></li>
+<%
+	}
+%>					
+					<!-- 
+						Pagination객체가 제공하는 isExistNext()는 다음 블록이 존재하는 경우 true를 반환한다.
+						Pagination객체가 제공하는 getNexPage()는 다음 블록의 첫 페이지값을 반환한다.
+					 -->
+				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="list.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
+			</ul>
+		</div>
+		<div class="col-3 text-end">
+			<div class="col">
+				<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
+			</div>
 		</div>
 	</div>
 </div>
