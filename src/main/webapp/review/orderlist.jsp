@@ -1,3 +1,4 @@
+<%@page import="dao.OrderReviewJdbcDao"%>
 <%@page import="vo.Product"%>
 <%@page import="vo.Review"%>
 <%@page import="dto.UserDto"%>
@@ -31,9 +32,14 @@
 	}
 	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
  	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
+ 	OrderReviewJdbcDao orderDao = OrderReviewJdbcDao.getInstance();
+ 
+ 	
  	List<OrderDto> orderDtos = productDao.getAllReviewByUserNo(loginUserInfo.getUserNo());
  	for(OrderDto orderDto : orderDtos) { 
  		Product product	= productDao.getProductByProductNo(orderDto.getProductNo());
+ 		OrderDto findorder = orderDao.getAllPointByOrderNo(orderDto.getOrderNo());
+ 		if(findorder.getReviewContent() == null){
 %>		
 	<div class="row d-flex">	
 		<div class="col" >
@@ -42,14 +48,31 @@
 					<div class="card-body">
 						<h5 class="card-title">총 결제 금액 :<%=orderDto.getOrderRealTotalPrice() %></h5>
 						<h6 class="card-subtitle mb-2 text-muted">주문 상태:<%=orderDto.getOrderState() %></h6>
-						<a href="../review/form.jsp" class="btn btn-danger">리뷰 쓰기</a> 
+						<a href="../review/form.jsp?productNo=<%=product.getProductNo() %>&orderNo=<%=orderDto.getOrderNo() %>" class="btn btn-danger">리뷰 쓰기</a> 
 						<a href="../product/detail.jsp?productNo=<%=orderDto.getProductNo() %>" class="btn btn-secondary">상품확인하기</a>
 					</div>
 				</div>
 				</div>
 				</div>
 <% 	
-	}
+	} else {
+%>
+		<div class="row d-flex">	
+		<div class="col" >
+				<div class="card text-center">
+					<div class="card-header">상품 이름 :<strong><%=product.getProductName() %></strong></div>
+					<div class="card-body">
+						<h5 class="card-title">총 결제 금액 :<%=orderDto.getOrderRealTotalPrice() %></h5>
+						<h6 class="card-subtitle mb-2 text-muted">주문 상태:<%=orderDto.getOrderState() %></h6> 
+						<h6 class="card-subtitle mb-2 text-muted">리뷰 작성 완료</h6> 
+						<a href="../product/detail.jsp?productNo=<%=orderDto.getProductNo() %>" class="btn btn-secondary">상품확인하기</a>
+						<a href="../user/userpointdetail.jsp?<%=loginUserInfo.getUserNo() %>" class="btn btn-primary">나의 적립금 확인하기</a>
+					</div>
+				</div>
+				</div>
+				</div>
+<%
+	}}
 %>
 		
 </div>

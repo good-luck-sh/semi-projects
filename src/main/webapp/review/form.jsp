@@ -1,3 +1,5 @@
+<%@page import="vo.Product"%>
+<%@page import="dao.ProductReviewJdbcDao"%>
 <%@page import="dao.ProductDao"%>
 <%@page import="dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -23,6 +25,11 @@
 
 	UserDao userDao = UserDao.getInstance();
 	UserTable user = userDao.getUserAllInfoByNo(loginUserInfo.getUserNo());
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
+	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
+	Product product = productDao.getProductByProductNo(productNo);
+	
 %>
 <div class ="container">
 	<div class="row form-control mt-3">
@@ -58,26 +65,21 @@
 <% 
 }
 %>
-<%
-	ProductDao productDao = new ProductDao();
-%>
-				<form action="/semi-projects/review/register.jsp "method="post">
+				<form action="register.jsp "method="post">
 					<div class="mb-3" id="text-review-1">
-						<input type="hidden" class="form-control" name="order" value="1">
+						<input type="hidden" class="form-control" name="orderNo" value="<%=orderNo %>">
+						<input type="hidden" class="form-control" name="productNo" value="<%=productNo %>">
+						<input type="hidden" class="form-control" name="ordercheck" value="1">
 						<label for="exampleFormControlInput1" class="form-label">리뷰 제목</label> 
 						<input type="text" class="form-control" name="reviewTitle">
 					</div>
 					<div class="mb-3">
 						<label for="exampleFormControlInput1" class="form-label">작성자</label>
-						<input type="text" class="form-control" name="" disabled="disabled" value="<%=loginUserInfo.getUserName()%>">
+						<input type="text" class="form-control" name="" disabled="disabled" readonly="readonly" value="<%=loginUserInfo.getUserName()%>">
 					</div>
 					<div class="mb-3" id="text-review-2">
-						<select class="form-select form-select-lg mb-3" name="star">
-						<option selected="selected" disabled="disabled">리뷰 상품 클릭하기</option>
-<%
-
-%>						
-						<option value="1">1</option>
+						<label for="exampleFormControlInput1" class="form-label">해당하는 리뷰 상품</label>
+						<input type="text" class="form-control" name="" disabled="disabled" readonly="readonly" value="<%=product.getProductName()%>">
 					</div>
 					<div class="mb-3" id="text-review-2">
 						<label class="mb-3">리뷰 내용</label>

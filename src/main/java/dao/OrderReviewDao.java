@@ -19,6 +19,14 @@ public interface OrderReviewDao {
 	public List<OrderDto> getAllReviewByOrder(int orderNo) throws SQLException; 
 	
 	/**
+	 * 해당하는 주문번호를 입력받아 해당하는 리뷰를 출력한다.
+	 * @param orderNo 해당하는 주문번호 
+	 * @return 해당하는 리뷰 객체 
+	 * @throws SQLException DB Access 오류시 예외가 발생한다. 
+	 */
+	public OrderDto getAllReviewByOrderNo(int orderNo) throws SQLException; 
+	
+	/**
 	 * 모든 주문에 대한 리뷰를 출력한다. 
 	 * @param begin 시작번호 
 	 * @param end 끝번호 
@@ -27,4 +35,11 @@ public interface OrderReviewDao {
 	 */
 	public List<OrderDto> getAllReview(int begin, int end) throws SQLException;
 	
+	/**
+	 * 해당하는 주문번호를 출력한다. 
+	 * @param orderNo 해당하는 주문번호 
+	 * @return 해당하는 OrderDto 객체
+	 * @throws SQLException DB Access 오류시 예외가 발생한다.
+	 */
+	public OrderDto getAllPointByOrderNo(int orderNo) throws SQLException;
 }
