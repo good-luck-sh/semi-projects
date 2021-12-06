@@ -19,44 +19,7 @@ public class CsBoardJdbcDao implements CsBoardDao {
 	public static CsBoardJdbcDao getInstance() {
 		return self;
 	}
-	
-	@Override
-	public List<CsBoard> getBoardInfoByNo(int userNo) throws SQLException {
-		String sql = "select C.cs_board_no, C.cs_board_title, C.user_no, C.cs_board_view_count, "
-					+ "C.cs_board_like_count, C.cs_created_date, C.cs_reply_check, U.user_name "
-					+ "from cs_board C, user_table U "
-					+ "where C.user_no = U.user_no "
-					+ "and C.user_no = ? "
-					+ "order by C.cs_created_date ";
-		List<CsBoard> boards = new ArrayList<>();
-		Connection connection = getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(sql);
-		pstmt.setInt(1, userNo);
-		ResultSet rs = pstmt.executeQuery();
-		
-		while(rs.next()) {
-			CsBoard board = new CsBoard();
-			board.setCsBoardNo(rs.getInt("cs_board_no"));
-			board.setCsBoardTitle(rs.getString("cs_board_title"));
-			board.setCsBoardViewCount(rs.getInt("cs_board_view_count"));
-			board.setCsBoardLikeCount(rs.getInt("cs_board_like_count"));
-			board.setCsCreateDate(rs.getDate("cs_created_date"));
-			board.setCsReplyCheck(rs.getString("cs_reply_check"));
-			UserTable user = new UserTable();
-			user.setUserNo(rs.getInt("user_no"));
-			user.setUserName(rs.getString("user_name"));
-			
-			board.setUserTable(user);
-			boards.add(board);
-			
-		}
-		
-		rs.close();
-		pstmt.close();
-		connection.close();
-				
-		return boards;
-	}
+
 
 	@Override
 	public List<CsBoard> getAllcsBoard(int begin, int end) throws SQLException {

@@ -23,17 +23,45 @@ public class UserPointHistoryDao {
 		return self;
 	}
 	
+	/**
+	 * 포인트히스토리의 총 개수를 구한다.
+	 * @return 포인트히스토리 개수
+	 * @throws SQLException
+	 */
+	public int getTotalRecord() throws SQLException {
+		int countHistory = 0;
+		String sql = "select count(*) cnt "
+					+ "from user_point_history ";
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		countHistory = rs.getInt("cnt");
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+				
+		return countHistory;
+	}
 	
-	public List<UserPointHistory> getAllPointHistoryByNo(int userNo) throws SQLException {
+	
+	
+	public List<UserPointHistory> getAllPointHistoryByNo(int userNo, int begin, int end) throws SQLException {
 		String sql = "select history_no, user_no, history_point_check, history_reason, history_create_date, "
 					+ "history_total_point "
-					+ "from user_point_history "
-					+ "where user_no = ? "
-					+ "order by history_create_date ";
+					+ "from (select row_number() over (order by history_create_date desc) rn, "
+					+ "				history_no, user_no, history_point_check, history_reason, history_create_date, "
+					+ "				history_total_point "
+					+ "		from user_point_history "
+					+ "where user_no = ?) "
+					+ "where rn >= ? and rn <= ? ";
 		List<UserPointHistory> historys = new ArrayList<>();
 		 Connection connection = getConnection();
 	     PreparedStatement pstmt = connection.prepareStatement(sql);
 	     pstmt.setInt(1, userNo);
+	     pstmt.setInt(2, begin);
+	     pstmt.setInt(3, end);
 	     ResultSet rs = pstmt.executeQuery();
 	      
 	     while(rs.next()) {
