@@ -5,7 +5,7 @@
 <% 
 	String productName = request.getParameter("product_name");
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
-	int productPrice = Integer.parseInt(request.getParameter("product_discount_price"));
+	int productPrice = Integer.parseInt(request.getParameter("product_price"));
 	int productDiscountPrice = Integer.parseInt(request.getParameter("product_discount_price"));
 	int productStock = Integer.parseInt(request.getParameter("product_stock"));
 	String productOnSale = request.getParameter("product_on_sale");
