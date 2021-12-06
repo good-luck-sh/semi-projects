@@ -158,16 +158,17 @@ public class ReviewJdbcDao implements ReviewDao {
 	
 
 	@Override
-	public Review getReviewById(int userNo) throws SQLException {
+	public Review getReviewById(int reviewNo) throws SQLException {
 		Review review = null;
 		String sql = "select R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point, "
 				+ " U.user_no, U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
 				+ "	U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check "
 				+ "from review R, user_table U "
-				+ "where R.user_no = ? ";
+				+ "where R.review_no = ? "
+				+ "and R.user_no = U.user_no ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
-		ptmt.setInt(1, userNo);
+		ptmt.setInt(1, reviewNo);
 		ResultSet rs = ptmt.executeQuery();
 		review = repeateReview(review, rs);
 		rs.close();

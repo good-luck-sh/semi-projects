@@ -22,6 +22,6 @@
 	review.setReviewReviewLikeCount(like);
 	reviewDao.updateReviewById(review);
 
-	response.sendRedirect("detail.jsp?&cpno="+cpno);
+	response.sendRedirect("reviewUserDetail.jsp?no="+no+"&cpno="+cpno);
 
 %>
