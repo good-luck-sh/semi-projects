@@ -145,10 +145,10 @@ public class ProductReviewJdbcDao implements ProductReviewDao {
 				+ "P.product_no, P.category_no, P.product_name, P.product_price , P.product_discount_price, P.product_stock, P.product_on_sale, P.product_review_count, "
 				+ "P.product_star_point, P.product_date, P.product_picture "
 				+ "	from review R, user_table U, product P, user_basket B "
-				+ "	where R.user_no = U.user_no "
-				+ "	and U.user_no = B.user_no "
-				+ "	and P.product_no = B.product_no "
-				+ "	and R.review_no = ? ";
+				+ "	where R.user_no = U.user_no(+) "
+				+ "	and U.user_no = B.user_no(+) "
+				+ "	and P.product_no = B.product_no(+) "
+				+ "	and U.user_no = ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setInt(1, reviewNo);

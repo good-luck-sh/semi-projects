@@ -37,7 +37,7 @@
 <div class ="container mt-3">
 	<div class="row p-3">
 		<div class="col">
-			<p>주문</strong>에 대한 리뷰 게시글입니다.</p>
+			<p><strong>주문</strong>에 대한 리뷰 게시글입니다.</p>
 			<table class="table">
 				<thead>
 					<tr class="black">
@@ -56,16 +56,16 @@
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
 	int totalReview = reviewDao.getAllCountReview();
 	Pagination paging = new Pagination(request.getParameter("cpno"),totalReview);
-	List<OrderDto> reviews = orderDto.getAllReview(paging.getBeginPage(), paging.getEndPage());
+	List<OrderDto> reviews = orderDto.getAllReview(paging.getBegin(), paging.getEnd());
 	
 	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();		
 	for(OrderDto review : reviews) {
-		Product product = productDao.getAllReviewByReviewByreviewNo(review.getReviewNo());
+		Product product = productDao.getAllReviewByReviewByreviewNo(review.getUserNo());
 %>
 					<tr>
 						<td><%=review.getReviewTitle() %></td>
 						<td><a href="userReview.jsp?no=<%=review.getOrderNo()%>&cpno=<%=paging.getPageNo() %>"><%=review.getUserName() %></a></td>
-						<td><a href="../product/list_product.jsp"><%=product.getProductName() %></a></td>
+						<td><a href="../product/detail.jsp?productNo=<%=product.getProductNo() %>"><%=product.getProductName() %></a></td>
 						<td><%=review.getReviewReviewLikeCount() %></td>
 						<td><%=review.getReviewStarPoint() %></td>
 						<td><%=review.getReviewContent() %></td>

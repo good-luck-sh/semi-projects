@@ -29,7 +29,7 @@
 	if ("complete".equals(error)) {
 		%>
 		<div class="alert alert-primary">
-			<strong>댓글 삭제 성공</strong>삭제가 완료 되었습니다. 
+			<strong>댓글 성공</strong>완료 되었습니다. 
 		</div>
 		<% 
 	}
@@ -119,7 +119,14 @@
 					<textarea class="form-control col-sm-5" rows="5" placeholder="댓글을 입력하세요" name="manager_content"></textarea>
 				</div>
 				<div class="text-right mt-3">
+<%
+	  
+	if("답변미완료".equals(csBoard.getCsReplyCheck()) || csBoard.getCsReplyCheck() == null){
+%>				
 					<button type="submit" class="btn btn-danger p-2">등록</button>
+<%
+	}
+%>					
 					<a href="managercsboard.jsp?cpno=<%=cpno %>" class="btn btn-outline-primary p-2">목록</a></button>
 				</div>
 			</form>

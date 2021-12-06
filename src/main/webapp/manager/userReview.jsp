@@ -45,7 +45,7 @@
 							<th><mark>번호</mark></th>
 							<td><strong><%=order.getOrderNo()%></strong></td>
 							<th>작성자</th>
-							<td><strong><%=order.getUserName() %></strong><</td>
+							<td><strong><%=order.getUserName() %></strong></td>
 						</tr>
 						<tr>
 							<th>별점</th>
