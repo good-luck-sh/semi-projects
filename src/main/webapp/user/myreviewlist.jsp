@@ -115,7 +115,6 @@
 		</div>
 		<div class="col-3 text-end">
 			<div class="col">
-				<a href="../review/form.jsp" class="btn btn-danger p-2">리뷰쓰기</a>
 				<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
 			</div>
 		</div>
