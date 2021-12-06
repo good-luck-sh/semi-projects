@@ -167,7 +167,11 @@ if(findReview.getReviewReviewLikeCount() >= 10) {
 							<td><mark><%=findReviews.size() %></mark></td>
 							<th>평균 별점</th>
 <%
-	int findStarAverage = (int)(totalStarPoint/findReviews.size());	
+	int findStarAverage = 0;
+	if(findReviews.size() != 0) {
+		findStarAverage = (int)(totalStarPoint/findReviews.size());	
+	
+	}
 %>
 							<td><mark><%=findStarAverage %></mark></td>
 						</tr>					

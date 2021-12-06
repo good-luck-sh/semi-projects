@@ -74,6 +74,7 @@
 <hr>
 	<div class="row mb-3">
 		<div class="col">
+			<a href="../csBoard/form.jsp" class="btn btn-danger p-2">문의사항쓰기</a>
 			<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
 		</div>
 	</div>
