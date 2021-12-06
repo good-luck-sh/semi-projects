@@ -93,8 +93,8 @@ public class OrderReviewJdbcDao implements OrderReviewDao {
 				+ "O.order_no, O.order_total_point, O.order_total_price, O.order_use_point,O.order_state, O.order_real_total_price, "
 				+ "O.order_date,O.order_cancel_date, O.order_address, O.order_phone_number, O.order_name "
 				+ "from review R, user_table U, orders O "
-				+ "where R.user_no = U.user_no "
-				+ "and U.user_no(+) = O.user_no ) "
+				+ "where R.user_no = U.user_no(+) "
+				+ "and U.user_no = O.user_no(+) ) "
 				+ "where rn >= ? and rn <= ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);

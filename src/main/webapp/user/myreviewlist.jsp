@@ -58,7 +58,7 @@
 	for (Review rv : reviewList){
 %>
 				<tr>
-					<td><a href="../review/detail.jsp?no=<%=rv.getReviewNo()%>"><%=rv.getReviewTitle() %></a></td>
+					<td><a href="../review/detail.jsp?no=<%=rv.getReviewNo()%>&cpno=1"><%=rv.getReviewTitle() %></a></td>
 					<!--  페이지네이션 완성되면 cpno입력하기  -->
 					<td><%=rv.getReviewStarPoint() %> 점</td>
 					<td><Strong><%=rv.getReviewTitle() %></Strong>     <%=rv.getReviewContent() %></td>
@@ -73,6 +73,7 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col">
+			<a href="../review/form.jsp" class="btn btn-danger p-2">리뷰쓰기</a>
 			<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
 		</div>
 	</div>

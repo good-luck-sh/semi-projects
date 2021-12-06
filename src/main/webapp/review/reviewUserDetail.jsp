@@ -90,7 +90,7 @@
 <%
 	}
 %>
-					<a href="detail.jsp?cpno=<%=cpno %>" class="btn btn-primary">목록</a>
+					<a href="detail.jsp?cpno=<%=cpno %>" class="btn btn-primary">내 리뷰보기</a>
 				</div>
 			</div>
 		</div>

@@ -37,7 +37,7 @@
 <div class ="container mt-3">
 	<div class="row p-3">
 		<div class="col">
-			<p><strong>주문</strong>에 대한 리뷰 게시글입니다.</p>
+			<p><strong>주문</strong>후 작성한 리뷰 게시글입니다.</p>
 			<table class="table">
 				<thead>
 					<tr class="black">
@@ -54,13 +54,13 @@
 <%
 	OrderReviewJdbcDao orderDto = OrderReviewJdbcDao.getInstance();
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
-	int totalReview = reviewDao.getAllCountReview();
+	int totalReview = reviewDao.getAllOrderReview();
 	Pagination paging = new Pagination(request.getParameter("cpno"),totalReview);
 	List<OrderDto> reviews = orderDto.getAllReview(paging.getBegin(), paging.getEnd());
 	
 	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();		
 	for(OrderDto review : reviews) {
-		Product product = productDao.getAllReviewByReviewByreviewNo(review.getUserNo());
+		Product product = productDao.getAllReviewByReviewByreviewNo(review.getReviewNo());
 %>
 					<tr>
 						<td><%=review.getReviewTitle() %></td>
