@@ -12,8 +12,8 @@
    <title></title>
 </head>
 <body>
-<div class="container">  
 <%@include file="../navbar/nav.jsp" %>
+<div class="container">  
 <%
 	ManagerDao managerDao = new ManagerDao();
 	List<AgeDto> ageList = managerDao.countUsersByAge();
