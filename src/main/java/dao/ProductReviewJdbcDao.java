@@ -134,6 +134,8 @@ public class ProductReviewJdbcDao implements ProductReviewDao {
 		ptmt.setInt(2, product.getPrdocutStarPoint());
 		ptmt.setInt(3, product.getProductNo());
 		
+		ptmt.executeUpdate();
+		
 		ptmt.close();
 		connection.close();
 	}

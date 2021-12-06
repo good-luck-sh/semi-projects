@@ -1,3 +1,5 @@
+<%@page import="dto.OrderDto"%>
+<%@page import="dao.OrderReviewJdbcDao"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="dto.ProductDto"%>
 <%@page import="vo.Orders"%>
@@ -17,13 +19,16 @@
 
 	UserTable loginUserInfo = (UserTable)session.getAttribute("LOGIN_USER_INFO");
 	
-	int order = Integer.parseInt(request.getParameter("order"));
+	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
+	int ordercheck = Integer.parseInt(request.getParameter("ordercheck"));
 	
 	String title = request.getParameter("reviewTitle");
 	String text = request.getParameter("reviewText");
 	int star = Integer.parseInt(request.getParameter("star"));
 	
-	order += 1;	//주문한번씩 진행시 order이 1씩 증가가 된다.
+	int totalorder =+ ordercheck;
+	//주문한번씩 진행시 order이 1씩 증가가 된다.
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
 	if(loginUserInfo == null) {
 		response.sendRedirect("../main/loginform.jsp?error=empty");
@@ -46,49 +51,41 @@
 	review.setReviewTitle(title);
 	review.setReviewContent(text);
 	review.setReviewStarPoint(star);
-
 	
-	UserDao user = UserDao.getInstance();
-	UserTable findUser = user.getUserAllInfoByNo(loginUserInfo.getUserNo());
-	
-	review.setUserTable(findUser);
+	review.setUserTable(loginUserInfo);
 	reviewDao.insertReviewById(review);
-	//mybatis 배울 때 사용해야하는 부분
-	//Connection connection = getConnection();
-	//int reviewNo = reviewDao.getReviewSequence(connection);
-	//Review findReivew = reviewDao.getReview(reviewNo, connection);
-	
-	//ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
-	//Product product = productDao.getAllReviewByReviewByreviewNo(findReivew.getReviewNo());
-	
-	//int productReview = product.getProductReviewCount() + 1;
-	//int productStar = (int)( product.getPrdocutStarPoint() + star / order );
-	//평균을 구하는 계산방법 
-	//product.setProductReviewCount(productReview);
-	//product.setPrdocutStarPoint(productStar);
-	//productDao.updateProductByProductNo(product);
-	//리뷰번호와 이미 격차가 많이 나서 사용 불가 코딩
-	
-	UserDto users = reviewDao.getOrderUserByUserNo(findUser.getUserNo());
+	//리뷰입력up
+
+	OrderReviewJdbcDao orderDao = OrderReviewJdbcDao.getInstance();
+	OrderDto orderDto = orderDao.getAllReviewByOrderNo(orderNo);
 	UserPointHistory point = new UserPointHistory();
-	point.setUserTable(findUser);
+	point.setUserTable(loginUserInfo);
 	String check = "적립";
 	String reason = "리뷰 작성";
 	point.setHistoryPointCheck(check);
 	point.setHistoryReason(reason);
-	int getPoint = (int)(users.getOrderRealTotalPrice()*0.01);
+	int getPoint = (int)(orderDto.getOrderRealTotalPrice()*0.01);
 	point.setHistoryTotalPoint(getPoint);
-	
 	reviewDao.insertReviewByUserPointHistory(point);
-	
+	//리뷰 작성포인트 up
 	
 	Orders orders = new Orders();
-	findUser.setUserOrderPoint(findUser.getUserOrderPoint() + getPoint);
-	orders.setUserTable(findUser);
-	orders.setOrderNo(users.getOrderNo());
-	orders.setOrderTotalPoint(users.getOrderTotalPoint() + getPoint);
-	
+	loginUserInfo.setUserOrderPoint(loginUserInfo.getUserOrderPoint() + getPoint);
+	orders.setUserTable(loginUserInfo);
+	orders.setOrderNo(orderDto.getOrderNo());
+	orders.setOrderTotalPoint(orderDto.getOrderTotalPoint() + getPoint);
+	//리뷰 totalpoint up
 	reviewDao.updateOrderByUserOrderTotalPoint(orders);
+	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
+	Product product = productDao.getProductByProductNo(productNo);
+	
+	int productTotalReview = product.getProductReviewCount() + 1;
+	product.setProductReviewCount(productTotalReview);
+	
+	int productTotalStar = (int)(product.getPrdocutStarPoint() + star)/(int)(productTotalReview);
+	product.setPrdocutStarPoint(productTotalStar);
+	productDao.updateProductByProductNo(product);
+	//product 리뷰수와 별점 수 up
 	
 	response.sendRedirect("detail.jsp?succes=complete&cpno=1");
 	
