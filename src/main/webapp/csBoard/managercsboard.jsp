@@ -38,7 +38,7 @@
 %>
 		<div class="row">
 			<div class="col">
-				<h1 class="mb-4"><%=loginUserInfo.getUserName() %>님의 게시판 리스트</h1>
+				<h1 class="mb-4">cs 게시판 리스트</h1>
 				<table class="table">
 					<colgroup>
 						<col width="10%">
@@ -85,7 +85,17 @@
 					</tbody>
 				</table>
 				<div class="text-right">
+<%
+	if(loginUserInfo.getManagerCheck() == null ){
+%>				
 					<a href="form.jsp" class="btn btn-primary">새글 쓰기</a>
+<%
+	} else {
+%>
+					<a href="list.jsp" class="btn btn-primary">답변 미완료 확인하기</a>
+<%
+	}
+%>			
 				</div>
 			</div>
 		</div>
@@ -97,7 +107,7 @@
 <%
 	if(paging.getPrevPage() != 0) {
 %>
-				<a href="list.jsp?cpno=<%=paging.getPrevPage() %>" class="<%=paging.getPrevPage() == 0 ? "disable" : ""%>">이전</a>
+				<a href="managercsboard.jsp?cpno=<%=paging.getPrevPage() %>" class="<%=paging.getPrevPage() == 0 ? "disable" : ""%>">이전</a>
 <%
 	}
 %>
@@ -106,7 +116,7 @@
 	for(int pno = paging.getBeginPage(); pno<=paging.getEndPage(); pno++ ) {
 		if(pno > 0) {
 %>
-				<a href="list.jsp?cpno=<%=pno %>" class="<%=pno == paging.getPageNo() ? "disable" : ""%>"><%=pno%></a>
+				<a href="managercsboard.jsp?cpno=<%=pno %>" class="<%=pno == paging.getPageNo() ? "disable" : ""%>"><%=pno%></a>
 <%
 	} }
 
@@ -114,7 +124,7 @@
 
 %>
 				<!-- 다음페이지가 동일할 경우 disable이 실행된다. -->
-				<a href="list.jsp?cpno=<%=paging.getNextPage() %>" class="<%=paging.getNextPage() == paging.getPageNo() ? "disable" : ""%>">다음</a>
+				<a href="managercsboard.jsp?cpno=<%=paging.getNextPage() %>" class="<%=paging.getNextPage() == paging.getPageNo() ? "disable" : ""%>">다음</a>
 <%
 	}
 %>

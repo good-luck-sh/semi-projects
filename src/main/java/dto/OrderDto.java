@@ -2,6 +2,8 @@ package dto;
 
 import java.util.Date;
 
+import vo.Categorys;
+import vo.Product;
 import vo.UserTable;
 
 public class OrderDto {
@@ -35,6 +37,12 @@ public class OrderDto {
 	private String reviewContent;
 	private Date reviewCreatedDate;
 	private int reviewStarPoint;
+	private int productNo;
+	private Categorys categorys;
+	private int orderItemNo;
+	private Product product;
+	private int productAmount;
+
 	
 	public int getOrderNo() {
 		return orderNo;
@@ -209,6 +217,36 @@ public class OrderDto {
 	}
 	public void setReviewStarPoint(int reviewStarPoint) {
 		this.reviewStarPoint = reviewStarPoint;
+	}
+	public int getProductNo() {
+		return productNo;
+	}
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
+	}
+	public Categorys getCategorys() {
+		return categorys;
+	}
+	public void setCategorys(Categorys categorys) {
+		this.categorys = categorys;
+	}
+	public int getOrderItemNo() {
+		return orderItemNo;
+	}
+	public void setOrderItemNo(int orderItemNo) {
+		this.orderItemNo = orderItemNo;
+	}
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	public int getProductAmount() {
+		return productAmount;
+	}
+	public void setProductAmount(int productAmount) {
+		this.productAmount = productAmount;
 	}
 	
 	

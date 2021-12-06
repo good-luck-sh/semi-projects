@@ -74,8 +74,10 @@
 	for (Review rv : reviewList){
 %>
 				<tr>
+
 					<td><%=rv.getReviewCreatedDate() %></td>
 					<td><a href="../review/detail.jsp?no=<%=rv.getReviewNo()%>"><%=rv.getReviewTitle() %></a></td>
+
 					<!--  페이지네이션 완성되면 cpno입력하기  -->
 					<td><%=rv.getReviewStarPoint() %> 점</td>
 					<td><%=rv.getReviewContent() %></td>

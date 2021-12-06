@@ -63,12 +63,20 @@ public interface ReviewDao {
 	public Review getReviewById(int userNo) throws SQLException;
 	
 	/**
-	 * 물건 번호를 클릭하면 해당하는 리뷰의 게시물이 모두 출력된다.
+	 * 물건 번호를 입력하면 해당하는 리뷰의 게시물이 모두 출력된다.
 	 * @param productNo 출력하고자 하는 물건 번호 
 	 * @return 리뷰 전체 정보
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
 	public List<Review> getAllReview(int productNo, int begin, int end) throws SQLException;
+	
+	/**
+	 * 유저 정보를 입력하면 해당하는 리뷰의 게시물이 모두 출력된다. 
+	 * @param userNo 출력하고자 하는 사용자 번호 
+	 * @return 리뷰의 전체 정보
+	 * @throws SQLException DB Access 오류시 예외가 발생한다.
+	 */
+	public List<Review> getAllReview(int userNo) throws SQLException;
 	
 	/**
 	 * 해당하는 리뷰의 정보를 수정한다. 
@@ -126,7 +134,7 @@ public interface ReviewDao {
 	 * @return userDto의 대한 정보 
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */
-	public UserDto getOrderUserByUserNo(int userNo) throws SQLException;
+	public List<UserDto> getOrderUserByUserNo(int userNo) throws SQLException;
 	/**
 	 * 리뷰번호로 사용될 시퀀스 값을 반환한다.
 	 * @param connection 커넥션 객체
@@ -143,6 +151,14 @@ public interface ReviewDao {
 	 * @throws SQLException DB Access 오류시 예외가 발생한다.
 	 */ 
 	public Review getReview(int reviewNo, Connection connection) throws SQLException;
+	
+	/**
+	 * 총 주문 횟수를 출력한다.
+	 * @return 총 주문 횟수 
+	 * @throws SQLException DB Access 오류시 예외가 발생한다.
+	 */
+	public int getAllOrderReview() throws SQLException;
+
 	
 	
 }

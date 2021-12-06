@@ -116,14 +116,14 @@
    </div>
 </div>
 <!-- 리뷰 부분 구현 -->
-<div class="row">
+<div class="row mt-3">
 			<div class="col">
 				<table class="table">
 					<colgroup>
 						<col width="10%">
-						<col width="20%">
-						<col width="10%">
-						<col width="20%">
+						<col width="15%">
+						<col width="7.5%">
+						<col width="25%">
 						<col width="10%">
 						<col width="10%">
 						<col width="5%">
@@ -133,26 +133,48 @@
 	ProductReviewJdbcDao productReviewDao = ProductReviewJdbcDao.getInstance();
 	List<ProductDto> findReviews = productReviewDao.getAllReviewByProductNo(product.getProductNo());
 %>
-					
-<% 
+						
+<% 	
+		int totalStarPoint = 0;
 		for(ProductDto findReview : findReviews) {
-			//size를 이용하여, 리뷰수 적고, 별점을 입력하는 total창만들기 
+		 totalStarPoint = totalStarPoint + findReview.getReviewStarPoint();
+		
 			
 %>						
 						<tr>
-							<td>리뷰 제목</td>
+							<th>리뷰 제목</th>
 							<td><a href="../review/reviewUserDetail.jsp?no=<%=findReview.getReviewNo()%>&cpno=1"><%=findReview.getReviewTitle() %></a></td>
-							<!-- cpno어케할지 확인하기 -->
-							<td>리뷰 내용</td>
+							<th>리뷰 내용</th>
+
 							<td><%=findReview.getReviewContent() %></td>
-							<td>작성자</td>
+							<th>작성자</th>
 							<td><%=findReview.getUserName() %></td>
-							<td>별점</td>
+							<th>별점</th>
+<% 	
+if(findReview.getReviewReviewLikeCount() >= 10) {
+%>
+							<td><%=findReview.getReviewStarPoint() %><span class="badge rounded-pill bg-danger">추천리뷰</span></td>
+<%
+}	else {
+%>
 							<td><%=findReview.getReviewStarPoint() %></td>
 						</tr>
 <%
-		}
-%>						
+}}
+%>		
+						<tr>
+							<th>전체 리뷰 수</th>
+							<td><mark><%=findReviews.size() %></mark></td>
+							<th>평균 별점</th>
+<%
+	int findStarAverage = 0;
+	if(findReviews.size() != 0) {
+		findStarAverage = (int)(totalStarPoint/findReviews.size());	
+	
+	}
+%>
+							<td><mark><%=findStarAverage %></mark></td>
+						</tr>					
 					</tbody>
 				</table>
 			</div>

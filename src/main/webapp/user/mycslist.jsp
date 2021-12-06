@@ -94,6 +94,7 @@
 		</div>
 	</div>
 	<div class="row mb-3">
+
 		<div class="col-6 offset-3">
 			<ul class="pagination justify-content-center">
 					<!-- 

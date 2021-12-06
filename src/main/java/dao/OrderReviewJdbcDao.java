@@ -32,9 +32,9 @@ public class OrderReviewJdbcDao implements OrderReviewDao {
 				+ "O.order_no, O.order_total_point, O.order_total_price, O.order_use_point,O.order_state, O.order_real_total_price, "
 				+ "O.order_date,O.order_cancel_date, O.order_address, O.order_phone_number, O.order_name "
 				+ "from review R, user_table U, orders O "
-				+ "where R.user_no = U.user_no "
-				+ "and U.user_no = O.user_no  "
-				+ "where O.order_no = ? ";
+				+ "where R.user_no = U.user_no(+) "
+				+ "and U.user_no = O.user_no(+)  "
+				+ "and O.order_no = ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setInt(1, orderNo);
@@ -93,15 +93,15 @@ public class OrderReviewJdbcDao implements OrderReviewDao {
 				+ "O.order_no, O.order_total_point, O.order_total_price, O.order_use_point,O.order_state, O.order_real_total_price, "
 				+ "O.order_date,O.order_cancel_date, O.order_address, O.order_phone_number, O.order_name "
 				+ "from review R, user_table U, orders O "
-				+ "where R.user_no = U.user_no "
-				+ "and U.user_no = O.user_no ) "
+				+ "where R.user_no = U.user_no(+) "
+				+ "and U.user_no = O.user_no(+) ) "
 				+ "where rn >= ? and rn <= ? ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setInt(1, begin);
 		ptmt.setInt(2, end);
 		ResultSet rs = ptmt.executeQuery();
-		while (rs.next()) {
+		while(rs.next()) {
 			OrderDto orderDto = new OrderDto();
 			orderDto.setReviewNo(rs.getInt("review_no"));
 			orderDto.setReviewTitle(rs.getString("review_title"));

@@ -26,7 +26,7 @@
 	} 
 	
 	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
-	Review review = reviewDao.getReviewById(loginUserInfo.getUserNo());
+	Review review = reviewDao.getReviewById(no);
 	
 %>
 <div class ="container mt-3">
@@ -35,18 +35,23 @@
 				<table class="table">
 					<colgroup>
 						<col width="10%">
-						<col width="40%">
 						<col width="10%">
-						<col width="40%">
+						<col width="5%">
+						<col width="20%">
+						<col width="10%">
+						<col width="*">
 					</colgroup>
 					<tbody>
 						<tr>
 							<th>번호</th>
 							<td><%=review.getReviewNo()%></td>
-							<th>작성자</th>
-							<td><%=review.getUserTable().getUserName() %></td>
+							<th>제목</th>
+							<td><%=review.getReviewTitle()%></td>
+							
 						</tr>
 						<tr>
+							<th>작성자</th>
+							<td><%=review.getUserTable().getUserName() %></td>
 							<th>별점</th>
 							<td><%=review.getReviewStarPoint() %></td>
 <%
@@ -85,7 +90,7 @@
 <%
 	}
 %>
-					<a href="detail.jsp?cpno=<%=cpno %>" class="btn btn-primary">목록</a>
+					<a href="detail.jsp?cpno=<%=cpno %>" class="btn btn-primary">내 리뷰보기</a>
 				</div>
 			</div>
 		</div>

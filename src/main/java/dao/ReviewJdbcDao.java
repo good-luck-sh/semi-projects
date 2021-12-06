@@ -158,16 +158,17 @@ public class ReviewJdbcDao implements ReviewDao {
 	
 
 	@Override
-	public Review getReviewById(int userNo) throws SQLException {
+	public Review getReviewById(int reviewNo) throws SQLException {
 		Review review = null;
 		String sql = "select R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point, "
 				+ " U.user_no, U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
 				+ "	U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check "
 				+ "from review R, user_table U "
-				+ "where R.user_no = ? ";
+				+ "where R.review_no = ? "
+				+ "and R.user_no = U.user_no ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
-		ptmt.setInt(1, userNo);
+		ptmt.setInt(1, reviewNo);
 		ResultSet rs = ptmt.executeQuery();
 		review = repeateReview(review, rs);
 		rs.close();
@@ -388,12 +389,11 @@ public class ReviewJdbcDao implements ReviewDao {
 		
 	}
 	@Override
-	public UserDto getOrderUserByUserNo(int userNo) throws SQLException {
-		UserDto userDto = null;
+	public List<UserDto> getOrderUserByUserNo(int userNo) throws SQLException {
+		List<UserDto> userDtos = new ArrayList<>();
 		String sql = "select U.user_no, U.user_id, U.user_password, U.user_name, U.user_age ,U.user_gender, U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.manager_check, "
 				+ "U.user_delete_check, O.order_no, O.order_total_price, O.order_total_point, O.order_use_Point, O.order_real_total_price, O.order_state, O.order_date, O.order_cancel_date, O.order_address, "
-				+ "O.order_phone_number, O.order_name, "
-				+ "H.history_no, H.history_point_check, H.history_reason, H.history_create_date ,H.history_total_point "
+				+ "O.order_phone_number, O.order_name "
 				+ "from User_point_history H, user_table U, orders O "
 				+ "where H.user_no(+) = U.user_no "
 				+ "and U.user_no = O.user_no(+) "
@@ -403,7 +403,7 @@ public class ReviewJdbcDao implements ReviewDao {
 	      ptmt.setInt(1, userNo);
 	      ResultSet rs = ptmt.executeQuery();
 	      if(rs.next()){
-	    	  userDto = new UserDto();
+	    	 UserDto userDto = new UserDto();
 	    	  userDto.setUserNo(rs.getInt("user_no"));
 	    	  userDto.setUserId(rs.getString("user_id"));
 	    	  userDto.setUserPassword(rs.getString("user_password"));
@@ -428,18 +428,14 @@ public class ReviewJdbcDao implements ReviewDao {
 	    	  userDto.setOrderPhoneNumber(rs.getString("order_phone_number"));
 	    	  userDto.setOrderName(rs.getString("order_name"));
 	    	  userDto.setHistoryNo(rs.getInt("history_no"));
-	    	  userDto.setHistoryPointCheck(rs.getString("history_point_check"));
-	    	  userDto.setHistoryReason(rs.getString("history_reason"));
-	    	  userDto.setHistoryCreateDate(rs.getDate("history_create_date"));
-	    	  userDto.setHistoryTotalPoint(rs.getInt("history_total_point"));
-	    	  
+	    	  userDtos.add(userDto);
 	      }
 	      
 		rs.close();
 		ptmt.close();
 		connection.close();
 		
-		return userDto;
+		return userDtos;
 	}
 	@Override
 	public void updateOrderByUserOrderTotalPoint(Orders orders) throws SQLException {
@@ -560,6 +556,50 @@ public class ReviewJdbcDao implements ReviewDao {
 		rs.close();
 		ptmt.close();
 		return review;
+	}
+	@Override
+	public List<Review> getAllReview(int userNo) throws SQLException {
+		List<Review> reviews = new ArrayList<>();
+		String sql =  " select R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point, "
+				+ " U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check, "
+				+ "	U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check, "
+				+ "	P.product_no, P.category_no, P.product_name, P.product_price , P.product_discount_price, P.product_stock, P.product_on_sale, P.product_review_count, P.product_picture, "
+				+ " P.product_star_point, P.product_date "
+				+ "	from review R, user_table U, product P , user_basket B "
+				+ "	where R.user_no = U.user_no "
+				+ "	and U.user_no = B.user_no "
+				+ "	and P.product_no = B.product_no "
+				+ " and U.user_no = ? ";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setInt(1, userNo);
+		
+		ResultSet rs = ptmt.executeQuery();
+		repeatProductUserReview(reviews, rs);
+		
+		rs.close();
+		ptmt.close();
+		connection.close();
+		return reviews;
+	}
+	@Override
+	public int getAllOrderReview() throws SQLException {
+		int countReview = 0;
+		String sql ="select count(*) as cnt "
+				+ "from review R, user_table U, orders O, user_basket B "
+				+ "where R.user_no = U.user_no "
+				+ "and U.user_no = O.user_no "
+				+ "and B.user_no = U.user_no ";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ResultSet rs = ptmt.executeQuery();
+		rs.next();
+		countReview = rs.getInt("cnt");
+		rs.close();
+		ptmt.close();
+		connection.close();
+		
+		return countReview;
 	}
 	
 	
