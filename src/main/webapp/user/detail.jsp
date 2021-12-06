@@ -33,19 +33,18 @@
 			<h4>my page</h4>
 		</div>
 	</div>
-<hr>
 <%
 	UserDao uDao = UserDao.getInstance();
 	UserTable user = uDao.getUserAllInfoByNo(loginUserInfo.getUserNo());
 
 %>
-	<div class="row mb-3">
+	<div class="row mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
 		<div class="col-2">
-			<h6><span class="badge bg-secondary"><%=user.getUserDegree() %></span>등급</h6>
+			<p><span class="badge bg-secondary"><%=user.getUserDegree() %></span>등급</p>
 		</div>
 		<div class="col-10">
 			<div>
-				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userDegree">멤버십안내
+				<button class="btn btn-text-black btn-sm" style="background-color: #f2efe4" data-bs-toggle="modal" data-bs-target="#userDegree">멤버십안내
 				</button>
 			</div>
 		 	<div class="modal" id="userDegree">
@@ -69,10 +68,10 @@
 		 								</thead>
 		 								<tbody>
 		 									<tr>
-		 										<td>총 누적금액 10만원 미만, 적립률 0%</td>
-		 										<td>총 누적금액 100만원 미만, 적립률 1%</td>
-		 										<td>총 누적금액 1000만원 미만, 적립률 2%</td>
-		 										<td>총 누적금액 1000만원 이상, 적립률 3%</td>
+		 										<td>총 누적금액 10만원 미만, 적립률 1%</td>
+		 										<td>총 누적금액 100만원 미만, 적립률 2%</td>
+		 										<td>총 누적금액 1000만원 미만, 적립률 3%</td>
+		 										<td>총 누적금액 1000만원 이상, 적립률 4%</td>
 		 									</tr>
 		 								</tbody>
 		 							</table>
@@ -80,18 +79,18 @@
 		 					</div>
 		 				</div>
 		 				<div class="modal-footer">
-        					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
+        					<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">닫기</button>
       					</div>
 		 			</div>
 		 		</div>
 		 	</div>
 		</div>
 	</div>
-<hr>
 <%
-	final double DIAMOND_POINT_DEPOSIT_RATE = 0.03;
-	final double GOLD_POINT_DEPOSIT_RATE = 0.02;
-	final double SILVER_POINT_DEPOSIT_RATE = 0.01;
+	final double DIAMOND_POINT_DEPOSIT_RATE = 0.04;
+	final double GOLD_POINT_DEPOSIT_RATE = 0.03;
+	final double SILVER_POINT_DEPOSIT_RATE = 0.02;
+	final double BRONZE_POINT_DEPOSIT_RATE = 0.01;
 	
 	int pointRate = 0;
 
@@ -102,32 +101,35 @@
 	} else if("실버".equals(user.getUserDegree())){
 		pointRate = (int)(SILVER_POINT_DEPOSIT_RATE*100);
 	} else if("브론즈".equals(user.getUserDegree())){
-		pointRate = 0;
+		pointRate = (int)(BRONZE_POINT_DEPOSIT_RATE*100);
 	}
 %>
 
-	<div class="row mb-3 border border-dark">
+	<div class="row mb-3">
 		<div clas="col">
 			<h6><Strong>안녕하세요 :) <%=user.getUserName() %> 회원님</Strong></h6>
 			<h6>상품 구매시 <%=pointRate %>%을 추가적립 받으실 수 있습니다.</h6>
 		</div>
 	</div>
 	<div class="row mb-3">
-		<div class="col">
-			<h6><a href="userpointdetail.jsp?no=<%=user.getUserNo() %>">적립금</a></h6>
-			<h6><%=user.getUserOrderPoint() %> 원</h6>
+		<div class="col-6">
+			<a href="userpointdetail.jsp?no=<%=user.getUserNo() %>" class="text-black">적립금 ></a>
+			<p><%=user.getUserOrderPoint() %> 원</p>
+		</div>
+		<div class="col-6">
+			<h6><a href="" class="text-black">주문내역 확인하기 ></a></h6>
 		</div>
 	</div>
 <hr>
 	<div class="row mb-3">
-		<div class="col-4">
-			<a href="basket.jsp?no=<%=user.getUserNo() %>" class="btn btn-primary">장바구니</a>
+		<div class="d-grid gap-2 col-4">
+			<a href="basket.jsp?no=<%=user.getUserNo() %>" class="btn btn-text-black" style="background-color: #f2efe4">장바구니</a>
 		</div>
-		<div class="col-4">
-			<a href="modifyform.jsp?no=<%=user.getUserNo() %>" class="btn btn-primary">회원 정보 수정</a>
+		<div class="d-grid gap-2 col-4">
+			<a href="modifyform.jsp?no=<%=user.getUserNo() %>" class="btn btn-text-black" style="background-color: #f2efe4">회원 정보 수정</a>
 		</div>
-		<div class="col-4">
-			<a href="../main/logout.jsp" class="btn btn-primary">로그아웃</a>
+		<div class="d-grid gap-2 col-4">
+			<a href="../main/logout.jsp" class="btn btn-text-black" style="background-color: #f2efe4">로그아웃</a>
 		</div>
 	</div>
 <hr>
@@ -142,10 +144,10 @@
 %>
 	<div class="row mb-3">
 		<div class="col">
-			<a href="mycslist.jsp?no=<%=user.getUserNo() %>">나의 게시글</a>
+			<a href="mycslist.jsp?no=<%=user.getUserNo() %>" class="text-black">나의 게시글 ></a>
 		</div>
 		<div class="col">
-			<a href="myreviewlist.jsp?no=<%=user.getUserNo() %>">나의 리뷰</a>		
+			<a href="myreviewlist.jsp?no=<%=user.getUserNo() %>" class="text-black">나의 리뷰 ></a>		
 		</div>
 	</div>
 <%
@@ -153,10 +155,10 @@
 %>
 	<div class="row mb-3">
 		<div class="col">
-			<a href="../csBoard/managercsboard.jsp?cpno=1">cs 전체 게시물 확인하기</a>
+			<a href="../csBoard/managercsboard.jsp?cpno=1" class="text-black">cs 전체 게시물 확인하기 ></a>
 		</div>
 		<div class="col">
-			<a href="../manager/managerlist.jsp">매니저 메뉴 확인하기</a>		
+			<a href="../manager/managerlist.jsp" class="text-black">매니저 메뉴 확인하기 ></a>		
 		</div>
 	</div>
 <%

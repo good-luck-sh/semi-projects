@@ -1,3 +1,4 @@
+<%@page import="vo.Pagination"%>
 <%@page import="dao.ReviewJdbcDao"%>
 <%@page import="vo.Review"%>
 <%@page import="java.util.List"%>
@@ -26,9 +27,6 @@
 	}
 
 %>
-<!-- 
-	페이지네이션 들어가야함
- -->
 <div class="container">
 <hr>
 	<div class="row mb-3">
@@ -38,47 +36,89 @@
 	</div>
 <hr>
 <%
-	int userNo = Integer.parseInt(request.getParameter("no"));
+
+	// 요청파라미터에서 pageNo값을 조회한다.
+	// 요청파라미터에 pageNo값이 존재하지 않으면 Pagination객체에서 1페이지로 설정한다.
+	String pageNo = request.getParameter("pageNo");
+	
+	// 리뷰 정보 관련 기능을 제공하는 ReviewJdbcDao객체를 획득한다.
 	ReviewJdbcDao rvDao = ReviewJdbcDao.getInstance();
-	List<Review> reviewList = rvDao.getUserAllReviewByNo(userNo);
+	
+	// 총 데이터 갯수를 조회한다.
+	int totalRecords = rvDao.getAllCountReview();
+	
+	// 페이징 처리 필요한 값을 계산하는 Paginatition객체를 생성한다.
+	Pagination pagination = new Pagination(pageNo, totalRecords);
+	List<Review> reviewList = rvDao.getAllReviewById(loginUserInfo.getUserNo(), pagination.getBegin(), pagination.getEnd());
 %>
 	<div>
 		<table class="table">
 			<thead>
 				<tr>
+					<th>등록날짜</th>
 					<th>제목</th>
 					<th>별점</th>
 					<th>리뷰</th>
 					<th>좋아요</th>
-					<th>등록날짜</th>
 				</tr>
 			</thead>
 			<tbody>
 <%
+	if(reviewList.isEmpty()){
+%>
+				<tr>
+					<td class="text-center" colspan="6">리뷰가 존재하지 않습니다.</td>
+				</tr>
+<%
+	} else{
 	for (Review rv : reviewList){
 %>
 				<tr>
-					<td><a href="../review/detail.jsp?no=<%=rv.getReviewNo()%>&cpno=1"><%=rv.getReviewTitle() %></a></td>
+
+					<td><%=rv.getReviewCreatedDate() %></td>
+					<td><a href="../review/detail.jsp?no=<%=rv.getReviewNo()%>"><%=rv.getReviewTitle() %></a></td>
+
 					<!--  페이지네이션 완성되면 cpno입력하기  -->
 					<td><%=rv.getReviewStarPoint() %> 점</td>
-					<td><Strong><%=rv.getReviewTitle() %></Strong>     <%=rv.getReviewContent() %></td>
+					<td><%=rv.getReviewContent() %></td>
 					<td><%=rv.getReviewReviewLikeCount() %> 개</td>
-					<td><%=rv.getReviewCreatedDate() %></td>
 				</tr>
 <%
+		}
 	}
 %>
 			</tbody>
 		</table>
 	</div>
 	<div class="row mb-3">
-		<div class="col">
-			<a href="../review/form.jsp" class="btn btn-danger p-2">리뷰쓰기</a>
-			<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
+		<div class="col-6 offset-3">
+			<ul class="pagination justify-content-center">
+					<!-- 
+						Pagination객체가 제공하는 isExistPrev()는 이전 블록이 존재하는 경우 true를 반환한다.
+						Pagination객체가 제공하는 getPrevPage()는 이전 블록의 마지막 페이지값을 반환한다.
+					 -->
+				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="list.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
+<%
+	// Pagination 객체로부터 해당 페이지 블록의 시작 페이지번호와 끝 페이지번호만큼 페이지내비게이션 정보를 표시한다.
+	for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
+%>					
+				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="list.jsp?pageNo=<%=num%>"><%=num %></a></li>
+<%
+	}
+%>					
+					<!-- 
+						Pagination객체가 제공하는 isExistNext()는 다음 블록이 존재하는 경우 true를 반환한다.
+						Pagination객체가 제공하는 getNexPage()는 다음 블록의 첫 페이지값을 반환한다.
+					 -->
+				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="list.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
+			</ul>
+		</div>
+		<div class="col-3 text-end">
+			<div class="col">
+				<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
+			</div>
 		</div>
 	</div>
-
-
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
