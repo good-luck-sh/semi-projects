@@ -12,8 +12,37 @@ import java.util.List;
 
 import vo.Categorys;
 import vo.Product;
+import vo.UserBasket;
 
 public class ProductDao {
+	
+	/**
+	 * 유저번호로 바스켓 정보 불러오기
+	 * @param userNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public Product getProductNoByUserNo(int userNo) throws SQLException {
+		 Product product = null;
+		 String sql = "select product_no "
+				 	+ "from user_basket "
+				 	+ "where user_no = ? ";
+		 
+		 Connection connection = getConnection();
+		 PreparedStatement pstmt = connection.prepareStatement(sql);
+		 pstmt.setInt(1, userNo);
+		 ResultSet rs = pstmt.executeQuery();
+		 if(rs.next()) {
+			product = new Product();
+			product.setProductNo(rs.getInt("product_no"));
+		 	}
+		      
+		  rs.close();
+		  pstmt.close();
+		  connection.close();
+	      
+	      return product;
+	}
 	
 	/**
 	 * 상품의 활성화 비활성화
