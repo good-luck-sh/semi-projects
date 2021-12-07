@@ -9,7 +9,7 @@
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-    <title></title>
+    <title>공지사항</title>
 </head>
 <body>
 <%
@@ -71,23 +71,23 @@
 	<div class="row mb-3">
 		<div class="col-6 offset-3">
 			<ul class="pagination justify-content-center">
-				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="list.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
+				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="notice.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
 <%
 	
 	for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
 %>					
-				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="list.jsp?pageNo=<%=num%>"><%=num %></a></li>
+				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="notice.jsp?pageNo=<%=num%>"><%=num %></a></li>
 <%
 	}
 %>			
-				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="list.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
+				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="notice.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
 			</ul>
 
 		</div>
 		<div class="col-3 text-end">
 <%
-	// 로그인되지 않은 경우 새 공지사항작성버튼이 출력되지 않음
-	if (loginUserInfo != null) { 
+	
+	if (loginUserInfo.getManagerCheck() != null) { 
 %>
 			<a href="form.jsp" class="btn btn-outline-primary">새 공지사항 작성</a>
 <%

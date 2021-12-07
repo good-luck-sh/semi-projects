@@ -19,7 +19,7 @@
 	if ("empty".equals(error)) {							
 %>
 	<div class="alert alert-danger">
-		<strong>로그인 실패</strong> 아이디와 비밀번호는 필수입력값입니다.
+		<strong>로그인 실패</strong> 아이디와 비밀번호를 입력해주세요.
 	</div>
 <%
 	} else if ("notfound-user".equals(error)) {			

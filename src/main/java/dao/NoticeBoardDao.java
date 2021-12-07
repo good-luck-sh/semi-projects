@@ -38,7 +38,7 @@ public class NoticeBoardDao {
 		pstmt.close();
 		connection.close();
 	}
-	
+		
 	/**
 	 * 테이블에 저장된 공지사항글의 갯수를 반환한다.
 	 * @return
