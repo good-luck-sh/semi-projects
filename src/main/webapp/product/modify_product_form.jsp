@@ -17,16 +17,29 @@
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <title>커먼 유니크</title>
+	<%@ include file="../navbar/nav.jsp" %>
 </head>
 
 <body>
 <div class="container">
-	<%@ include file="../navbar/nav.jsp" %>
+<%
+	pageContext.setAttribute("menu", "login");
+	if (loginUserInfo == null) {
+		response.sendRedirect("../main/loginform.jsp?error=login-required");
+		return;
+	}
+	// 매니저 권한이 없을 경우 메인화면으로 보낸다.
+	if(loginUserInfo.getManagerCheck() == null) {
+		response.sendRedirect("../main/index.jsp");
+		return;
+	}
+%>
 <%
 	Service service = Service.getInstance();
 	ProductDao productDao = new ProductDao();
 	List<Categorys> categorys = service.getAllCategorys();
 
+	String error = request.getParameter("error");
 	String success = request.getParameter("success");
 	if ("commit".equals(success)) {
 %>
@@ -34,8 +47,61 @@
 				<strong>상품 수정 완료</strong>
 			</div>
 <%		
+	} else if ("empty-productName".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>상품 등록 실패</strong> 상품이름을 입력하세요.
+			</div>
+<%
+	} else if ("empty-productPrice".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>상품 등록 실패</strong> 가격을 입력하세요.
+			</div>
+<%
+	} else if ("wrong-price".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>상품 등록 실패</strong> 상품가격은 0원보다 작을수 없습니다.
+			</div>
+<%
+	} else if ("empty-productDiscountPrice".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>상품 등록 실패</strong> 할인가격을 입력하세요.
+			</div>
+<%
+	} else if ("wrong2-price".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>상품 등록 실패</strong> 할인가격은 정상가격보다 비쌀수없습니다.
+			</div>
+<%
+	} else if ("wrong-productStock".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>상품 등록 실패</strong> 입고수량을 입력 안했거나, 0이하로 입력할수 없습니다.
+			</div>
+<%
+	} else if ("empty-product_on_sale".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>상품 등록 실패</strong> 판매여부를 확인하세요.
+			</div>
+<%
+	} else if ("numCheck-productPrice".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>상품 등록 실패</strong> 할인가격에는 숫자만 입력할 수 있습니다.
+			</div>
+<%
 	}
 %>
+
+
+
+
+
 <%
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	Product product = productDao.selectProductByNo(productNo);

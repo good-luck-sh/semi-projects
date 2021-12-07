@@ -1,3 +1,4 @@
+<%@page import="dao.UserDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="vo.UserBasket"%>
 <%@page import="dao.UserBasketDao"%>
@@ -11,28 +12,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<title>커먼 유니크</title>
-<%@ include file="../navbar/nav.jsp" %>
 <link href="resource/test.css" rel="stylesheet">
+<title>커먼 유니크::주문하기</title>
+<%@ include file="../navbar/nav.jsp" %>
 </head>
+<body>
 <%
-
+	pageContext.setAttribute("menu", "login");
+	// 로그인 안하면 로그인 페이지로 연결
+	if (loginUserInfo == null) {
+		response.sendRedirect("../main/loginform.jsp?error=login-required");
+		return;
+	}
+	
 	UserBasketDao userBasketDao = UserBasketDao.getInstance();
-	UserTable userTable = (UserTable) session.getAttribute("LOGIN_USER_INFO");
-	List<UserBasket> userBasket = userBasketDao.getAllUserBasketItemByNo(userTable.getUserNo());
+	int userNo =  loginUserInfo.getUserNo();
+	List<UserBasket> userBasket = userBasketDao.getAllUserBasketItemByNo(loginUserInfo.getUserNo());
+	
+	// 장바구니가 비어있으면 장바구니 페이지로 연결
+	if (userBasket.isEmpty()) {
+		response.sendRedirect("../user/basket.jsp?no="+loginUserInfo.getUserNo()+"&error=empty-basket");
+		return;
+	}
 	
 	double savePointRate = 0;
-	if (userTable.getUserDegree().equals("브론즈")) {
+	if (loginUserInfo.getUserDegree().equals("브론즈")) {
 		savePointRate = 0.01;
-	} else if (userTable.getUserDegree().equals("실버")) {
+	} else if (loginUserInfo.getUserDegree().equals("실버")) {
 		savePointRate = 0.02;
-	} else if (userTable.getUserDegree().equals("골드")) {
+	} else if (loginUserInfo.getUserDegree().equals("골드")) {
 		savePointRate = 0.03;
 	} else {
 		savePointRate = 0.04;
 	}
+	
 %>
-<body>
 	<div class="container" >
 		<div>
 			<form name="frm_order_act" action="order.jsp" method="post" target="_self" >
@@ -44,7 +58,8 @@
 						<div  class="ec-base-fold eToggle">
 							<div  class="title">
 								<h2>주문자</h2>
-								<span class="txtEm gRight float-right text-black"><Strong class="text-primary"><%= userTable.getUserName()%></Strong>님 (회원등급: <Strong class="text-primary"><%=userTable.getUserDegree()%></Strong>) 구매금액의 <Strong class="text-primary"><%=savePointRate*100%>%</Strong> point 적립</span>
+								<span class="txtEm gRight float-right text-black"><Strong class="text-primary"><%= loginUserInfo.getUserName()%></Strong>님 (회원등급: <Strong class="text-primary"><%=loginUserInfo.getUserDegree()%></Strong>) 구매금액의 <Strong class="text-primary"><%=savePointRate*100%>%</Strong> point 적립</span>
+								<input type="hidden" name="userNo" value="<%=loginUserInfo.getUserNo()%>">
 							</div>
 
 							<!-- 수령자 정보   -->
@@ -106,7 +121,7 @@
 															</strong>
 															<ul class="info">
 																<input type="hidden" name="productNo" value="<%=basket.getProduct().getProductNo()%>">
-																<input type="hidden" name="productAmount" value="<%=basket.getProduct().getProductNo()%>">
+																<input type="hidden" name="productAmount" value="<%=basket.getBasketAmount()%>">
 																<li>수량: <%=basket.getBasketAmount() %></li>
 																<li>상품금액: <%= basket.getProduct().getProductPrice()%> * <%=basket.getBasketAmount()%> = <%=(basket.getProduct().getProductPrice() * basket.getBasketAmount())%> 원</li>
 																<li class="text-primary" name="">할인금액: <%= basket.getProduct().getProductDiscountPrice() %> * <%=basket.getBasketAmount() %> = <%=(basket.getProduct().getProductDiscountPrice() * basket.getBasketAmount()) %> 원</li>
@@ -130,9 +145,10 @@
 										<div class="contents">
 											<div class="discountDetail ">
 												<strong class="heading">적립포인트</strong>
-												<span class="summary">(사용가능 <span id="test2" class="txtEm"> <%=userTable.getUserOrderPoint()%> point</span>)</span>
+												<span class="summary">(사용가능 <span id="test2" class="txtEm"> <%=loginUserInfo.getUserOrderPoint()%> point</span>)</span>
+												<input type="hidden" name="nowPoint" value="<%=loginUserInfo.getUserOrderPoint()%>">
 												<div class="control  mb-3">
-													<input type="hidden" id="UseAblePoint" value="<%=userTable.getUserOrderPoint()%>">
+													<input type="hidden" id="UseAblePoint" value="<%=loginUserInfo.getUserOrderPoint()%>">
 													<input id="UseAll" type="text" name="" class="inputTypeText" size="10" value="0" >
 													<button type="button" class="btnNormal" onclick="allPoint()">전액 사용</button>
 												</div>

@@ -15113,14 +15113,10 @@ input:-webkit-autofill {
 }
 
 #mCafe24Order .resultArea .message {
-	padding: 56px 0 13px;
 	text-align: center;
-	font-size: 18px;
-	color: #333;
+	font-size: 22px;
+	color: #62676d;
 	line-height: 26px;
-	background:
-		url("//img.echosting.cafe24.com/skin/mobile/order/ico_resultarea_message.png")
-		no-repeat center 0;
 	background-size: 38px 42px;
 }
 
@@ -16795,7 +16791,7 @@ input:-webkit-autofill {
 		border-left: 1px solid #d7d5d5;
 		border-right: 1px solid #d7d5d5;
 		box-sizing: border-box;
-		background: #e3e4e7;
+		background: #f3f6f8;
 	}
 	#popup, #popup.popup .ec-base-layer {
 		width: 900px;
