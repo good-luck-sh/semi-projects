@@ -19,6 +19,7 @@
 <body>
 <%
 	pageContext.setAttribute("menu", "login");
+
 	// 로그인 안하면 로그인 페이지로 연결
 	if (loginUserInfo == null) {
 		response.sendRedirect("../main/loginform.jsp?error=login-required");
@@ -35,18 +36,55 @@
 		return;
 	}
 	
+	// 고객등급별 포인트 적립
 	double savePointRate = 0;
-	if (loginUserInfo.getUserDegree().equals("브론즈")) {
+	String degree = loginUserInfo.getUserDegree();
+	if (degree == null) {
+		savePointRate = 0;
+	} else if (degree.equals("브론즈")) {
 		savePointRate = 0.01;
-	} else if (loginUserInfo.getUserDegree().equals("실버")) {
+	} else if (degree.equals("실버")) {
 		savePointRate = 0.02;
-	} else if (loginUserInfo.getUserDegree().equals("골드")) {
+	} else if (degree.equals("골드")) {
 		savePointRate = 0.03;
 	} else {
 		savePointRate = 0.04;
 	}
 	
+	String error = request.getParameter("error");
+	if ("empty-name".equals(error)) {
 %>
+			<div class="alert alert-danger">
+				<strong>주문 실패</strong> 받는분 성함을 입력해주세요.
+			</div>
+<%
+	} else if ("empty-address".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>주문 실패</strong> 받는분 주소를 입력해주세요.
+			</div>
+<%
+	} else if ("empty-phoneNumber".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>주문 실패</strong> 받는분 전화번호를 입력해주세요.
+			</div>
+<%
+	} else if ("point-error".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>주문 실패</strong> 할인 포인트는 보유포인트 보다 클 수 없습니다.
+			</div>
+<%
+	} else if ("point-error2".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>주문 실패</strong> 할인 포인트는 0보다 작은 값으로 사용할 수 없습니다.
+			</div>
+<%
+	}
+%>
+
 	<div class="container" >
 		<div>
 			<form name="frm_order_act" action="order.jsp" method="post" target="_self" >
@@ -109,13 +147,13 @@
 												<div class="ec-base-prdInfo xans-record-">
 													<div class="prdBox">
 														<div class="thumbnail">
-															<a href="#">
+															<a href="../product/detail.jsp?productNo=<%=basket.getProduct().getProductNo()%>">
 																<img src="<%=basket.getProduct().getProductPicture() %>" alt="" width="90" height="90">
 															</a>
 														</div>
 														<div class="description">
 															<strong class="prdName" title="상품명">
-																<a href="#" class="ec-product-name">
+																<a href="../product/detail.jsp?productNo=<%=basket.getProduct().getProductNo()%>" class="ec-product-name">
 																	<%=basket.getProduct().getProductName() %>
 																</a>
 															</strong>
@@ -145,11 +183,11 @@
 										<div class="contents">
 											<div class="discountDetail ">
 												<strong class="heading">적립포인트</strong>
-												<span class="summary">(사용가능 <span id="test2" class="txtEm"> <%=loginUserInfo.getUserOrderPoint()%> point</span>)</span>
+												<span class="summary">(사용가능 <span id="test2" name="test2" class="txtEm"> <%=loginUserInfo.getUserOrderPoint()%> point</span>)</span>
 												<input type="hidden" name="nowPoint" value="<%=loginUserInfo.getUserOrderPoint()%>">
 												<div class="control  mb-3">
 													<input type="hidden" id="UseAblePoint" value="<%=loginUserInfo.getUserOrderPoint()%>">
-													<input id="UseAll" type="text" name="" class="inputTypeText" size="10" value="0" >
+													<input id="UseAll" type="text" name="UseAll" class="inputTypeText" size="10" value="0" >
 													<button type="button" class="btnNormal" onclick="allPoint()">전액 사용</button>
 												</div>
 													<button type="button" class="btnNormal" onclick="CommitPoint()">적용</button>

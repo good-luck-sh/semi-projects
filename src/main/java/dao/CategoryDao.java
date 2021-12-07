@@ -12,6 +12,21 @@ import vo.Categorys;
 
 public class CategoryDao {
 	
+	public void modifyCategorysName(Categorys categorys) throws SQLException {
+		String sql ="update categorys "
+					+"set categorys_name = ? "
+					+"where categorys_no = ? ";
+		
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setString(1, categorys.getCategorysName());
+		pstmt.setInt(2, categorys.getCategorysNo());
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		connection.close();
+	}
+	
 	public int overlappingCategorysName(Categorys categorys) throws SQLException {
 		String sql = "select count(*) as cnt "
 					+"from categorys "
