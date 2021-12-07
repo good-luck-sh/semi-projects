@@ -38,6 +38,17 @@
 				<li><a class="dropdown-item" href="totalordereview.jsp?cpno=1">주문 리뷰 보기</a></li>
 			</ul>
 			</div>
+			<div class="dropdown">
+			  <button class="btn btn-secondary dropdown-toggle  mt-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+ 				상품 관리 
+  			</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+				<li><a class="dropdown-item" href="../product/insert_categorys_form.jsp">카테고리 등록하기</a></li>
+				<li><a class="dropdown-item" href="../product/modify_categorys_form.jsp">카테고리 수정하기</a></li>
+				<li><a class="dropdown-item" href="../product/insert_product_form.jsp">상품 등록하기</a></li>
+				<li><a class="dropdown-item" href="../product/disable_list.jsp">비활성화 상품리스트 보기</a></li>
+			</ul>
+			</div>
 			<div class="text-right mt-3">
 			<a href="../user/detail.jsp" class="btn btn-info">뒤로 가기</a>
 			</div>

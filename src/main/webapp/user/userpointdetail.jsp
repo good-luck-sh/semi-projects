@@ -77,7 +77,7 @@
 				<tr>
 					<td><%=history.getHistoryCreateDate() %></td>
 					<td><%=history.getHistoryReason() %></td>
-					<td><%=history.getHistoryPointCheck() %><%=history.getHistoryTotalPoint() %>원</td>
+					<td><%=history.getHistoryPointCheck() %>  <%=history.getHistoryTotalPoint()%>원</td>
 				</tr>
 <%
 	}

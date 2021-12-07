@@ -18,9 +18,24 @@
 	String productPicture = request.getParameter("img");
 	
 	//int 값 체크
-	Boolean checked = service.isNum(request.getParameter("product_price"));
-	if(!checked){
+	// 상품가격에 문자가 들어갔을때 오류
+	Boolean checkedprice = service.isNum(request.getParameter("product_price"));
+	if(!checkedprice){
 		response.sendRedirect("insert_product_form.jsp?error=numCheck-productPrice");
+		return;
+	}
+	
+	// 할인가격에 문자가 들어갔을때 오류
+	Boolean checkedDiscountPrice = service.isNum(request.getParameter("product_discount_price"));
+	if(!checkedDiscountPrice){
+		response.sendRedirect("insert_product_form.jsp?error=numCheck-productDiscountPrice");
+		return;
+	}
+	
+	// 재고량에 문자가 들어갔을때 오류
+	Boolean checkedStock = service.isNum(request.getParameter("product_stock"));
+	if(!checkedStock){
+		response.sendRedirect("insert_product_form.jsp?error=numCheck-stock");
 		return;
 	}
 	
@@ -37,7 +52,7 @@
 		productStock = Integer.parseInt(request.getParameter("product_stock"));
 	}
 			
-	//오류 검사 시작
+	// 오류 검사 시작
 	// 카테고리 입력안했을때 오류 출력
 	if (temp_categorysNo.isBlank()) {
 		response.sendRedirect("insert_product_form.jsp?error=empty-categorysNo");
@@ -87,10 +102,6 @@
 		response.sendRedirect("insert_product_form.jsp?error=empty-product_on_sale");
 		return;
 	}
-	
-
-	
-	
 	
 	//insert
 	Categorys categorys = service.getCategoryByNo(categorysNo);

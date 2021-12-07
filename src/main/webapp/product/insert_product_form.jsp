@@ -53,7 +53,13 @@
 				<strong>상품 등록 실패</strong> 가격을 입력하세요.
 			</div>
 <%
-	} else if ("wrong-price".equals(error)) {
+	} else if ("numCheck-productPrice".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>상품 등록 실패</strong> 가격에는 숫자만 입력할 수 있습니다.
+			</div>
+<%
+	}  else if ("wrong-price".equals(error)) {
 %>
 			<div class="alert alert-danger">
 				<strong>상품 등록 실패</strong> 상품가격은 0원보다 작을수 없습니다.
@@ -63,6 +69,12 @@
 %>
 			<div class="alert alert-danger">
 				<strong>상품 등록 실패</strong> 할인가격을 입력하세요.
+			</div>
+<%
+	} else if ("numCheck-productDiscountPrice".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>상품 등록 실패</strong> 할인가격에는 숫자만 입력할 수 있습니다.
 			</div>
 <%
 	} else if ("wrong2-price".equals(error)) {
@@ -77,23 +89,20 @@
 				<strong>상품 등록 실패</strong> 입고수량을 입력 안했거나, 0이하로 입력할수 없습니다.
 			</div>
 <%
+	} else if ("numCheck-stock".equals(error)) {
+%>
+			<div class="alert alert-danger">
+				<strong>상품 등록 실패</strong> 입고량에는 숫자만 입력할 수 있습니다.
+			</div>
+<%
 	} else if ("empty-product_on_sale".equals(error)) {
 %>
 			<div class="alert alert-danger">
 				<strong>상품 등록 실패</strong> 판매여부를 확인하세요.
 			</div>
 <%
-	} else if ("numCheck-productPrice".equals(error)) {
-%>
-			<div class="alert alert-danger">
-				<strong>상품 등록 실패</strong> 할인가격에는 숫자만 입력할 수 있습니다.
-			</div>
-<%
 	}
 %>
-
-
-
 <%
 	if ("commit".equals(success)) {
 %>
