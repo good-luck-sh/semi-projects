@@ -40,7 +40,7 @@
 %>
 	<div class="row mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
 		<div class="col-2">
-			<p><span class="badge bg-secondary"><%=user.getUserDegree() %></span>등급</p>
+			<p><span class="badge text-white" style="background-color: #d9c27c"><%=user.getUserDegree() %></span>등급</p>
 		</div>
 		<div class="col-10">
 			<div>
@@ -79,7 +79,7 @@
 		 					</div>
 		 				</div>
 		 				<div class="modal-footer">
-        					<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">닫기</button>
+        					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
       					</div>
 		 			</div>
 		 		</div>
@@ -121,7 +121,7 @@
 		</div>
 	</div>
 <hr>
-	<div class="row mb-3">
+	<div class="row mb-3" style="padding: 20px;">
 		<div class="d-grid gap-2 col-4">
 			<a href="basket.jsp?no=<%=user.getUserNo() %>" class="btn btn-text-black" style="background-color: #f2efe4">장바구니</a>
 		</div>

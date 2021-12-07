@@ -26,9 +26,8 @@
 %>
 <div class="container">
 <%
-	int userNo = Integer.parseInt(request.getParameter("no"));
 	UserDao utDao = UserDao.getInstance();
-	UserTable user = utDao.getUserAllInfoByNo(userNo);
+	UserTable user = utDao.getUserAllInfoByNo(loginUserInfo.getUserNo());
 %>
 <hr>
 	<div class="row mb-3">
@@ -36,10 +35,9 @@
 			<h4>my info</h4>
 		</div>
 	</div>
-<hr>
-	<div class="border border-dark">
+	<div class="row mb-3 border">
 		<div class="col-2">
-			<h6><span class="badge bg-secondary"><%=user.getUserDegree() %></span>등급</h6>
+			<h6><span class="badge text-white" style="background-color: #d9c27c"><%=user.getUserDegree() %></span>등급</h6>
 		</div>
 <%
 	final double DIAMOND_POINT_DEPOSIT_RATE = 0.04;
@@ -60,17 +58,14 @@
 	}
 %>
 		<div class="col-10">
-			<h6>안녕하세요! <%=user.getUserName() %>님은 <Strong><%=user.getUserDegree() %></Strong> 등급 입니다.</h6>
-			<h6> <%=pointRate%>%할인을 받으실 수 있습니다.</h6>
+			<p>안녕하세요! <%=user.getUserName() %>님은 <Strong><%=user.getUserDegree() %></Strong> 등급 입니다.</p>
+			<p> <%=pointRate%>%할인을 받으실 수 있습니다.</p>
 		</div>
 	</div>
-
-
-
-<hr>
-
-	<h4>기본 정보</h4>
-	<div class="row mb-3">
+	<div style="padding: 10px;">
+		<h6>기본 정보</h6>
+	</div>
+	<div class="row mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
 		<div class="col">
 <%
 	String success = request.getParameter("success");
@@ -100,34 +95,59 @@
 	}
 %>
 			<form class="border p-3 bg-light" method="post" action="update.jsp">
+<%
+	if(user.getManagerCheck() == null){
+%>
 				<div class="mb-3">
-					<label class="form-label" for="no">회원번호</label>
-					<input type="number" name="no" id="no" value="<%=user.getUserNo() %>" readonly="readonly"/>
+					<label class="form-label" for="managerCheck">회원분류</label>
+					<input type="text" class="form-control" name="managerCheck" id="managerCheck" value="일반회원" readonly="readonly"/>
 				</div>
+<%
+	} else {
+%>
+				<div class="mb-3">
+					<label class="form-label" for="managerCheck">회원번호</label>
+					<input type="text" class="form-control" name="managerCheck" id="managerCheck" value="매니저" readonly="readonly"/>
+				</div>
+<%
+	}
+%>
 				<div class="mb-3">
 					<label class="form-label" for="id">아이디</label>
-					<input type="text" name="id" id="id" value="<%=user.getUserId() %>" readonly="readonly"/>
+					<input type="text" class="form-control" name="id" id="id" value="<%=user.getUserId() %>" readonly="readonly"/>
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="pwd">비밀번호</label>
-					<input type="password" name="pwd" id="pwd"/>
+					<input type="password" class="form-control" name="pwd" id="pwd"/>
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="name">이름</label>
-					<input type="text" name="name" id="name" value="<%=user.getUserName() %>" readonly="readonly"/>
+					<input type="text" class="form-control" name="name" id="name" value="<%=user.getUserName() %>" readonly="readonly"/>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="gender">성별</label>
+					<input type="text" class="form-control" name="gender" id="gender" value="<%=user.getUserGender() %>"  readonly="readonly"/>
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="age">나이</label>
+					<input type="number" class="form-control" name="age" id="age" value="<%=user.getUserAge() %>"  readonly="readonly"/>
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="address">주소</label>
-					<input type="text" name="address" id="address" value="<%=user.getUserAddress() %>"/>
+					<input type="text" class="form-control" name="address" id="address" value="<%=user.getUserAddress() %>"/>
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="createdDate">가입일</label>
-					<input type="text" name="createdDate" id="createdDate" value="<%=user.getUserCreateDate() %>"  readonly="readonly"/>
+					<input type="text" class="form-control" name="createdDate" id="createdDate" value="<%=user.getUserCreateDate() %>"  readonly="readonly"/>
 				</div>
-				<div class="text-right">
-					<input class="btn btn-primary" type="submit" value="회원정보수정"/>
-					<a href="detail.jsp?no=<%=user.getUserNo() %>" class="btn btn-secondary">취소</a>
-					<a href="delete.jsp?no=<%=user.getUserNo() %>" class="btn btn-danger">회원탈퇴</a>
+				<div class="row mb-3">
+					<div class="d-md-flex gap-2 justify-content-center">
+						<input class="btn text-white" style="background-color: #a45339;" type="submit" value="회원정보수정"/>
+						<a href="detail.jsp?no=<%=user.getUserNo() %>" class="btn btn-secondary">취소</a>
+					</div>
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						<a href="delete.jsp?no=<%=user.getUserNo() %>" class="btn btn-outline-danger">회원탈퇴</a>
+					</div>
 				</div>
 			</form>
 		</div>

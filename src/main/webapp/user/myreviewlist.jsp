@@ -34,7 +34,6 @@
 			<h4>my review</h4>
 		</div>
 	</div>
-<hr>
 <%
 
 	// 요청파라미터에서 pageNo값을 조회한다.
@@ -51,15 +50,15 @@
 	Pagination pagination = new Pagination(pageNo, totalRecords);
 	List<Review> reviewList = rvDao.getAllReviewById(loginUserInfo.getUserNo(), pagination.getBegin(), pagination.getEnd());
 %>
-	<div>
+	<div class="row mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
 		<table class="table">
 			<thead>
 				<tr>
-					<th>등록날짜</th>
-					<th>제목</th>
-					<th>별점</th>
-					<th>리뷰</th>
-					<th>좋아요</th>
+					<th class="col-2">등록일</th>
+					<th class="col-3">제목</th>
+					<th class="col-5">리뷰</th>
+					<th class="col-1">별점</th>
+					<th class="col-1">좋아요</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -76,11 +75,11 @@
 				<tr>
 
 					<td><%=rv.getReviewCreatedDate() %></td>
-					<td><a href="../review/detail.jsp?no=<%=rv.getReviewNo()%>&cpno=1"><%=rv.getReviewTitle() %></a></td>
+					<td><a href="../review/detail.jsp?no=<%=rv.getReviewNo()%>&cpno=1" class="text-black"><%=rv.getReviewTitle() %></a></td>
 
 					<!--  페이지네이션 완성되면 cpno입력하기  -->
-					<td><%=rv.getReviewStarPoint() %> 점</td>
 					<td><%=rv.getReviewContent() %></td>
+					<td><%=rv.getReviewStarPoint() %> 점</td>
 					<td><%=rv.getReviewReviewLikeCount() %> 개</td>
 				</tr>
 <%
@@ -92,17 +91,17 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col-6 offset-3">
-			<ul class="pagination justify-content-center">
+			<ul class="pagination justify-content-center"">
 					<!-- 
 						Pagination객체가 제공하는 isExistPrev()는 이전 블록이 존재하는 경우 true를 반환한다.
 						Pagination객체가 제공하는 getPrevPage()는 이전 블록의 마지막 페이지값을 반환한다.
 					 -->
-				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="list.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
+				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="myreviewlist.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
 <%
 	// Pagination 객체로부터 해당 페이지 블록의 시작 페이지번호와 끝 페이지번호만큼 페이지내비게이션 정보를 표시한다.
 	for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
 %>					
-				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="list.jsp?pageNo=<%=num%>"><%=num %></a></li>
+				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="myreviewlist.jsp?pageNo=<%=num%>"><%=num %></a></li>
 <%
 	}
 %>					
@@ -110,12 +109,12 @@
 						Pagination객체가 제공하는 isExistNext()는 다음 블록이 존재하는 경우 true를 반환한다.
 						Pagination객체가 제공하는 getNexPage()는 다음 블록의 첫 페이지값을 반환한다.
 					 -->
-				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="list.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
+				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="myreviewlist.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
 			</ul>
 		</div>
 		<div class="col-3 text-end">
 			<div class="col">
-				<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
+				<a href="detail.jsp" class="btn text-white" style="background-color: #a45339;">되돌아가기</a>
 			</div>
 		</div>
 	</div>
