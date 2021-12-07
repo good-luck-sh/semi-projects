@@ -25,7 +25,7 @@
 		font-size: 14px;	   
 	   }
    </style>
-   <title></title>
+   <title>Best 상품</title>
 </head>
 <body>
 <%@include file="../navbar/nav.jsp" %>

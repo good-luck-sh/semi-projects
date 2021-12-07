@@ -1,13 +1,13 @@
 package dto;
 
-public class monthDto {
+public class SalesDto {
 	
 	private String orderDate;
 	private int totalSales;
 	private int usePoint;
 	private int realSales;
 	
-	public monthDto () {}
+	public SalesDto () {}
 
 	public String getOrderDate() {
 		return orderDate;

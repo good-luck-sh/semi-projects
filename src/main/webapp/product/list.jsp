@@ -26,7 +26,7 @@
    
    </style>
    
-   <title></title>
+   <title>상품 목록</title>
 </head>
 <body>
 <%@include file="../navbar/nav.jsp" %>

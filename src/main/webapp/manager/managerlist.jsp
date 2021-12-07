@@ -31,9 +31,9 @@
  				매니저 메뉴 
   			</button>
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-				<li><a class="dropdown-item" href="#">매출 조회</a></li>
-				<li><a class="dropdown-item" href="#">연령별 가입 현황 조회</a></li>
-				<li><a class="dropdown-item" href="#">성별 가입 현황 조회</a></li>
+				<li><a class="dropdown-item" href="saleslist.jsp">월별 매출 조회</a></li>
+				<li><a class="dropdown-item" href="agelist.jsp">연령별 가입 현황 조회</a></li>
+				<li><a class="dropdown-item" href="genderlist.jsp">성별 가입 현황 조회</a></li>
 				<li><a class="dropdown-item" href="userSystem.jsp">매니저 등록하기</a></li>
 				<li><a class="dropdown-item" href="totalordereview.jsp?cpno=1">주문 리뷰 보기</a></li>
 			</ul>
