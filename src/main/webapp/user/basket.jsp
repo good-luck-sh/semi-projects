@@ -44,11 +44,16 @@
 		<div class="alert alert-danger">
 			<strong>상품 삭제 실패!!</strong> 본인의 장바구니가 아닙니다.
 		</div>
-
 <%
-	}
-
+   } else if ("empty-basket".equals(error)) {
 %>
+      <div class="alert alert-danger">
+         <strong>장바구니가 비어있습니다.</strong> 장바구니를 확인해주세요.
+      </div>
+<%      
+   }
+%>
+
 <!-- 사진 추가하기. 근데 사진 추가는 어떻게 추가 되는거?? -->
  	<div class="mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
  		<form method="get" action="">
@@ -100,7 +105,7 @@
  			<div class="row mb-3">
 	 			<div class="col">
 	 				<div class="d-flex justify-content-between">
-	 					<button type="submit" class="btn text-white" style="background-color: #a45339;" >상품주문</button>
+	 					<a href="../order/order_form.jsp?no=<%=loginUserInfo.getUserNo()%>" type="submit" class="btn text-white" style="background-color: #a45339;" >상품주문</button>
 	 					<a href="detail.jsp" class="btn btn-outline-secondary">되돌아가기</a>
 	 				</div>
 				</div>
