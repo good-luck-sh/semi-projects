@@ -2,17 +2,14 @@
 package dao;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.catalina.User;
-
-import dto.PointHistoryReviewDto;
 import dto.UserDto;
+import vo.Product;
 import vo.UserPointHistory;
 import vo.UserTable;
 
@@ -26,6 +23,32 @@ public class UserPointHistoryDao {
 	public static UserPointHistoryDao getInstance() {
 		return self;
 	}
+	
+	
+	/**
+	 * 포인트 히스토리 생성
+	 * @param userPointHistory
+	 * @throws SQLException
+	 */
+	public void insertPointHistory(UserPointHistory userPointHistory) throws SQLException {
+		String sql = "insert into user_point_history (history_no, user_no, history_point_check, history_reason, history_total_point) "
+					+"values (product_no.nextval, ?, ?, ?, ?) ";
+		
+		Connection connection = getConnection();
+	    PreparedStatement pstmt = connection.prepareStatement(sql);
+	    pstmt.setInt(1, userPointHistory.getUserTable().getUserNo());
+	    pstmt.setString(2, userPointHistory.getHistoryPointCheck());
+	    pstmt.setString(3, userPointHistory.getHistoryReason());
+	    pstmt.setInt(4, userPointHistory.getHistoryTotalPoint());
+	    
+	    pstmt.executeUpdate();
+	    
+	    pstmt.close();
+	    connection.close();
+	}
+	
+	
+	
 	
 	/**
 	 * 포인트히스토리의 총 개수를 구한다.
@@ -91,40 +114,6 @@ public class UserPointHistoryDao {
 		 return historys;
 	}
 	
-	public PointHistoryReviewDto getAllreviewByReason(String reason) throws SQLException {
-		PointHistoryReviewDto review = null;
-		String sql = "select H.history_no, H.history_point_check, H.history_reason, H.history_create_date, H.history_total_point, "
-				+ " R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point "
-				+ "from user_point_history H, Review R "
-				+ "where H.history_create_date = R.review_created_date "
-				+ "and H.history_reason like '%' || ? || '%' ";
-		 Connection connection = getConnection();
-	     PreparedStatement ptmt = connection.prepareStatement(sql);
-	     ptmt.setString(1, reason);
-	     ResultSet rs = ptmt.executeQuery();
-	     if(rs.next()) {
-	    	 review = new PointHistoryReviewDto();
-	    	 review.setHistoryNo(rs.getInt("history_no"));
-	    	 review.setHistoryPointCheck(rs.getString("history_point_check"));
-	    	 review.setHistoryReason(rs.getString("history_reason"));
-	    	 review.setHistoryCreateDate(rs.getDate("history_create_date"));
-	    	 review.setHistoryTotalPoint(rs.getInt("history_total_point"));
-	    	 review.setReviewNo(rs.getInt("review_no"));
-	    	 review.setReviewTitle(rs.getString("review_title"));
-	    	 UserTable user = new UserTable();
-	    	 user.setUserNo(rs.getInt("user_no"));
-	    	 review.setUserTable(user);
-	    	 review.setReviewReviewLikeCount(rs.getInt("review_review_like_count"));
-	    	 review.setReviewContent(rs.getString("review_content"));
-	    	 review.setReviewCreatedDate(rs.getDate("review_created_date"));
-	    	 review.setReviewStarPoint(rs.getInt("review_star_point")); 
-	     }
-	     
-		rs.close();
-		ptmt.close();
-		connection.close();
-		return review;
-		
-	}
+	
 
 }

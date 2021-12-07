@@ -11,11 +11,23 @@
     <link rel="stylesheet" href="../navbar/nav.css">
     <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
     <title>커먼 유니크</title>
-</head>
-
-<body>
-<div class="container p-3">
 	<%@ include file="../navbar/nav.jsp" %>
+</head>
+<body>
+<%
+	pageContext.setAttribute("menu", "login");
+	if (loginUserInfo == null) {
+		response.sendRedirect("../main/loginform.jsp?error=login-required");
+		return;
+	}
+	// 매니저 권한이 없을 경우 메인화면으로 보낸다.
+	if(loginUserInfo.getManagerCheck() == null) {
+		response.sendRedirect("../main/index.jsp");
+		return;
+	}
+%>
+
+<div class="container p-3">
 <%
 	Service service = Service.getInstance();
 	List<Categorys> categorys = service.getAllCategorys();

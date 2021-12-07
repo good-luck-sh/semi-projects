@@ -17,6 +17,60 @@ public class OrderDao {
 	
 	
 	/**
+	 * 주문번호에 해당하는 실제 결제금액을 조회하기
+	 * @param orderNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public Orders selectOrdersPriceByOrderNo(int userNo) throws SQLException {
+		Orders orders = null;
+		String sql = "select order_real_total_price "
+					+"from orders "
+					+"where order_no = (select max(order_no) "
+					+"				    from orders "
+					+"				    where user_no = ?) ";
+		
+		Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setInt(1, userNo);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+        	orders = new Orders();
+        	orders.setOrderRealTotalPrice(rs.getInt("order_real_total_price"));
+        }
+        
+        rs.close();
+	    pstmt.close();
+	    connection.close();
+		
+		return orders;
+	}
+	
+	/**
+	 * 유저번호에 해당하는 포인트 업데이트
+	 * @param userTable
+	 * @throws SQLException
+	 */
+	public void updateUserPoint(UserTable userTable) throws SQLException {
+	      String sql = "update user_table "
+	    		  	 + "set "
+	                 + "	user_order_point = ? "
+	                 + "where user_no = ? ";
+	      
+	      Connection connection = getConnection();
+	      PreparedStatement pstmt = connection.prepareStatement(sql);
+	      pstmt.setInt(1, userTable.getUserOrderPoint());
+	      pstmt.setInt(2, userTable.getUserNo());
+	      pstmt.executeUpdate();
+	         
+	      pstmt.close();
+	      connection.close();
+	   }
+	
+	
+	
+	
+	/**
 	 * 유저번호로 바스켓 정보 불러오기
 	 * @param userNo
 	 * @return
@@ -54,19 +108,22 @@ public class OrderDao {
 	 * @param orderItem
 	 * @throws SQLException
 	 */
-	public void insertOrderItem(OrderItem orderItem) throws SQLException {
+	public void insertOrderItem(int amount, int numbers) throws SQLException {
 		String sql = "insert into order_item (order_item_no, product_no, product_amount) "
 					+"values (order_item_no.nextval, ?, ?) ";
 		
 		Connection connection = getConnection();
 	    PreparedStatement pstmt = connection.prepareStatement(sql);
-	    pstmt.setInt(1, orderItem.getProduct().getProductNo());
-	    pstmt.setInt(2, orderItem.getProductAmount());
+	    pstmt.setInt(1, numbers);
+	    pstmt.setInt(2, amount);
 	    
-	    pstmt.executeUpdate();
+	    int a = pstmt.executeUpdate();
 	      
 	    pstmt.close();
 	    connection.close();
+	    
+	    //성공이면 1이떨어지고 실패면 0 
+	    //System.out.println(a);
 	}
 	
 	

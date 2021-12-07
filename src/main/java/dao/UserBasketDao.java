@@ -22,6 +22,25 @@ public class UserBasketDao {
 		return self;
 	}
 	
+	/**
+	 * 주문완료후 장바구니 데이터 삭제
+	 * @param userNo
+	 * @throws SQLException
+	 */
+	public void deleteBasket(int userNo) throws SQLException {
+		String sql = "delete "
+					+"from user_basket "
+					+"where user_no = ? ";
+		
+		Connection connection = getConnection();
+	    PreparedStatement pstmt = connection.prepareStatement(sql);
+	    pstmt.setInt(1, userNo);
+	    pstmt.executeQuery();
+	    
+	    pstmt.close();
+	    connection.close();
+	}
+	
 	
 	
 	public UserBasket getUserBasketBybasketNo(int basketNo) throws SQLException {
