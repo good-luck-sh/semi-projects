@@ -28,9 +28,8 @@
 %>
 <div class="container">
 <%
-	int userNo = Integer.parseInt(request.getParameter("no"));
 	UserBasketDao basketDao = UserBasketDao.getInstance();
-	List<UserBasket> basketList = basketDao.getAllUserBasketItemByNo(userNo);
+	List<UserBasket> basketList = basketDao.getAllUserBasketItemByNo(loginUserInfo.getUserNo());
 %>
 <hr>
 	<div class="row mb-3">
@@ -38,7 +37,6 @@
 			<h4>my basket</h4>
 		</div>
 	</div>
-<hr>
 <%
 	String error = request.getParameter("error");
 	if("deny-delete".equals(error)){
@@ -52,7 +50,7 @@
 
 %>
 <!-- 사진 추가하기. 근데 사진 추가는 어떻게 추가 되는거?? -->
- 	<div>
+ 	<div class="mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
  		<form method="get" action="">
  			<table class="table" id="table-basket">
 	 			<thead>
@@ -78,32 +76,32 @@
 	 					<td><%=basket.getBasketAmount() %> 개</td>
 	 					<td><%=basket.getProduct().getProductPrice() %> 원</td>
 	 					<td><%=basket.getProduct().getProductDiscountPrice() %> 원</td>
-	 					<td><a href="deletebasket.jsp?no=<%=basket.getUserTable().getUserNo() %>&basketNo=<%=basket.getUserBasketNo() %>" class="btn btn-danger btn-sm">삭제</a></td>
+	 					<td><a href="deletebasket.jsp?no=<%=basket.getUserTable().getUserNo() %>&basketNo=<%=basket.getUserBasketNo() %>" class="btn btn-outline-danger btn-sm">삭제</a></td>
 	 				</tr>
 <%
 	}
 %>
 	 			</tbody>
 	 		</table>
-<hr>
- 			<div class="row mb-3">
-	 			<div class="col">
+ 			<div class="mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
+	 			<div class="d-flex justify-content-md-end">
 	 				<h4>총 상품 금액</h4>
+	 			</div>
 <%
 	int totalPrice = 0;
 	for(UserBasket basket : basketList ){
 		totalPrice += basket.getProduct().getProductDiscountPrice() * basket.getBasketAmount();
 	}
 %>
-	 				<h3><%=totalPrice %> 원</h3>
+	 			<div class="d-flex justify-content-md-end">
+	 				<h3>= <Strong><%=totalPrice %>원</Strong></h3>
 	 			</div>
  			</div>
-<hr>
  			<div class="row mb-3">
 	 			<div class="col">
 	 				<div class="d-flex justify-content-between">
-	 					<button type="submit" class="btn btn-primary">상품주문</button>
-	 					<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
+	 					<button type="submit" class="btn text-white" style="background-color: #a45339;" >상품주문</button>
+	 					<a href="detail.jsp" class="btn btn-outline-secondary">되돌아가기</a>
 	 				</div>
 				</div>
  			</div>

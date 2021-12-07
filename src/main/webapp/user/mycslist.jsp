@@ -10,7 +10,7 @@
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-    <title>마이 페이지:내 게시글</title>
+    <title>마이 페이지:내 게시글 보기</title>
 </head>
 <body>
 <%
@@ -34,8 +34,8 @@
 			<h4>my post</h4>
 		</div>
 	</div>
-<hr>
 <%
+
 
 	// 요청파라미터에서 pageNo값을 조회한다.
 	// 요청파라미터에 pageNo값이 존재하지 않으면 Pagination객체에서 1페이지로 설정한다.
@@ -53,7 +53,7 @@
 	// 현재 페이지번호에 해당하는 게시글 목록을 조회한다.
 	List<CsBoard> boardList = boardDao.getAllcsBoardById(loginUserInfo.getUserNo(), pagination.getBegin(), pagination.getEnd());
 %>
-	<div class="row mb-3">
+	<div class="row mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
 		<div class="col">
 			<table class="table">
 				<thead>
@@ -76,11 +76,13 @@
 <%
 	} else {
 		for(CsBoard board : boardList){
+			
 
 %>
 					<tr>
 						<td class="col-2"><%=board.getCsCreateDate() %></td>
-						<td class="col-6"><a href="../csBoard/detail.jsp?no=<%=board.getCsBoardNo() %>&userNo=<%=loginUserInfo.getUserNo() %>"><%=board.getCsBoardTitle() %></a> (<%=board.getCsReplyCheck() %>)</td> <!-- 게시글 상세보기 연결,페이지네이션후 cpno추가 -->
+						<td class="col-6"><a href="../csBoard/detail.jsp?no=<%=board.getCsBoardNo() %>&userNo=<%=loginUserInfo.getUserNo() %>" class="text-black"><%=board.getCsBoardTitle() %></a>
+						<span class="badge text-black" style="background-color: #f2efe4""><%=board.getCsReplyCheck() %></span></td> <!-- 게시글 상세보기 연결,페이지네이션후 cpno추가 -->
 						<td class="col-2"><%=board.getUserTable().getUserName() %></td>
 						<td class="col-1"><%=board.getCsBoardLikeCount() %> 개</td>
 						<td class="col-1"><%=board.getCsBoardViewCount() %></td>
@@ -101,12 +103,12 @@
 						Pagination객체가 제공하는 isExistPrev()는 이전 블록이 존재하는 경우 true를 반환한다.
 						Pagination객체가 제공하는 getPrevPage()는 이전 블록의 마지막 페이지값을 반환한다.
 					 -->
-				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="list.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
+				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="mycslist.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
 <%
 	// Pagination 객체로부터 해당 페이지 블록의 시작 페이지번호와 끝 페이지번호만큼 페이지내비게이션 정보를 표시한다.
 	for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
 %>					
-				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="list.jsp?pageNo=<%=num%>"><%=num %></a></li>
+				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="mycslist.jsp?pageNo=<%=num%>"><%=num %></a></li>
 <%
 	}
 %>					
@@ -114,13 +116,13 @@
 						Pagination객체가 제공하는 isExistNext()는 다음 블록이 존재하는 경우 true를 반환한다.
 						Pagination객체가 제공하는 getNexPage()는 다음 블록의 첫 페이지값을 반환한다.
 					 -->
-				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="list.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
+				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="mycslist.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
 			</ul>
 		</div>
 		<div class="col-3 text-end">
 			<div class="col">
-				<a href="../csBoard/form.jsp" class="btn btn-danger p-2">문의사항쓰기</a>
-				<a href="detail.jsp" class="btn btn-primary">되돌아가기</a>
+				<a href="../csBoard/form.jsp" class="btn btn-outline-secondary">문의사항쓰기</a>
+				<a href="detail.jsp" class="btn text-white" style="background-color: #a45339;">되돌아가기</a>
 			</div>
 		</div>
 	</div>
