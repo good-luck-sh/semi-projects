@@ -1,12 +1,14 @@
 package dto;
 
 import java.util.Date;
+import java.util.Objects;
 
 import vo.Categorys;
 import vo.Product;
 import vo.UserTable;
 
 public class OrderDto {
+	
 	
 	private int orderNo;
 	private int orderTotalPrice;
@@ -248,7 +250,6 @@ public class OrderDto {
 	public void setProductAmount(int productAmount) {
 		this.productAmount = productAmount;
 	}
-	
 	
 	
 }

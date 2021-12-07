@@ -142,7 +142,7 @@ public class OrderReviewJdbcDao implements OrderReviewDao {
 	@Override
 	public OrderDto getAllReviewByOrderNo(int orderNo) throws SQLException {
 		OrderDto orderDto = null;
-		String sql =" select distinct U.user_no, "
+		String sql =" select U.user_no, "
 				+ "U.user_id, U.user_password, U.user_name, U.user_age, U.user_gender, U.manager_check,  "
 				+ "U.user_address, U.user_order_point, U.user_degree, U.user_created_date, U.user_delete_check,  "
 				+ "O.order_no, O.order_total_point, O.order_total_price, O.order_use_point,O.order_state, O.order_real_total_price,  "

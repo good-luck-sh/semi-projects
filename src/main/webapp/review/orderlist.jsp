@@ -1,3 +1,8 @@
+<%@page import="dto.PointHistoryReviewDto"%>
+<%@page import="dao.UserPointHistoryDao"%>
+<%@page import="vo.UserPointHistory"%>
+<%@page import="vo.UserBasket"%>
+<%@page import="dao.UserBasketDao"%>
 <%@page import="dao.OrderReviewJdbcDao"%>
 <%@page import="vo.Product"%>
 <%@page import="vo.Review"%>
@@ -33,13 +38,17 @@
 	ProductReviewJdbcDao productDao = ProductReviewJdbcDao.getInstance();
  	ReviewJdbcDao reviewDao = ReviewJdbcDao.getInstance();
  	OrderReviewJdbcDao orderDao = OrderReviewJdbcDao.getInstance();
- 
+ 	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+ 	int proudctNo = Integer.parseInt(request.getParameter("proudctNo"));
  	
- 	List<OrderDto> orderDtos = productDao.getAllReviewByUserNo(loginUserInfo.getUserNo());
- 	for(OrderDto orderDto : orderDtos) { 
- 		Product product	= productDao.getProductByProductNo(orderDto.getProductNo());
- 		OrderDto findorder = orderDao.getAllPointByOrderNo(orderDto.getOrderNo());
- 		if(findorder.getReviewContent() == null){
+ 	OrderDto orderDto = orderDao.getAllReviewByOrderNo(orderNo);
+ 	Product product = productDao.getProductByProductNo(proudctNo);
+ 	
+ 	UserPointHistoryDao userPointDao = UserPointHistoryDao.getInstance();
+ 	PointHistoryReviewDto reviewDto = userPointDao.getAllreviewByReason("주문번호 :" +orderNo + "리뷰 작성");
+ 			
+ 		
+ 	if(reviewDto == null){
 %>		
 	<div class="row d-flex">	
 		<div class="col" >
@@ -48,7 +57,7 @@
 					<div class="card-body">
 						<h5 class="card-title">총 결제 금액 :<%=orderDto.getOrderRealTotalPrice() %></h5>
 						<h6 class="card-subtitle mb-2 text-muted">주문 상태:<%=orderDto.getOrderState() %></h6>
-						<a href="../review/form.jsp?productNo=<%=product.getProductNo() %>&orderNo=<%=orderDto.getOrderNo() %>" class="btn btn-danger">리뷰 쓰기</a> 
+						<a href="../review/form.jsp?productNo=<%=proudctNo %>&orderNo=<%=orderDto.getOrderNo() %>" class="btn btn-danger">리뷰 쓰기</a> 
 						<a href="../product/detail.jsp?productNo=<%=orderDto.getProductNo() %>" class="btn btn-secondary">상품확인하기</a>
 					</div>
 				</div>
@@ -56,7 +65,7 @@
 				</div>
 <% 	
 	} else {
-%>
+%>				
 		<div class="row d-flex">	
 		<div class="col" >
 				<div class="card text-center">
@@ -65,16 +74,15 @@
 						<h5 class="card-title">총 결제 금액 :<%=orderDto.getOrderRealTotalPrice() %></h5>
 						<h6 class="card-subtitle mb-2 text-muted">주문 상태:<%=orderDto.getOrderState() %></h6> 
 						<h6 class="card-subtitle mb-2 text-muted">리뷰 작성 완료</h6> 
-						<a href="../product/detail.jsp?productNo=<%=orderDto.getProductNo() %>" class="btn btn-secondary">상품확인하기</a>
+						<a href="../product/detail.jsp?productNo=<%=proudctNo %>" class="btn btn-secondary">상품확인하기</a>
 						<a href="../user/userpointdetail.jsp?<%=loginUserInfo.getUserNo() %>" class="btn btn-primary">나의 적립금 확인하기</a>
 					</div>
 				</div>
 				</div>
 				</div>
 <%
-	}}
-%>
-		
+	}
+%>		
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
