@@ -45,7 +45,8 @@
  	Product product = productDao.getProductByProductNo(proudctNo);
  	
  	UserPointHistoryDao userPointDao = UserPointHistoryDao.getInstance();
- 	PointHistoryReviewDto reviewDto = userPointDao.getAllreviewByReason("주문번호 :" +orderNo + "리뷰 작성");
+ 	String reason = "주문번호 :" +orderNo + "리뷰 작성";
+ 	PointHistoryReviewDto reviewDto = userPointDao.getAllreviewByReason(reason);
  			
  		
  	if(reviewDto == null){
