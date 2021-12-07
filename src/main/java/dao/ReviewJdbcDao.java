@@ -402,7 +402,7 @@ public class ReviewJdbcDao implements ReviewDao {
 	      PreparedStatement ptmt = connection.prepareStatement(sql);
 	      ptmt.setInt(1, userNo);
 	      ResultSet rs = ptmt.executeQuery();
-	      if(rs.next()){
+	      while(rs.next()){
 	    	 UserDto userDto = new UserDto();
 	    	  userDto.setUserNo(rs.getInt("user_no"));
 	    	  userDto.setUserId(rs.getString("user_id"));
@@ -601,8 +601,5 @@ public class ReviewJdbcDao implements ReviewDao {
 		
 		return countReview;
 	}
-	
-	
-	
+	}
 
-}

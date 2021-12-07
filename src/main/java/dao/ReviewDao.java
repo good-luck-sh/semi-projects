@@ -70,6 +70,7 @@ public interface ReviewDao {
 	 */
 	public List<Review> getAllReview(int productNo, int begin, int end) throws SQLException;
 	
+	
 	/**
 	 * 유저 정보를 입력하면 해당하는 리뷰의 게시물이 모두 출력된다. 
 	 * @param userNo 출력하고자 하는 사용자 번호 

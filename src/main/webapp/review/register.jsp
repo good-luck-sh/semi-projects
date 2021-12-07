@@ -61,7 +61,7 @@
 	UserPointHistory point = new UserPointHistory();
 	point.setUserTable(loginUserInfo);
 	String check = "적립";
-	String reason = "리뷰 작성";
+	String reason = "주문번호 :" + orderNo + "리뷰 작성";
 	point.setHistoryPointCheck(check);
 	point.setHistoryReason(reason);
 	int getPoint = (int)(orderDto.getOrderRealTotalPrice()*0.01);
