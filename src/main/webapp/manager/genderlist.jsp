@@ -9,60 +9,81 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-<style>
-.border1{
-    border: 2px solid #f44336;
-    border-radius: 20px;
-}
-</style>
-   <title></title>
+   <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+   <script src="http://code.highcharts.com/highcharts.js"></script> 
+   <script src="http://code.highcharts.com/modules/data.js"></script> 
+   <title>성별 가입현황 조회</title>
 </head>
-<body>
 <%@include file="../navbar/nav.jsp" %>
-<div class="container border1">  
+<body>
+<div class="container">
+	<div class="row">
 <%
 	ManagerDao managerDao = new ManagerDao();
-	
 	List<GenderDto> genderList = managerDao.countAllUsersByGender();
 %>
-<div class="row mt-3 border1">
-		<div class="col-sm-4">
-			<div class="card">
-				<div class="card-header">성별 가입현황</div>
-				<div class="card-body">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>성별</th>
-								<th>가입현황</th>
-							</tr>
-						</thead>
-						<tbody>
+		<div id="genderChart" style="width: 600px; height: 550px; margin:0;"></div>
+		<div class="col-md-4">
+			<table id="datatable" class="mt-5 table table-bordered table-striped table-hover">
+				<thead class="table-primary" style="font-size:15px;">
+					<tr><th>성별</th><th>가입자 수</th></tr>
+				</thead>
+				<tbody style="font-size:15px;">
 <%
-	for (GenderDto gender : genderList) {
+	for (GenderDto genders : genderList) {
 		
-%>
-							<tr>
-								<td><%=gender.getGender() %></td>
-								<td><%=gender.getCnt() %></td>
-							</tr>
+%>		
+					<tr height="40"><th><%=genders.getGender() %></th><td><%=genders.getCnt() %></td></tr>
 <%
 	}
-%>
-						</tbody>
-					</table>
-				</div>
-			</div>
+%>	
+				</tbody>
+			</table>
+			<p style="font-size:13px; font='italic';" align="right"><i>가입자 수 : 사람(명)</i></p>
 		</div>
 	</div>
+	<div class="text-right mt-3">
+		<a href="managerlist.jsp" class="btn btn-info">뒤로 가기</a>
+	</div>  
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
-	var xArray = ["영업1팀", "영업2팀", "영업3팀", "영업4팀", "영업5팀"];
-	var yArray = [55, 49, 44, 24, 15];
+$(document).ready(function() { 
+   var data = {	
+      table: 'datatable'
+   };
+   var chart = {
+      type: 'column'
+   };
+   var title = {
+      text: '<b>' + '< 성별 가입자 통계 >' + '</b>'   
+   };      
+   var yAxis = {
+      allowDecimals: false,
+      title: {
+         text: '가입자 수'
+      }
+   };
+   var tooltip = {
+      formatter: function () {
+         return '<b>' + '가입 현황' + '</b><br/>' +
+            this.point.y + ' ' + '명';
+      }
+   };
+   var credits = {
+      enabled: false
+   };  
+      
+   var json = {};   
+   json.chart = chart; 
+   json.title = title; 
+   json.data = data;
+   json.yAxis = yAxis;
+   json.credits = credits;  
+   json.tooltip = tooltip;  
+   $('#genderChart').highcharts(json);
+});
 
-	Plotly.newPlot("chart-pie",  [{labels:xArray, values:yArray, type:"pie"}]);
 </script>
 </body>
 </html>

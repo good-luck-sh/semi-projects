@@ -11,8 +11,7 @@
    <link rel="stylesheet" href="../navbar/nav.css">
    <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-   
-   <title></title>
+   <title>카테고리 리스트</title>
 </head>
 <body>
 <div class="container">

@@ -11,7 +11,7 @@ import java.util.List;
 
 import dto.AgeDto;
 import dto.GenderDto;
-import dto.monthDto;
+import dto.SalesDto;
 
 public class ManagerDao {
 	
@@ -20,7 +20,7 @@ public class ManagerDao {
 	 * @return 월별 매출
 	 * @throws SQLException
 	 */
-	public List<monthDto> monthlySalesCheckByOrderDate() throws SQLException {
+	public List<SalesDto> monthlySalesCheckByOrderDate() throws SQLException {
 		String sql = "select to_char(order_date, 'mm') as month, "
 				+ 	 	"sum(order_total_price) as totalsales, "
 				+ 	 	"sum(order_total_point) as usepoint, "
@@ -29,14 +29,14 @@ public class ManagerDao {
 				+ "group by to_char(order_date, 'mm') "
 				+ "order by to_char(order_date, 'mm') asc ";
 		
-		List<monthDto> orderList = new ArrayList<>();
+		List<SalesDto> orderList = new ArrayList<>();
 		
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			monthDto orders = new monthDto();
+			SalesDto orders = new SalesDto();
 			orders.setOrderDate(rs.getString("month"));
 			orders.setTotalSales(rs.getInt("totalsales"));
 			orders.setUsePoint(rs.getInt("usepoint"));
@@ -59,7 +59,8 @@ public class ManagerDao {
 	public List<AgeDto> countUsersByAge() throws SQLException {
 		String sql = "select trunc(user_age, -1) as age, count(*) as cnt "
 				+ "from user_table "
-				+ "group by trunc(user_age, -1) ";
+				+ "group by trunc(user_age, -1) "
+				+ "order by trunc(user_age, -1) asc ";
 		
 		List<AgeDto> ageList = new ArrayList<>();
 		
@@ -91,7 +92,8 @@ public class ManagerDao {
 		public List<GenderDto> countAllUsersByGender() throws SQLException {
 			String sql = "select user_gender, count(*) as cnt "
 					+ "from user_table "
-					+ "group by user_gender ";
+					+ "group by user_gender "
+					+ "order by user_gender asc ";
 			
 			List<GenderDto> genderList = new ArrayList<>();
 			

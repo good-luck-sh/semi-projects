@@ -1,4 +1,4 @@
-<%@page import="dto.monthDto"%>
+<%@page import="dto.SalesDto"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.ManagerDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -12,40 +12,37 @@
    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
    <script src="http://code.highcharts.com/highcharts.js"></script> 
    <script src="http://code.highcharts.com/modules/data.js"></script> 
-   <style>
-.border1{
-    border: 2px solid #f44336;
-    border-radius: 20px;
-}
-   </style>
-   <title></title>
+   <title>월별 매출현황 조회</title>
 </head>
 <%@include file="../navbar/nav.jsp" %>
 <body>
-<div class="container border1">
+<div class="container">
 	<div class="row">
 <%
-ManagerDao managerDao = new ManagerDao();
-	List<monthDto> ordersList = managerDao.monthlySalesCheckByOrderDate();
+	ManagerDao managerDao = new ManagerDao();
+	List<SalesDto> ordersList = managerDao.monthlySalesCheckByOrderDate();
 %>
-	<div id="container" style="width: 600px; height: 550px; margin:0; "></div>
-		<div class="col">
-		<table id="datatable" class="table table-bordered table-hover">
-			<thead class="table-secondary">
-				<tr><th>월</th><th>총 매출액</th><th>실제 결제금액</th><th>사용 포인트</th></tr>
-			</thead>
-			<tbody class="table-light">
+		<div id="monthlyChart" class="col-md-8"></div>
+		<div class="col-md-4">
+			<table id="datatable" class="mt-5 table table-bordered table-striped table-hover">
+				<thead class="table-primary" style="font-size:15px;">
+					<tr><th>월</th><th>총 매출액</th><th>실제 결제금액</th><th>사용 포인트</th></tr>
+				</thead>
+				<tbody class="table-light" style="font-size:14px;">
 <%
-for (monthDto orders : ordersList) {
+	for (SalesDto orders : ordersList) {
 %>
-				<tr><th><%=orders.getOrderDate() %></th><td><%=orders.getTotalSales() %></td><td><%=orders.getRealSales() %></td><td><%=orders.getUsePoint() %></td></tr>
+					<tr><th><%=orders.getOrderDate() %>월</th><td><%=orders.getTotalSales() %></td><td><%=orders.getRealSales() %></td><td><%=orders.getUsePoint() %></td></tr>
 <%
 	}
 %>
-			</tbody>
-		</table>
-		<p style="font-size:14px;">총 매출액 : 실제 결제금액 + 사용 포인트</p>
+				</tbody>
+			</table>
+			<p style="font-size:13px;" align="right"><i>총 매출액 : 실제 결제금액(원)+ 사용 포인트</i></p>
 		</div>
+	</div>
+	<div class="text-right mt-3">
+		<a href="managerlist.jsp" class="btn btn-info">뒤로 가기</a>
 	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -58,7 +55,7 @@ $(document).ready(function() {
       type: 'column'
    };
    var title = {
-      text: '월별매출통계'   
+		      text: '<b>' + '< 2021 월별 매출 통계 >' + '</b>'   
    };      
    var yAxis = {
       allowDecimals: false,
@@ -83,7 +80,7 @@ $(document).ready(function() {
    json.yAxis = yAxis;
    json.credits = credits;  
    json.tooltip = tooltip;  
-   $('#container').highcharts(json);
+   $('#monthlyChart').highcharts(json);
 });
 
 </script>
