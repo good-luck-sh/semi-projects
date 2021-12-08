@@ -16,13 +16,13 @@
 	
 	// 패스워드가 비어있는지 확인
 	if(password != null && password.isBlank()){
-		response.sendRedirect("modifyform.jsp?no="+loginUserInfo.getUserNo()+"&error=empty-password");
+		response.sendRedirect("modifyform.jsp?error=empty-password");
 		return; 
 	}
 	
 	//주소가 비어있는지 확인
 	if(address != null && address.isBlank()){
-		response.sendRedirect("modifyform.jsp?no="+ loginUserInfo.getUserNo() +"&&error=empty-address");
+		response.sendRedirect("modifyform.jsp?error=empty-address");
 		return;
 	}
 	
@@ -40,7 +40,7 @@
 	uDao.updateUser(user);
 	
 	
-	response.sendRedirect("modifyform.jsp?no=" + loginUserInfo.getUserNo() +"&&success=complete");
+	response.sendRedirect("modifyform.jsp?success=complete");
 	
 	
 	
