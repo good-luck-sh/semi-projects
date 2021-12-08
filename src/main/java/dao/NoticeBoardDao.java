@@ -25,8 +25,8 @@ public class NoticeBoardDao {
 	 * @throws SQLException
 	 */
 	public void insertNotice(NoticeBoard noticeBoard) throws SQLException {
-		String sql = "insert into notice_board (board_no, board_title, board_content) "
-				   + "values (board_no.nextval, ?, ?)";
+		String sql = "insert into notice_board (board_no, board_title, board_content, board_created_date) "
+				   + "values (board_no.nextval, ?, ?, sysdate)";
 		
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -38,7 +38,20 @@ public class NoticeBoardDao {
 		pstmt.close();
 		connection.close();
 	}
+	
+	public void deleteBoard(int no) throws SQLException {
+		String sql = "delete from notice_board where board_no = ? ";
 		
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1, no);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+			
 	/**
 	 * 테이블에 저장된 공지사항글의 갯수를 반환한다.
 	 * @return

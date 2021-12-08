@@ -12,14 +12,18 @@
 	
 	UserDao userDao = UserDao.getInstance();
 	
+	// 동일한 아이디가 있으면 회원가입 실패
 	UserTable savedUser = userDao.getUserById(id);
 	if (savedUser != null) {
 		response.sendRedirect("registerform.jsp?error=id-exists");
 		return;
 	}
+
 	
 	// 비밀번호 암호화
 	String secretPassword = DigestUtils.sha256Hex(password);
+	
+	
 	
 	UserTable user = new UserTable();
 	user.setUserId(id);

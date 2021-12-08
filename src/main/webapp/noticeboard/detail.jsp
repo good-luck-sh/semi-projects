@@ -7,12 +7,14 @@
 <head>
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
     <title>공지사항 상세페이지</title>
 </head>
 <body>
 <%
-	pageContext.setAttribute("menu", "noticeboard");
+pageContext.setAttribute("menu", "noticeboard");
+
 %>
 <%@ include file="../navbar/nav.jsp" %>
 <div class="container">    
@@ -22,12 +24,13 @@
 		</div>
 	</div>
 <%
-	int no = Integer.parseInt(request.getParameter("no"));
+int no = Integer.parseInt(request.getParameter("no"));
 	String pageNo = request.getParameter("pageNo");
 	String error = request.getParameter("error");
 	
 	NoticeBoardDao noticeBoardDao = NoticeBoardDao.getInstance();
 	NoticeBoard noticeBoard = noticeBoardDao.getBoardDetail(no);
+
 %>	
 	<div class="row mb-3">
 		<div class="col">
@@ -50,6 +53,23 @@
 			</table>
 			<div class="col-6 text-end">
 				<a href="notice.jsp" class="btn btn-outline-primary">목록</a>
+			</div>
+		</div>	
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			<div class="d-flex justify-content-between">
+				<div>
+<%
+	if (loginUserInfo != null) { 
+		if (loginUserInfo.getManagerCheck() != null) {
+%>
+				<a class="btn btn-danger p-2" href="delete.jsp?no=<%=noticeBoard.getBooardNo()%>&no=<%=no%>">삭제</a>
+<%
+		}
+	}
+%>
+				</div>
 			</div>
 		</div>
 	</div>

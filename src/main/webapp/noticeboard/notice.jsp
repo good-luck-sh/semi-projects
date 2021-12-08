@@ -8,12 +8,13 @@
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
     <title>공지사항</title>
 </head>
 <body>
 <%
-	pageContext.setAttribute("menu", "noitceboard");
+pageContext.setAttribute("menu", "noitceboard");
 %>
 <%@ include file="../navbar/nav.jsp" %>
 <div class="container">    
@@ -23,7 +24,7 @@
 		</div>
 	</div>
 <%
-	String pageNo = request.getParameter("pageNo");
+String pageNo = request.getParameter("pageNo");
 
 	NoticeBoardDao noticeBoardDao = NoticeBoardDao.getInstance();
 	
@@ -82,18 +83,24 @@
 %>			
 				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="notice.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
 			</ul>
-
 		</div>
+
 		<div class="col-3 text-end">
 <%
 	
-	if (loginUserInfo.getManagerCheck() != null) { 
+	if (loginUserInfo != null) { 
+		if (loginUserInfo.getManagerCheck() != null) {
 %>
 			<a href="form.jsp" class="btn btn-outline-primary">새 공지사항 작성</a>
 <%
+		}
 	}
 %>
+			</div>
+		</div>
+	</div>
 
+			
 		</div>
 	</div>
 </div>

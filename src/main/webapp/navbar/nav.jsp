@@ -62,7 +62,10 @@
 
                     <li class="nav-li"><a href="../user/mycslist.jsp"><img src="../navbar/resource/ico_headsearch.png" alt="" class="userIcon <%="login".equals(menu) ? "active" : "" %>"id="icon-2" ></a></li>
                     <!-- 로그인이 되어있으면 활성화 시켜서 cs게시판 jsp로 이동하도록 입력한다. -->
-					<li class="nav-li"><a href="../main/logout.jsp" class="btn btn-primary btn-sm">out</a></li>
+
+                    <li class="nav-li"><a href="http://localhost/semi-projects/noticeboard/notice.jsp"><img src="../navbar/resource/ico_headhm.png" alt="" class="userIcon <%="login".equals(menu) ? "active" : "" %>"id="icon-3" ></a></li>
+                	<!-- 로그인이 되어있지 않으면 icon을 누르면 카테고리의 별 상품정보가 출력되도록 한다.  -->
+					<li class="nav-li"><a href="http://localhost/semi-projects/main/logout.jsp" class="btn btn-primary btn-sm">out</a></li>
 
 <%
 	}
