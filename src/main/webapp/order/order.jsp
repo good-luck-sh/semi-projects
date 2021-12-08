@@ -1,3 +1,4 @@
+<%@page import="java.lang.reflect.Array"%>
 <%@page import="dao.UserPointHistoryDao"%>
 <%@page import="vo.UserPointHistory"%>
 <%@page import="dao.ProductDao"%>
@@ -20,6 +21,7 @@
 	int orderRealTotalPrice = Integer.parseInt(request.getParameter("orderRealTotalPrice"));
 	String orderName = request.getParameter("orderName");
 	String orderAddress = request.getParameter("orderAddress");
+	String orderDetailAddress = request.getParameter("orderDetailAddress");
 	String orderPhoneNumber = request.getParameter("orderPhoneNumber");
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	
@@ -30,26 +32,33 @@
 	// 오류 검사 시작
 	int orderPoint = Integer.parseInt(request.getParameter("UseAll"));
 	int nowUserPoint = Integer.parseInt(request.getParameter("nowPoint"));
-	
+
+	String[] basketNo = request.getParameterValues("basketNo");
+	String text = "";
+	for(int i = 0; i < basketNo.length; i++){
+		text += "&basketNo="+basketNo[i];
+	}
 	if (orderName.isBlank()) {
-		response.sendRedirect("order_form.jsp?error=empty-name");
+		
+		
+		response.sendRedirect("order_form.jsp?error=empty-name"+text);
 		return;
 	} else if (orderAddress.isBlank()) {
-		response.sendRedirect("order_form.jsp?error=empty-address");
+		response.sendRedirect("order_form.jsp?error=empty-address"+text);
 		return;
 	} else if (orderPhoneNumber.isBlank()) {
-		response.sendRedirect("order_form.jsp?error=empty-phoneNumber");
+		response.sendRedirect("order_form.jsp?error=empty-phoneNumber"+text);
 		return;
 	} else if (nowUserPoint < orderPoint) {
-		response.sendRedirect("order_form.jsp?error=point-error");
+		response.sendRedirect("order_form.jsp?error=point-error"+text);
 		return;
 	} else if (orderPoint < 0) {
-		response.sendRedirect("order_form.jsp?error=point-error2");
+		response.sendRedirect("order_form.jsp?error=point-error2"+text);
 		return;
 	} else if (orderRealTotalPrice < orderPoint) {
-		response.sendRedirect("order_form.jsp?error=point-error3");
+		response.sendRedirect("order_form.jsp?error=point-error3"+text);
 		return;
-	}
+	} 
 	
 
 	// Orders에 정보 입력
@@ -58,7 +67,7 @@
 	orders.setOrderTotalPoint(orderTotalPoint);
 	orders.setOrderUsePoint(orderUsePoint);
 	orders.setOrderRealTotalPrice(orderRealTotalPrice);
-	orders.setOrderAddress(orderAddress);
+	orders.setOrderAddress(orderAddress+" "+orderDetailAddress);
 	orders.setOrderPhoneNumber(orderPhoneNumber);
 	orders.setOrderName(orderName);
 	UserDao user = UserDao.getInstance();
