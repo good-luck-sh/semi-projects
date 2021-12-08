@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.catalina.User;
+
+import dto.PointHistoryReviewDto;
 import dto.UserDto;
 import vo.Product;
 import vo.UserPointHistory;
@@ -114,6 +117,40 @@ public class UserPointHistoryDao {
 		 return historys;
 	}
 	
+	public PointHistoryReviewDto getAllreviewByReason(String reasons) throws SQLException {
+		PointHistoryReviewDto reviewDto = null;
+		String sql = "select R.review_no, R.review_title, R.user_no, R.review_review_like_count, R.review_content, R.review_created_date, R.review_star_point,"
+				+ " H.history_no, H.history_point_check, H.history_reason, H.history_create_date, H.history_total_point "
+				+ "from user_point_history H, review R "
+				+ "where H.history_create_date = R.review_created_date "
+				+ "and H.history_reason like '%' || ? || '%' ";
+		Connection connection = getConnection();
+		PreparedStatement ptmt = connection.prepareStatement(sql);
+		ptmt.setString(1, reasons);
+		ResultSet rs = ptmt.executeQuery();
+		if(rs.next()) {
+			reviewDto = new PointHistoryReviewDto();
+			reviewDto.setReviewNo(rs.getInt("review_no"));
+			reviewDto.setReviewTitle(rs.getString("review_title"));
+			UserTable user = new UserTable();
+			user.setUserNo(rs.getInt("user_no"));
+			reviewDto.setUserTable(user);
+			reviewDto.setReviewReviewLikeCount(rs.getInt("review_review_like_count"));
+			reviewDto.setReviewContent(rs.getString("review_content"));
+			reviewDto.setReviewCreatedDate(rs.getDate("review_created_date"));
+			reviewDto.setReviewStarPoint(rs.getInt("review_star_point"));
+			reviewDto.setHistoryNo(rs.getInt("history_no"));
+			reviewDto.setHistoryPointCheck(rs.getString("history_point_check"));
+			reviewDto.setHistoryReason(rs.getString("history_reason"));
+			reviewDto.setHistoryCreateDate(rs.getDate("history_create_date"));
+			reviewDto.setHistoryTotalPoint(rs.getInt("history_total_point"));
+		}
+		
+		rs.close();
+		ptmt.close();
+		connection.close();
+		return reviewDto;
+	}
 	
 
 }
