@@ -55,7 +55,7 @@
    }
 %>
 
-<!-- 장바구니에 상품이 없습니다 넣기 -->
+
  	<div class="mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
  		<form method="get" action="../order/order_form.jsp">
  			<table class="table" id="table-basket">
@@ -87,7 +87,7 @@
 	 				<tr>
 	 					<td><input type="checkbox" id="ch-<%=basket.getUserBasketNo() %>" name="basketNo" value="<%=basket.getUserBasketNo() %>"></td>
 	 					<td><%=basket.getProduct().getProductNo() %></td>
-	 					<td><img alt="item-img" src="<%=basket.getProduct().getProductPicture() %>" width="90" height="90"></td>
+	 					<td><img alt="item-img" src="<%=basket.getProduct().getProductPicture() %>" width="100" height="150"></td>
 	 					<td><%=basket.getProduct().getProductName() %></td>
 	 					<td><%=basket.getBasketAmount() %> 개</td>
 	 					<td><%=basket.getProduct().getProductPrice() %> 원</td>
