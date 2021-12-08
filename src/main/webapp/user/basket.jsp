@@ -49,7 +49,7 @@
    } else if ("empty-basket".equals(error)) {
 %>
       <div class="alert alert-danger">
-         <strong>장바구니가 비어있습니다.</strong> 장바구니를 확인해주세요.
+         <strong>선택된 상품이 없습니다.</strong>
       </div>
 <%      
    }
