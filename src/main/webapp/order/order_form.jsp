@@ -25,16 +25,23 @@
 		response.sendRedirect("../main/loginform.jsp?error=login-required");
 		return;
 	}
-	
-	UserBasketDao userBasketDao = UserBasketDao.getInstance();
 	int userNo =  loginUserInfo.getUserNo();
-	List<UserBasket> userBasket = userBasketDao.getAllUserBasketItemByNo(loginUserInfo.getUserNo());
 	
-	// 장바구니가 비어있으면 장바구니 페이지로 연결
-	if (userBasket.isEmpty()) {
+	// 장바구니에서 상품을 체크하지 않고 주문을 요청한 경
+	String[] basketNoArray = request.getParameterValues("basketNo");// ["23", "24"]
+	if (basketNoArray == null) {
 		response.sendRedirect("../user/basket.jsp?no="+loginUserInfo.getUserNo()+"&error=empty-basket");
 		return;
 	}
+	
+	List<UserBasket> userBasketList = new ArrayList<>();
+	UserBasketDao userBasketDao = UserBasketDao.getInstance();
+	for (String str : basketNoArray) {
+		int basketNo = Integer.parseInt(str);
+		UserBasket userBasket = userBasketDao.getUserBasketBybasketNo(basketNo);
+		userBasketList.add(userBasket);
+	}
+	
 	
 	// 고객등급별 포인트 적립
 	double savePointRate = 0;
@@ -142,7 +149,7 @@
 									</div>
 									<div class="contents">
 <%
-	for (UserBasket basket : userBasket) {
+	for (UserBasket basket : userBasketList) {
 %>
 												<div class="ec-base-prdInfo xans-record-">
 													<div class="prdBox">
@@ -218,7 +225,7 @@
 															<td class="right">
 <%
 	int totalPrice = 0;
-	for (UserBasket basket : userBasket) {
+	for (UserBasket basket : userBasketList) {
 		totalPrice += (basket.getProduct().getProductDiscountPrice() * basket.getBasketAmount());
 	}
 %>
@@ -249,7 +256,7 @@
 								<!-- point 적립 -->
 <%
 	int totalPoint = 0;
-	for (UserBasket basket : userBasket) {
+	for (UserBasket basket : userBasketList) {
 		totalPoint += (basket.getProduct().getProductDiscountPrice() * basket.getBasketAmount() * savePointRate);
 	}
 %>
