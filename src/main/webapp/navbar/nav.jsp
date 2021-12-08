@@ -57,10 +57,10 @@
 	} else {
 %>      
 
-                 	<li class="nav-li"><a href="../user/detail.jsp"><img src="../navbar/resource/ico_headuser.png" alt="" class="userIcon <%="login".equals(menu) ? "active" : "" %>" id="icon-1" ></a></li>
+                 	<li class="nav-li"><a href="http://localhost/semi-projects/user/detail.jsp"><img src="../navbar/resource/ico_headuser.png" alt="" class="userIcon <%="login".equals(menu) ? "active" : "" %>" id="icon-1" ></a></li>
                     <!-- 로그인이 되어있으면 활성화 시켜서 마이페이지 jsp로 이동하도록 입력한다. -->
 
-                    <li class="nav-li"><a href="../user/mycslist.jsp"><img src="../navbar/resource/ico_headsearch.png" alt="" class="userIcon <%="login".equals(menu) ? "active" : "" %>"id="icon-2" ></a></li>
+                    <li class="nav-li"><a href="http://localhost/semi-projects/user/mycslist.jsp"><img src="../navbar/resource/ico_headsearch.png" alt="" class="userIcon <%="login".equals(menu) ? "active" : "" %>"id="icon-2" ></a></li>
                     <!-- 로그인이 되어있으면 활성화 시켜서 cs게시판 jsp로 이동하도록 입력한다. -->
 
                     <li class="nav-li"><a href="http://localhost/semi-projects/noticeboard/notice.jsp"><img src="../navbar/resource/ico_headhm.png" alt="" class="userIcon <%="login".equals(menu) ? "active" : "" %>"id="icon-3" ></a></li>
