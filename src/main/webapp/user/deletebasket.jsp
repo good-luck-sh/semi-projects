@@ -5,7 +5,7 @@
     pageEncoding="UTF-8"%>
 <%
 	
-	int userNo = Integer.parseInt(request.getParameter("no"));
+	
 	int basketNo = Integer.parseInt(request.getParameter("basketNo"));
 	
 	// 로그인한 사용자정보가 세션에 존재하지 않으면 장바구니 제품을 삭제할 수 없다.
@@ -31,5 +31,5 @@
 	
 	basketDao.deleteBasketProduct(basketNo);
 	
-	response.sendRedirect("basket.jsp?no="+userNo);
+	response.sendRedirect("basket.jsp");
 %>

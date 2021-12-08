@@ -40,7 +40,7 @@
 	uDao.updateUser(user);
 	
 	
-	response.sendRedirect("modifyform.jsp?no=" + loginUserInfo.getUserNo() +"&&success=complete");
+	response.sendRedirect("modifyform.jsp?success=complete");
 	
 	
 	
