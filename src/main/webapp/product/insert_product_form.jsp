@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../navbar/nav.css">
     <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
-    <title>커먼 유니크</title>
+    <title>관리자::상품등록</title>
 	<%@ include file="../navbar/nav.jsp" %>
 </head>
 <body>
