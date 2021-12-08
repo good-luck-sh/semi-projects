@@ -45,7 +45,7 @@
 					</div>
 					<div class="text-end mt-3">
 						<button class="btn btn-outline-primary m-3" type="submit">등록하기</button>
-						<button class="btn btn-outline-danger ml-3"><a href="mycslist.jsp">취소하기</a></button>
+						<button class="btn btn-outline-danger ml-3"><a href="../user/mycslist.jsp">취소하기</a></button>
 					</div>
 				</form>
 			</div>
