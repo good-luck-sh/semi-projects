@@ -46,6 +46,9 @@
 	} else if (orderPoint < 0) {
 		response.sendRedirect("order_form.jsp?error=point-error2");
 		return;
+	} else if (orderRealTotalPrice < orderPoint) {
+		response.sendRedirect("order_form.jsp?error=point-error3");
+		return;
 	}
 	
 

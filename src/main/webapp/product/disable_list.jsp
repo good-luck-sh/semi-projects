@@ -26,7 +26,7 @@
    
    </style>
    
-   <title>상품 목록</title>
+   <title>관리자::비활성화상품</title>
 </head>
 <body>
 <%@include file="../navbar/nav.jsp" %>

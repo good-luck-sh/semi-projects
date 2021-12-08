@@ -87,14 +87,14 @@ public class OrderDao {
 	}
 	
 	/**
-	 * 구매후 유저의 등급 변경(다이아)
+	 * 구매후 유저의 등급 변경(다이아몬드)
 	 * @param userNo1
 	 * @param userNo2
 	 * @throws SQLException
 	 */
 	public void updateUserDegreeDia(int userNo1, int userNo2) throws SQLException {
 		String sql = "update user_table "
-					+"set user_degree = '다이아' "
+					+"set user_degree = '다이아몬드' "
 					+"where user_no = ? "
 					+"and 1000000 <= (select sum(order_real_total_price) "
 					+"				 from orders "
