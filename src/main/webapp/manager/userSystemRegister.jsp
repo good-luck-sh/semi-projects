@@ -15,7 +15,7 @@
 		response.sendRedirect("../loginform.jsp?error=empty");
 		return;
 	}
-	int userNo = Integer.parseInt(request.getParameter("userNo"));
+	int userNo = Integer.parseInt(request.getParameter("usergiveManager"));
 	
 	UserDao userDao = UserDao.getInstance();
 	UserTable user = userDao.getUserAllInfoByNo(userNo);

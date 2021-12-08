@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>매니저 관리 폼</title>
 </head>
@@ -15,8 +16,15 @@
 %>
 <%@ include file="../navbar/nav.jsp" %>
 <%
+	if (loginUserInfo == null) {
+	response.sendRedirect("../main/loginform.jsp?error=empty");
+	return;
+	}
+	if (loginUserInfo.getManagerCheck() == null) {
+	response.sendRedirect("../main/loginform.jsp?error=login-required");
+	}
 	String error = request.getParameter("error");
-	if("empty".equals(error)) {
+	if ("empty".equals(error)) {
 %>				
 				<div class="alert alert-danger">
 					<strong>작성 실패</strong>설정이 필요합니다.
@@ -40,12 +48,10 @@
 	UserDao user = UserDao.getInstance();
 	List<UserTable> users= user.getAllUser();
 	for(UserTable finduser : users) {
-%>
-				<form action="userSystemRegister.jsp" method="post">
-<%
 	if(finduser.getManagerCheck() == null) {
-%>
-					<input type="hidden" name="userNo" value="<%=finduser.getUserNo() %>">
+%>	
+					<form action="userSystemRegister.jsp" method="post">
+					<input type="hidden" name="usergiveManager" value="<%=finduser.getUserNo() %>">
 					<label for="exampleFormControlInput1" class="form-label">회원 아이디</label>
 					<input type="text" name="" value="<%=finduser.getUserId() %>" class="form-control" disabled="disabled">
 					<select class="form-select form-select-lg mb-3" name="manager">
