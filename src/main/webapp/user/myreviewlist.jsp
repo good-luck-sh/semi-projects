@@ -114,7 +114,7 @@
 		</div>
 		<div class="col-3 text-end">
 			<div class="col">
-				<a href="detail.jsp" class="btn text-white" style="background-color: #a45339;">되돌아가기</a>
+				<a href="detail.jsp" class="btn text-white" style="background-color: #a45339;">돌아가기</a>
 			</div>
 		</div>
 	</div>

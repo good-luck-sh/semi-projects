@@ -62,6 +62,7 @@
 	 				<tr>
 	 					<th><input type="checkbox" id="ck-all" onchange="toggleCheckbox()"></th>
 	 					<th>상품 번호</th>
+	 					<th>이미지</th>
 	 					<th>상품 이름</th>
 	 					<th>수량</th>
 	 					<th>정상 가격</th>
@@ -77,6 +78,7 @@
 	 				<tr>
 	 					<td><input type="checkbox" id="ch-1" name="basket" value="1"></td>
 	 					<td><%=basket.getProduct().getProductNo() %></td>
+	 					<td><img alt="item-img" src="<%=basket.getProduct().getProductPicture() %>"></td>
 	 					<td><%=basket.getProduct().getProductName() %></td>
 	 					<td><%=basket.getBasketAmount() %> 개</td>
 	 					<td><%=basket.getProduct().getProductPrice() %> 원</td>
@@ -105,8 +107,8 @@
  			<div class="row mb-3">
 	 			<div class="col">
 	 				<div class="d-flex justify-content-between">
-	 					<a href="../order/order_form.jsp?no=<%=loginUserInfo.getUserNo()%>" type="submit" class="btn text-white" style="background-color: #a45339;" >상품주문</button>
-	 					<a href="detail.jsp" class="btn btn-outline-secondary">되돌아가기</a>
+	 					<a href="../order/order_form.jsp?no=<%=loginUserInfo.getUserNo()%>" type="submit" class="btn text-white" style="background-color: #a45339;" >상품주문</a>
+	 					<a href="detail.jsp" class="btn btn-outline-secondary">돌아가기</a>
 	 				</div>
 				</div>
  			</div>

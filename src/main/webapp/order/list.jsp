@@ -61,7 +61,7 @@
 </div>
 <div class="row text-center" style="justify-content: center;">
 	<div class="col-6">
-		<a href="../user/detail.jsp" class="btn btn-primary mr-3">돌아가기</a>	
+		<a href="../user/detail.jsp" class="btn text-white mr-3" style="background-color: #a45339;">돌아가기</a>	
 	</div>
 </div>
 
