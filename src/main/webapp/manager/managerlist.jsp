@@ -26,7 +26,7 @@
 	}
 %>
 			<h1 class=>매니저 메뉴 확인하기</h1>
-			<div class="dropdown">
+			<div class="dropdown"  style="border-top: 1px solid #a10000; padding: 10px;">
 			  <button class="btn btn-secondary dropdown-toggle  mt-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
  				매니저 메뉴 
   			</button>
