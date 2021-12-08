@@ -6,7 +6,7 @@
 	String id = request.getParameter("id");
 	String password = request.getParameter("password");
 	String name = request.getParameter("name");
-	int age = Integer.parseInt(request.getParameter("age"));
+	int age = 0;
 	String gender = request.getParameter("gender");
 	String address = request.getParameter("address");
 	
@@ -16,6 +16,35 @@
 	UserTable savedUser = userDao.getUserById(id);
 	if (savedUser != null) {
 		response.sendRedirect("registerform.jsp?error=id-exists");
+		return;
+	}
+	if (id != null && id.isBlank()) {
+		response.sendRedirect("registerform.jsp?error=id-empty");
+		return;
+	}
+	if (password != null && password.isBlank()) {
+		response.sendRedirect("registerform.jsp?error=password-empty");
+		return;
+	}
+	if (name != null && name.isBlank()) {
+		if (age == 0) {
+			if (address != null && address.isBlank()) {
+		
+				response.sendRedirect("registerform.jsp?error=all-empty");
+				return;
+			}
+		}	
+	}
+	if (name != null && name.isBlank()) {
+		response.sendRedirect("registerform.jsp?error=name-empty");
+		return;
+	}
+	if (age == 0) {
+		response.sendRedirect("registerform.jsp?error=age-empty");
+		return;
+	}
+	if (address != null && address.isBlank()) {
+		response.sendRedirect("registerform.jsp?error=address-empty");
 		return;
 	}
 

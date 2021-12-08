@@ -14,7 +14,7 @@
 </head>
 <body>
 <%
-pageContext.setAttribute("menu", "noitceboard");
+pageContext.setAttribute("menu", "login");
 %>
 <%@ include file="../navbar/nav.jsp" %>
 <div class="container">    

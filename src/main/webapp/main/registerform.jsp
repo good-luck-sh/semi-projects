@@ -22,13 +22,54 @@
 <%
 	if ("id-exists".equals(error)) {					
 %>
-	<div class="alert alert-danger">
-		<strong>회원가입 실패</strong> 다른 사용자가 사용중인 아이디입니다. 아이디를 확인하세요.
-	</div>
+		<div class="alert alert-danger">
+			<strong>회원가입 실패</strong> 다른 사용자가 사용중인 아이디입니다. 아이디를 확인하세요.
+		</div>
+<%
+	} else if ("id-empty".equals(error)) {					
+%>
+		<div class="alert alert-danger">
+			<strong>회원가입 실패</strong> 아이디를 입력하세요.
+		</div>
+<%
+	} else if ("password-empty".equals(error)) {					
+%>
+		<div class="alert alert-danger">
+			<strong>회원가입 실패</strong> 비밀번호를 입력하세요.
+		</div>
+<%
+	} else if ("all-empty".equals(error)) {					
+%>
+		<div class="alert alert-danger">
+			<strong>회원가입 실패</strong> 기본정보를 입력하세요.
+		</div>		
+<%
+	} else if ("name-empty".equals(error)) {					
+%>
+		<div class="alert alert-danger">
+			<strong>회원가입 실패</strong> 이름을 입력하세요.
+		</div>		
+<%
+	} else if ("age-empty".equals(error)) {					
+%>
+		<div class="alert alert-danger">
+			<strong>회원가입 실패</strong> 나이를 입력하세요.
+		</div>
+<%
+	} else if ("address-empty".equals(error)) {					
+%>
+		<div class="alert alert-danger">
+			<strong>회원가입 실패</strong> 주소를 입력하세요.
+		</div>
+<%
+	} else if ("all-empty".equals(error)) {					
+%>
+		<div class="alert alert-danger">
+			<strong>회원가입 실패</strong> 기본정보를 입력하세요.
+		</div>
 <%
 	} 
 %>
-	
 
 	<div class="row mb-3">
 		<div class="col">

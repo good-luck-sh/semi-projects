@@ -13,7 +13,7 @@
 </head>
 <body>
 <%
-pageContext.setAttribute("menu", "noticeboard");
+pageContext.setAttribute("menu", "login");
 
 %>
 <%@ include file="../navbar/nav.jsp" %>
