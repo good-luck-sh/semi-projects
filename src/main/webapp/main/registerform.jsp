@@ -5,12 +5,13 @@
 <head>
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
     <title>회원가입폼</title>
 </head>
 <body>
 <%
-	pageContext.setAttribute("menu", "register");
+	pageContext.setAttribute("menu", "login");
 %>
 <%@ include file="../navbar/nav.jsp" %>
 <div class="container">
@@ -22,11 +23,13 @@
 	if ("id-exists".equals(error)) {					
 %>
 	<div class="alert alert-danger">
-				<strong>회원가입 실패</strong> 다른 사용자가 사용중인 아이디입니다. 아이디를 확인하세요.
-			</div>
+		<strong>회원가입 실패</strong> 다른 사용자가 사용중인 아이디입니다. 아이디를 확인하세요.
+	</div>
 <%
 	} 
 %>
+	
+
 	<div class="row mb-3">
 		<div class="col">
 			<p class="fs-3">회원가입</p>
