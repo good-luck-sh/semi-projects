@@ -45,9 +45,11 @@ public class UserBasketDao {
 	
 	public UserBasket getUserBasketBybasketNo(int basketNo) throws SQLException {
 		UserBasket basket = null;
-		String sql = "select user_basket_no, user_no, product_no, basket_amount "
-					+ "from user_basket "
-					+ "where user_basket_no = ? ";
+		String sql = "select B.user_basket_no, B.user_no, B.product_no, B.basket_amount, "
+				+ "P.product_name, P.product_picture, P.product_price, P.product_discount_price "
+				+ "from user_basket B, product P "
+				+ "where B.product_no = P.product_no "
+				+ "and user_basket_no = ? ";
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
 		pstmt.setInt(1, basketNo);
@@ -63,9 +65,14 @@ public class UserBasketDao {
 			
 			Product product = new Product();
 			product.setProductNo(rs.getInt("product_no"));
+			product.setProductName(rs.getString("product_name"));
+			product.setProductPicture(rs.getString("product_picture"));
+			product.setProductPrice(rs.getInt("product_price"));
+			product.setProductDiscountPrice(rs.getInt("product_discount_price"));
 			
 			basket.setUserTable(user);
 			basket.setProduct(product);
+			
 			
 		}
 		

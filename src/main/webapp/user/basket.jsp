@@ -8,6 +8,7 @@
 <head>
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon"> 
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
     <title>마이페이지::장바구니</title>
 </head>
@@ -54,9 +55,9 @@
    }
 %>
 
-<!-- 사진 추가하기. 근데 사진 추가는 어떻게 추가 되는거?? -->
+<!-- 장바구니에 상품이 없습니다 넣기 -->
  	<div class="mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
- 		<form method="get" action="">
+ 		<form method="get" action="../order/order_form.jsp">
  			<table class="table" id="table-basket">
 	 			<thead>
 	 				<tr>
@@ -72,20 +73,29 @@
 	 			</thead>
 	 			<tbody>
 <%
-	for(UserBasket basket : basketList ){
+	if(basketList.isEmpty()){
+%>
+						<tr>
+							<td class="text-center" colspan="6">장바구니에 상품이 존재하지 않습니다.</td>
+						</tr>
+						
+<%
+	} else {
+		for(UserBasket basket : basketList ){
 
 %>
 	 				<tr>
-	 					<td><input type="checkbox" id="ch-1" name="basket" value="1"></td>
+	 					<td><input type="checkbox" id="ch-<%=basket.getUserBasketNo() %>" name="basketNo" value="<%=basket.getUserBasketNo() %>"></td>
 	 					<td><%=basket.getProduct().getProductNo() %></td>
-	 					<td><img alt="item-img" src="<%=basket.getProduct().getProductPicture() %>"></td>
+	 					<td><img alt="item-img" src="<%=basket.getProduct().getProductPicture() %>" width="90" height="90"></td>
 	 					<td><%=basket.getProduct().getProductName() %></td>
 	 					<td><%=basket.getBasketAmount() %> 개</td>
 	 					<td><%=basket.getProduct().getProductPrice() %> 원</td>
 	 					<td><%=basket.getProduct().getProductDiscountPrice() %> 원</td>
-	 					<td><a href="deletebasket.jsp?no=<%=basket.getUserTable().getUserNo() %>&basketNo=<%=basket.getUserBasketNo() %>" class="btn btn-outline-danger btn-sm">삭제</a></td>
+	 					<td><a href="deletebasket.jsp?basketNo=<%=basket.getUserBasketNo() %>" class="btn btn-outline-danger btn-sm">삭제</a></td>
 	 				</tr>
 <%
+		}
 	}
 %>
 	 			</tbody>
@@ -107,7 +117,7 @@
  			<div class="row mb-3">
 	 			<div class="col">
 	 				<div class="d-flex justify-content-between">
-	 					<a href="../order/order_form.jsp?no=<%=loginUserInfo.getUserNo()%>" type="submit" class="btn text-white" style="background-color: #a45339;" >상품주문</a>
+	 					<button type="submit" class="btn text-white" style="background-color: #a45339;">상품주문</button>
 	 					<a href="detail.jsp" class="btn btn-outline-secondary">돌아가기</a>
 	 				</div>
 				</div>
@@ -130,7 +140,7 @@
 		// 		 	 선택된 엘리먼트의 자손 tbody를 선택한다.
 		// 		 	 tbody의 자손 input을 선택한다.
 		// 			 input중에서 name이 no인 엘리먼트를 선택한다.
-		var checkboxes = document.querySelectorAll("#table-basket tbody input[name=basket]");
+		var checkboxes = document.querySelectorAll("#table-basket tbody input[name=basketNo]");
 		// 		2-2. 선택된 모든 체크박스를 순서대로 하나씩 꺼낸다.
 		for (var i=0; i<checkboxes.length; i++){
 			var checkbox = checkboxes[i];

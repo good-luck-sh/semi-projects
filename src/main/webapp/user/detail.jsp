@@ -9,8 +9,9 @@
 <head>
    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon"> 
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-    <title>마이 페이지</title>
+    <title>마이페이지</title>
 </head>
 <body>
 <%
@@ -115,7 +116,7 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col-6">
-			<a href="userpointdetail.jsp?no=<%=user.getUserNo() %>" class="text-black">적립금 ></a>
+			<a href="userpointdetail.jsp" class="text-black">적립금 ></a>
 			<p><%=user.getUserOrderPoint() %> 원</p>
 		</div>
 		<div class="col-6">
@@ -125,10 +126,10 @@
 <hr>
 	<div class="row mb-3" style="padding: 20px;">
 		<div class="d-grid gap-2 col-4">
-			<a href="basket.jsp?no=<%=user.getUserNo() %>" class="btn btn-text-black" style="background-color: #f2efe4">장바구니</a>
+			<a href="basket.jsp" class="btn btn-text-black" style="background-color: #f2efe4">장바구니</a>
 		</div>
 		<div class="d-grid gap-2 col-4">
-			<a href="modifyform.jsp?no=<%=user.getUserNo() %>" class="btn btn-text-black" style="background-color: #f2efe4">회원 정보 수정</a>
+			<a href="modifyform.jsp" class="btn btn-text-black" style="background-color: #f2efe4">회원 정보 수정</a>
 		</div>
 		<div class="d-grid gap-2 col-4">
 			<a href="../main/logout.jsp" class="btn btn-text-black" style="background-color: #f2efe4">로그아웃</a>
@@ -145,16 +146,16 @@
 %>
 	<div class="row mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
 		<div class="col">
-			<a href="mycslist.jsp?no=<%=user.getUserNo() %>" class="text-black">나의 게시글 ></a>
+			<a href="mycslist.jsp" class="text-black">나의 게시글 ></a>
 		</div>
 		<div class="col">
-			<a href="myreviewlist.jsp?no=<%=user.getUserNo() %>" class="text-black">나의 리뷰 ></a>		
+			<a href="myreviewlist.jsp" class="text-black">나의 리뷰 ></a>		
 		</div>
 	</div>
 <%
 	} else {	//매니저의 경우 
 %>
-	<div class="row mb-3">
+	<div class="row mb-3" style="border-top: 1px solid #a10000; padding: 10px;">
 		<div class="col">
 			<a href="../csBoard/managercsboard.jsp?cpno=1" class="text-black">cs 전체 게시물 확인하기 ></a>
 		</div>
