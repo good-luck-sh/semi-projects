@@ -9,6 +9,13 @@
 	String title = request.getParameter("title");
 	String content = request.getParameter("text");
 	
+	if(title == null) {
+		response.sendRedirect("form.jsp?error=empty");
+	}
+	if(content == null) {
+		response.sendRedirect("form.jsp?error=empty");
+	}
+	
 	CsBoardJdbcDao csBoardDao = CsBoardJdbcDao.getInstance();
 	CsBoard csBoard = csBoardDao.getBoardByCsBoardNo(no);
 	csBoard.setCsBoardTitle(title);

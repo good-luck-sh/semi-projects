@@ -6,14 +6,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title></title>
 </head>
 <body>
+<%@ include file="../navbar/nav.jsp" %>
 <%
 	int no = Integer.parseInt(request.getParameter("no"));
 	int cpno = Integer.parseInt(request.getParameter("cpno"));
-	
+	if (loginUserInfo == null) {
+		response.sendRedirect("../main/loginform.jsp?error=empty");
+		return;
+	}
+	if(loginUserInfo.getManagerCheck() == null ){
+		response.sendRedirect("form.jsp?error=nomanager");
+		return;
+	}
 	CsBoardJdbcDao csBoardDao = CsBoardJdbcDao.getInstance();
 	CsBoard csBoard = csBoardDao.getBoardByCsBoardNo(no);
 %>

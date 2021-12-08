@@ -7,6 +7,8 @@
 	UserTable loginUserInfo = (UserTable)session.getAttribute("LOGIN_USER_INFO");
 	
 	String userCheck = request.getParameter("managercheck");
+	String title = request.getParameter("title");
+	String text = request.getParameter("text");
 	
 	if(loginUserInfo == null) {
 		response.sendRedirect("../main/loginform.jsp?error=empty");
@@ -16,9 +18,12 @@
 		response.sendRedirect("form.jsp?error=nomanager");
 		return;
 	}
-	
-	String title = request.getParameter("title");
-	String text = request.getParameter("text");
+	if(title == null) {
+		response.sendRedirect("form.jsp?error=empty");
+	}
+	if(text == null) {
+		response.sendRedirect("form.jsp?error=empty");
+	}
 	
 	CsBoardJdbcDao csBoardDao = CsBoardJdbcDao.getInstance();
 	UserDao userDao = UserDao.getInstance();

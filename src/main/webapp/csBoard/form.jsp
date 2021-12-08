@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>새 게시글 작성하기</title>
 </head>
@@ -22,9 +23,16 @@
 	if("nomanager".equals(error)) {
 	%>
 	<div class="alert alert-danger">
-		<strong>작성 실패</strong>권한이 없습니다.
+		<strong>작성 실패</strong>빈칸이 입력되었습니다.
 	</div>
 	<% 
+	}
+	if("empty".equals(error)) {
+	%>
+	<div class="alert alert-danger">
+		<strong>작성 실패</strong>빈칸이 입력되었습니다.
+	</div>
+	<% 	
 	}
 %>
 <div class ="container p-3">
