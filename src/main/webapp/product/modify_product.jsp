@@ -1,8 +1,7 @@
 <%@page import="service.Service"%>
 <%@page import="vo.Product"%>
 <%@page import="dao.ProductDao"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% 
 	String productName = request.getParameter("product_name");
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
@@ -17,9 +16,24 @@
 	Service service = Service.getInstance();
 	Boolean validation = true;
 	
+	// 상품가격에 문자가 들어갔을때 오류
 	Boolean checked = service.isNum(request.getParameter("product_price"));
 	if(!checked){
-		response.sendRedirect("insert_product_form.jsp?error=numCheck-productPrice");
+		response.sendRedirect("modify_product_form.jsp?productNo="+productNo+"&error=numCheck-productPrice");
+		return;
+	}
+	
+	// 할인가격에 문자가 들어갔을때 오류
+	Boolean checkedDiscountPrice = service.isNum(request.getParameter("product_discount_price"));
+	if(!checkedDiscountPrice){
+		response.sendRedirect("modify_product_form.jsp?productNo="+productNo+"&error=numCheck-productDiscountPrice");
+		return;
+	}
+	
+	// 재고량에 문자가 들어갔을때 오류
+	Boolean checkedStock = service.isNum(request.getParameter("product_stock"));
+	if(!checkedStock){
+		response.sendRedirect("modify_product_form.jsp?productNo="+productNo+"&error=numCheck-stock");
 		return;
 	}
 	
@@ -35,7 +49,7 @@
 		productStock = Integer.parseInt(request.getParameter("product_stock"));
 	}
 
-	//오류 검사 시작
+	// 오류 검사 시작
 	// 상품명 입력안헀을때 오류 출력
 	if (productName != null && productName.isBlank()) {
 		response.sendRedirect("modify_product_form.jsp?productNo="+productNo+"&error=empty-productName");	
@@ -71,13 +85,12 @@
 		response.sendRedirect("modify_product_form.jsp?productNo="+productNo+"&error=wrong-productStock");	
 		return;
 	}
-		// 판매여부 입력안헀을때 오류 출력
+	
+	// 판매여부 입력안헀을때 오류 출력
 	if (productOnSale != null && productOnSale.isBlank()) {
 		response.sendRedirect("modify_product_form.jsp?productNo="+productNo+"&error=empty-product_on_sale");
 		return;
 	}
-		
-		
 
 	Product product = new Product();
 	product.setProductName(productName);
@@ -94,12 +107,6 @@
 	// 상품 수정 완료시 연결링크
 	response.sendRedirect("modify_product_form.jsp?productNo="+request.getParameter("productNo")+"&success=commit");
 	
-	
-	
-	
-	
-	
-
 %>
 
 

@@ -18,14 +18,39 @@
 	int orderTotalPoint = Integer.parseInt(request.getParameter("orderTotalPoint"));
 	int orderUsePoint = Integer.parseInt(request.getParameter("orderUsePoint"));
 	int orderRealTotalPrice = Integer.parseInt(request.getParameter("orderRealTotalPrice"));
+	String orderName = request.getParameter("orderName");
 	String orderAddress = request.getParameter("orderAddress");
 	String orderPhoneNumber = request.getParameter("orderPhoneNumber");
-	String orderName = request.getParameter("orderName");
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	
 	OrderDao orderDao = new OrderDao();
 	UserBasketDao userBasketDao = UserBasketDao.getInstance();
 	UserPointHistoryDao userPointHistoryDao = UserPointHistoryDao.getInstance();
+	
+	// 오류 검사 시작
+	int orderPoint = Integer.parseInt(request.getParameter("UseAll"));
+	int nowUserPoint = Integer.parseInt(request.getParameter("nowPoint"));
+	
+	if (orderName.isBlank()) {
+		response.sendRedirect("order_form.jsp?error=empty-name");
+		return;
+	} else if (orderAddress.isBlank()) {
+		response.sendRedirect("order_form.jsp?error=empty-address");
+		return;
+	} else if (orderPhoneNumber.isBlank()) {
+		response.sendRedirect("order_form.jsp?error=empty-phoneNumber");
+		return;
+	} else if (nowUserPoint < orderPoint) {
+		response.sendRedirect("order_form.jsp?error=point-error");
+		return;
+	} else if (orderPoint < 0) {
+		response.sendRedirect("order_form.jsp?error=point-error2");
+		return;
+	} else if (orderRealTotalPrice < orderPoint) {
+		response.sendRedirect("order_form.jsp?error=point-error3");
+		return;
+	}
+	
 
 	// Orders에 정보 입력
 	Orders orders = new Orders();
@@ -94,6 +119,33 @@
 
 		orderDao.insertOrderItem(amount, numbers);
 	}
+	
+	
+	// 주문한 상품 재고 감소
+	String[] productNo2 = request.getParameterValues("productNo");
+	String[] productAmount2 = request.getParameterValues("productAmount");
+	for(int i = 0; i < productNo2.length; i++){
+		int numbers = Integer.parseInt(productNo2[i]);
+		int amount = Integer.parseInt(productAmount2[i]);
+		
+		orderDao.updateProductStock(amount, numbers);
+	}
+	
+	// 상품 재고 0이하되면 품절로 변경
+	String[] productNo3 = request.getParameterValues("productNo");
+	for(int i = 0; i < productNo3.length; i++){
+		int numbers = Integer.parseInt(productNo3[i]);
+		
+		orderDao.updateProductOnSale(numbers);
+	}
+	
+	int userNo2 = userTable.getUserNo();
+	
+	// 주문후 고객등급 변경
+	orderDao.updateUserDegreeBronze(userNo, userNo2);
+	orderDao.updateUserDegreeSilver(userNo, userNo2);
+	orderDao.updateUserDegreeGold(userNo, userNo2);
+	orderDao.updateUserDegreeDia(userNo, userNo2);
 	
 	// 주문 완료후 장바구니 데이터 삭제
 	userBasketDao.deleteBasket(userTable.getUserNo());

@@ -7,13 +7,149 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import vo.OrderItem;
 import vo.Orders;
 import vo.Product;
 import vo.UserBasket;
 import vo.UserTable;
 
 public class OrderDao {
+	
+	/**
+	 * 구매후 유저의 등급 변경(브론즈)
+	 * @param userNo1
+	 * @param userNo2
+	 * @throws SQLException
+	 */
+	public void updateUserDegreeBronze(int userNo1, int userNo2) throws SQLException {
+		String sql = "update user_table "
+					+"set user_degree = '브론즈' "
+					+"where user_no = ? "
+					+"and 100000 > (select sum(order_real_total_price) "
+					+"				from orders "
+				    +"				where user_no = ?) ";
+		
+		Connection connection = getConnection();
+	    PreparedStatement pstmt = connection.prepareStatement(sql);
+	    pstmt.setInt(1, userNo1);
+	    pstmt.setInt(2, userNo2);
+	    pstmt.executeUpdate();
+	    
+	    pstmt.close();
+	    connection.close();
+	}
+	
+	/**
+	 * 구매후 유저의 등급 변경(실버)
+	 * @param userNo1
+	 * @param userNo2
+	 * @throws SQLException
+	 */
+	public void updateUserDegreeSilver(int userNo1, int userNo2) throws SQLException {
+		String sql = "update user_table "
+					+"set user_degree = '실버' "
+					+"where user_no = ? "
+					+"and 100000 <= (select sum(order_real_total_price) "
+					+"				 from orders "
+				    +"				 where user_no = ?) ";
+		
+		Connection connection = getConnection();
+	    PreparedStatement pstmt = connection.prepareStatement(sql);
+	    pstmt.setInt(1, userNo1);
+	    pstmt.setInt(2, userNo2);
+	    pstmt.executeUpdate();
+	    
+	    pstmt.close();
+	    connection.close();
+	}
+	
+	/**
+	 * 구매후 유저의 등급 변경(골드)
+	 * @param userNo1
+	 * @param userNo2
+	 * @throws SQLException
+	 */
+	public void updateUserDegreeGold(int userNo1, int userNo2) throws SQLException {
+		String sql = "update user_table "
+					+"set user_degree = '골드' "
+					+"where user_no = ? "
+					+"and 1000000 <= (select sum(order_real_total_price) "
+					+"				 from orders "
+				    +"				 where user_no = ?) ";
+		
+		Connection connection = getConnection();
+	    PreparedStatement pstmt = connection.prepareStatement(sql);
+	    pstmt.setInt(1, userNo1);
+	    pstmt.setInt(2, userNo2);
+	    pstmt.executeUpdate();
+	    
+	    pstmt.close();
+	    connection.close();
+	}
+	
+	/**
+	 * 구매후 유저의 등급 변경(다이아몬드)
+	 * @param userNo1
+	 * @param userNo2
+	 * @throws SQLException
+	 */
+	public void updateUserDegreeDia(int userNo1, int userNo2) throws SQLException {
+		String sql = "update user_table "
+					+"set user_degree = '다이아몬드' "
+					+"where user_no = ? "
+					+"and 1000000 <= (select sum(order_real_total_price) "
+					+"				 from orders "
+				    +"				 where user_no = ?) ";
+		
+		Connection connection = getConnection();
+	    PreparedStatement pstmt = connection.prepareStatement(sql);
+	    pstmt.setInt(1, userNo1);
+	    pstmt.setInt(2, userNo2);
+	    pstmt.executeUpdate();
+	    
+	    pstmt.close();
+	    connection.close();
+	}
+	
+	
+	/**
+	 * 주문후 상품재고가 0이하로 되면 '품절'로 업데이트
+	 * @throws SQLException
+	 */
+	public void updateProductOnSale(int productNo) throws SQLException {
+		String sql = "update product "
+					+"set product_on_sale = '품절' "
+					+"where product_stock <= 0 "
+					+"and product_no = ? ";
+		
+		Connection connection = getConnection();
+	    PreparedStatement pstmt = connection.prepareStatement(sql);
+	    pstmt.setInt(1, productNo);
+	    pstmt.executeUpdate();
+	    
+	    pstmt.close();
+	    connection.close();
+	}
+	
+	/**
+	 * 주문한 상품의 재고량 업데이트
+	 * @param orderStock
+	 * @param productNo
+	 * @throws SQLException
+	 */
+	public void updateProductStock(int orderStock, int productNo) throws SQLException {
+		String sql = "update product "
+					+"set product_stock = product_stock - ? "
+					+"where product_no = ? ";
+		
+		Connection connection = getConnection();
+	    PreparedStatement pstmt = connection.prepareStatement(sql);
+	    pstmt.setInt(1, orderStock);
+	    pstmt.setInt(2, productNo);
+	    pstmt.executeUpdate();
+	    
+	    pstmt.close();
+	    connection.close();
+	}
 	
 	
 	/**

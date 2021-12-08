@@ -119,7 +119,7 @@
 			<p><%=user.getUserOrderPoint() %> 원</p>
 		</div>
 		<div class="col-6">
-			<h6><a href="../order/list.jsp" class="text-black">주문내역 확인하기</a></h6>
+			<h6><a href="../order/list.jsp" class="text-black">주문내역 확인하기 ></a></h6>
 		</div>
 	</div>
 <hr>

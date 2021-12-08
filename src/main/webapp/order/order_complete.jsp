@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="../navbar/resource/img.png" type="image/x-icon">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<title>커먼 유니크</title>
+<title>커먼 유니크::주문완료</title>
 <link href="resource/test.css" rel="stylesheet">
 	<%@ include file="../navbar/nav.jsp" %>
 </head>
@@ -53,6 +53,12 @@
                                 	<span class="txtEm"><%=orders.getOrderRealTotalPrice() %> won<span class="refer displaynone"></span></span>
                         		</td>
                    			</tr>
+							<tr>
+								<th scope="row">고객등급</th>
+                        		<td class="right">
+                                	<span class="txtEm"><%=loginUserInfo.getUserDegree() %><span class="refer displaynone"></span></span>
+                        		</td>
+                   			</tr>
 						</tbody>
 					</table>
 					</div>
@@ -62,7 +68,7 @@
     		
     			
 				<div class="ec-base-button gColumn">
-        			<a href="../main/index.jsp" class="btnSubmit">주문확인하기</a>
+        			<a href="../order/list.jsp" class="btnSubmit">주문확인하기</a>
         			<a href="../main/index.jsp" class="btnSubmit">쇼핑계속하기</a>
     			</div>
 				</div>
