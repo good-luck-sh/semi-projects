@@ -107,9 +107,11 @@
 <%
 	// Pagination 객체로부터 해당 페이지 블록의 시작 페이지번호와 끝 페이지번호만큼 페이지내비게이션 정보를 표시한다.
 	for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
+		if(num > 0){
 %>					
 				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="mycslist.jsp?pageNo=<%=num%>"><%=num %></a></li>
 <%
+		}
 	}
 %>					
 					<!-- 
