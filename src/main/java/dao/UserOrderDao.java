@@ -27,7 +27,7 @@ public class UserOrderDao {
 				   + "           from (select product_no, sum(product_amount) as amount "
 				   + "                 from order_item "
 				   + "                 group by product_no)) "
-				   + "     where ranking <= 5) R, product P "
+				   + "     where ranking <= 4) R, product P "
 				   + "where R.product_no = P.product_no "
 				   + "order by R.ranking asc ";
 

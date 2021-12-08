@@ -10,7 +10,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-	<title></title>
+	<title>상품 상세보기</title>
 </head>
 <body>
 <%
@@ -24,7 +24,6 @@
    ProductDao productDao = new ProductDao();
    List<Product> productList = productDao.selectProductByProductNo(productNo);
    Product product = productDao.selectProductByNo(productNo);
-   int sale = 0;
 %>
 <%
    String success = request.getParameter("success");
@@ -42,42 +41,42 @@
       <div class="row">
 <%
 	for (Product products : productList) {
-		sale = (products.getProductPrice() - products.getProductDiscountPrice());
 %>      
          <div class="image col-md-3">
          <p class="text-muted" >제품 상세 사진</p>
          <img class="card-img-top" src="<%=products.getProductPicture()%>">
          </div>
          <div class="inf col-md-9">
-            <h2><strong><%=products.getProductName() %></strong></h2>
+            <p class="fs-4"><strong><%=products.getProductName() %></strong></p>
             <p class="text-muted"><%=products.getProductName() %></p>
             <hr class="col-md-5">
-            <p><b>상품코드</b> : <span class="badge bg-danger "><%=products.getProductNo() %></span></p>
+            <p><b>상품코드</b> : <span class="badge bg-success "><%=products.getProductNo() %></span></p>
 <%
-		if (sale == 0) {
+		if (products.getProductPrice() == products.getProductDiscountPrice()) {
 %>
             <p><b>판매가</b> : <%=products.getProductPrice() %> 원</p>
+			<p class="card-text mb-2 text-muted"><b>할인 불가</b></p>
 <%
 		} else {
 %>
             <p><b>판매가</b> : <%=products.getProductPrice() %> 원</p>
             <p><b>할인가</b> : <%=products.getProductDiscountPrice() %> 원</p>
             <p><b>재고</b> : <%=products.getProductStock() %> 개</p>
-			
 <%
 		}
 %>
 			<div class="row">
 				<div class="col">
-            		<span class="badge p-1 bg-primary text-white"><strong><%=products.getProductOnSale() %> </strong></span>
+            		<span class="badge p-1 bg-primary text-white"><strong><%=products.getProductOnSale() %></strong></span>
 <%
-		if (sale == 0) {
+		if (products.getProductPrice() == products.getProductDiscountPrice()) {
 %>
-					<span class="badge p-1 bg-secondary text-white"><strong>정상가 </strong></span>
+					<span class="badge p-1 bg-secondary text-white"><strong>정상가</strong></span>
+					<span class="badge p-1 bg-danger text-white"><strong>세일 불가 품목</strong></span>
 <%		
 		} else {
 %>	
-    	        	<span class="badge p-1 bg-success"><strong> 세일중 </strong></span>
+    	        	<span class="badge p-1 bg-danger text-white"><strong>세일중</strong></span>
 	            	<span class="badge p-1 bg-dark" >-<%=products.getProductPrice() - products.getProductDiscountPrice() %> 원</span>
 <%
 		}

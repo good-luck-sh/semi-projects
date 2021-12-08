@@ -20,7 +20,7 @@
 	<div class="row">
 <%
 	ManagerDao managerDao = new ManagerDao();
-	List<SalesDto> ordersList = managerDao.monthlySalesCheckByOrderDate();
+	List<SalesDto> salesList = managerDao.monthlySalesCheckByOrderDate();
 %>
 		<div id="monthlyChart" class="col-md-8"></div>
 		<div class="col-md-4">
@@ -30,9 +30,9 @@
 				</thead>
 				<tbody class="table-light" style="font-size:14px;">
 <%
-	for (SalesDto orders : ordersList) {
+	for (SalesDto sales : salesList) {
 %>
-					<tr><th><%=orders.getOrderDate() %>월</th><td><%=orders.getTotalSales() %></td><td><%=orders.getRealSales() %></td><td><%=orders.getUsePoint() %></td></tr>
+					<tr><th><%=sales.getOrderDate() %> 월</th><td><%=sales.getTotalSales() %></td><td><%=sales.getRealSales() %></td><td><%=sales.getUsePoint() %></td></tr>
 <%
 	}
 %>

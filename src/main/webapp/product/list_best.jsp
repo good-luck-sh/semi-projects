@@ -33,7 +33,6 @@
 <% 
 	UserOrderDao userOrderDao = new UserOrderDao();
 	List<BestItemDto> bestList = userOrderDao.getProductRankingByAmount();
-	int sale = 0;
 %>
 	<div class="row mb-3">
 		<div class="col text-center">
@@ -46,25 +45,40 @@
 	<div class="row mb-3">
 <%
 	for (BestItemDto best : bestList) {
-		sale = (best.getPrice() - best.getDiscountPrice());
 %>	
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" >
-			<div class="card mb-3 border ">
-				<a href="detail.jsp?productNo=<%=best.getProductNo() %>"><img class="card-img-top " src="<%=best.getPicture() %>" height="308"></a>
-				<div class="card-body h-100">
-					<h5 class="fw-bold card-title border-bottom "><small><%=best.getProductName() %></small></h5>
-					<p class="card-text mb-2"><strong><%=best.getDiscountPrice() %> 원</strong></p>
-					<p class="detail card-text text-muted mb-2 "><%=best.getProductName() %></p>
+		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 h-100">
+			<div class="card mb-3 border border-white">
+				<a href="detail.jsp?productNo=<%=best.getProductNo() %>"><img class="card-img-top " src="<%=best.getPicture() %>" height="365"></a>
+				<div class="card-body">
+					<p class="fs-4 fw-bold card-title"><small><%=best.getProductName() %></small></p>
+					<hr>
+<%
+		if (best.getPrice() == best.getDiscountPrice()) {
+%>
+					<p class="card-text mb-2"><strong>판매가: <%=best.getPrice() %> 원</strong></p>
+					<p class="card-text mb-2 text-muted"><strong>할인 불가</strong></p>
+					<p class="detail card-text text-muted mb-2"><%=best.getProductName() %></p>
+<%
+		} else {
+%>
+					<p class="card-text mb-2"><strong>판매가: <span class="text-muted text-decoration-line-through"><%=best.getPrice() %> 원</span></strong></p>
+					<p class="card-text mb-2"><strong>세일가: <%=best.getDiscountPrice() %> 원</strong></p>
+					<p class="detail card-text text-muted mb-2"><%=best.getProductName() %></p>
+				
+<%
+		}
+%>
 					<div>
 						<span class="badge p-1 bg-primary text-white"><strong><%=best.getOnSale() %> </strong></span>
 <%
-		if (sale == 0) {
+		if (best.getPrice() == best.getDiscountPrice()) {
 %>
-						<span class="badge p-1 bg-secondary text-white"><strong>정상가 </strong></span>
+						<span class="badge p-1 bg-secondary text-white"><strong>정상가</strong></span>
+						<span class="badge p-1 bg-danger text-white"><strong>세일 불가 품목</strong></span>
 <%		
 		} else {
 %>					
-						<span class="badge p-1 bg-success text-white"><strong>세일중 </strong></span>
+						<span class="badge p-1 bg-danger text-white"><strong>세일중</strong></span>
 						<span class="badge p-1 bg-dark" >-<%=best.getPrice() - best.getDiscountPrice() %> 원</span>
 <%
 		}
