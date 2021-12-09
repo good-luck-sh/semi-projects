@@ -52,7 +52,6 @@ public class UserOrderDao {
 			
 			bestOrderItemList.add(bestDto);
 		}
-		
 		rs.close();
 		pstmt.close();
 		connection.close();
