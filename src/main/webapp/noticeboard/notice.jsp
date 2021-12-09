@@ -96,9 +96,7 @@ String pageNo = request.getParameter("pageNo");
 		}
 	}
 %>
-			</div>
-		</div>
-	</div>
+	
 
 			
 		</div>

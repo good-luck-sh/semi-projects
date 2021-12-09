@@ -84,8 +84,10 @@ public class NoticeBoardDao {
 	 */
 	public List<NoticeBoard> getBoardList(int begin, int end) throws SQLException {
 		String sql = "select board_no, board_title, board_content, board_created_date "
-				   + "from notice_board "
-				   + "where board_no >= ? and board_no <= ? ";
+				   + "from (select row_number() over (order by board_no desc) rn, "
+				   + "             board_no, board_title, board_content, board_created_date "
+				   + "      from notice_board)"
+				   + "where rn >= ? and rn <= ? ";
 		
 		List<NoticeBoard> boardList = new ArrayList<>();
 		
