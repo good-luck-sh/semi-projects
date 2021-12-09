@@ -100,7 +100,7 @@
 					</div>
 					<div class="text-end">
 						<button class="btn btn-outline-primary" type="submit">등록하기</button>
-						<button class="btn btn-outline-danger"><a href="myreviewlist.jsp">취소하기</a></button>
+						<button class="btn btn-outline-danger"><a href="../order/list.jsp">취소하기</a></button>
 					</div>
 				</form>
 			</div>

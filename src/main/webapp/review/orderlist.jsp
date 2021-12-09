@@ -60,7 +60,7 @@
 						<h5 class="card-title">총 결제 금액 :<%=orderDto.getOrderRealTotalPrice() %></h5>
 						<h6 class="card-subtitle mb-2 text-muted">주문 상태:<%=orderDto.getOrderState() %></h6>
 						<a href="../review/form.jsp?productNo=<%=proudctNo %>&orderNo=<%=orderDto.getOrderNo() %>" class="btn btn-danger">리뷰 쓰기</a> 
-						<a href="../product/detail.jsp?productNo=<%=orderDto.getProductNo() %>" class="btn btn-secondary">상품확인하기</a>
+						<a href="../product/detail.jsp?productNo=<%=proudctNo %>" class="btn btn-secondary">상품확인하기</a>
 					</div>
 				</div>
 				</div>
