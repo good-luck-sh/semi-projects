@@ -43,7 +43,7 @@
 %>      
          <div class="image col-md-3">
          <p class="text-muted" >제품 상세 사진</p>
-         <img class="card-img-top" src="<%=products.getProductPicture()%>">
+         <img class="card-img-top" src="<%=products.getProductPicture()%>" height="365">
          </div>
          <div class="inf col-md-9">
             <p class="fs-4"><strong><%=products.getProductName() %></strong></p>
