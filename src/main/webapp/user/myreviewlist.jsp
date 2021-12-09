@@ -45,7 +45,7 @@
 	ReviewJdbcDao rvDao = ReviewJdbcDao.getInstance();
 	
 	// 총 데이터 갯수를 조회한다.
-	int totalRecords = rvDao.getAllCountReview();
+	int totalRecords = rvDao.getCountReviewByUserNo(loginUserInfo.getUserNo());
 	
 	// 페이징 처리 필요한 값을 계산하는 Paginatition객체를 생성한다.
 	Pagination pagination = new Pagination(pageNo, totalRecords);

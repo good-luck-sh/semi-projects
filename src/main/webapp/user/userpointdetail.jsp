@@ -38,7 +38,7 @@
 	
 	UserPointHistoryDao historyDao = UserPointHistoryDao.getInstance();
 	// 총 데이터 갯수를 조회한다.
-	int totalRecords = historyDao.getTotalRecord();
+	int totalRecords = historyDao.getTotalRecordByNo(loginUserInfo.getUserNo());
 	
 	// 페이징 처리 필요한 값을 계산하는 Paginatition객체를 생성한다.
 	Pagination pagination = new Pagination(pageNo, totalRecords);
@@ -95,26 +95,18 @@
 	<div class="row mb-3">
 		<div class="col-6 offset-3">
 			<ul class="pagination justify-content-center">
-					<!-- 
-						Pagination객체가 제공하는 isExistPrev()는 이전 블록이 존재하는 경우 true를 반환한다.
-						Pagination객체가 제공하는 getPrevPage()는 이전 블록의 마지막 페이지값을 반환한다.
-					 -->
-				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="userpointdetail.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
+				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="notice.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
 <%
-	// Pagination 객체로부터 해당 페이지 블록의 시작 페이지번호와 끝 페이지번호만큼 페이지내비게이션 정보를 표시한다.
+	
 	for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
-		if(num > 0){
+		if (num > 0) {
 %>					
-				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="userpointdetail.jsp?pageNo=<%=num%>"><%=num %></a></li>
+				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="notice.jsp?pageNo=<%=num%>"><%=num %></a></li>
 <%
 		}
 	}
-%>					
-					<!-- 
-						Pagination객체가 제공하는 isExistNext()는 다음 블록이 존재하는 경우 true를 반환한다.
-						Pagination객체가 제공하는 getNexPage()는 다음 블록의 첫 페이지값을 반환한다.
-					 -->
-				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="userpointdetail.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
+%>			
+				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="notice.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
 			</ul>
 		</div>
 		<div class="col-3 text-end">
