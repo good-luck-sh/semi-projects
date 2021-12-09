@@ -29,6 +29,8 @@ public class ReviewJdbcDao implements ReviewDao {
 	public static ReviewJdbcDao getInstance() {
 		return self;
 	}
+	
+	
 
 	@Override
 	public List<Review> getAllReview() throws SQLException {
@@ -601,5 +603,6 @@ public class ReviewJdbcDao implements ReviewDao {
 		
 		return countReview;
 	}
-	}
+	
+}
 

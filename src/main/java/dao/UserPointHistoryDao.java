@@ -54,16 +54,19 @@ public class UserPointHistoryDao {
 	
 	
 	/**
-	 * 포인트히스토리의 총 개수를 구한다.
-	 * @return 포인트히스토리 개수
+	 * 유저 번호로 포인트 히스토리 총 개수 구하기
+	 * @param userNo 유저번호
+	 * @return 유저당 포인트 히스토리 총 개수
 	 * @throws SQLException
 	 */
-	public int getTotalRecord() throws SQLException {
+	public int getTotalRecordByNo(int userNo) throws SQLException {
 		int countHistory = 0;
 		String sql = "select count(*) cnt "
-					+ "from user_point_history ";
+					+ "from user_point_history "
+					+ "where user_no = ? ";
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setInt(1, userNo);
 		ResultSet rs = pstmt.executeQuery();
 		rs.next();
 		countHistory = rs.getInt("cnt");
