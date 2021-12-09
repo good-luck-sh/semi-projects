@@ -41,7 +41,7 @@ public class ManagerDao {
 			orders.setTotalSales(rs.getInt("totalsales"));
 			orders.setUsePoint(rs.getInt("usepoint"));
 			orders.setRealSales(rs.getInt("realsales"));
-			
+
 			orderList.add(orders);
 		}
 		rs.close();
