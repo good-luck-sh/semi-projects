@@ -157,7 +157,13 @@
 	orderDao.updateUserDegreeDia(userNo, userNo2);
 	
 	// 주문 완료후 장바구니 데이터 삭제
-	userBasketDao.deleteBasket(userTable.getUserNo());
+	UserBasket basket = new UserBasket();
+	String order = "주문완료";
+	basket.setUserOrder(order);
+	basket.setUserTable(findUser);
+	product.setProductNo(productNo);
+	basket.setProduct(product);
+	userBasketDao.updateBasketByOrder(basket);
 	
 	// 주문 완료후 주문 완료 페이지로 이동
 	response.sendRedirect("order_complete.jsp");
