@@ -35,7 +35,6 @@ font-size: 14px;
 	CategorysDao cateDao = new CategorysDao();
 	List<Categorys> categorysList = cateDao.selectCategoryByCateNoList(categorysNo);
 	List<Product> productList = productDao.getAllProductByCategorysNo(categorysNo);
-
 %>
 	<div class="row mb-3 ">
 		<div class="col text-center">

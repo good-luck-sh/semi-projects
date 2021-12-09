@@ -41,7 +41,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="row mb-3">
 <%
 	for (BestItemDto best : bestList) {

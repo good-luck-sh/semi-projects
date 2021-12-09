@@ -27,8 +27,8 @@
 %>
 <%
    String success = request.getParameter("success");
-   
-   if("complete".equals(success)){
+
+if("complete".equals(success)){
 %>
    <div class="alert alert-primary">
       <strong>장바구니 등록 성공!!</strong> 정상 완료 되었습니다.
@@ -36,7 +36,6 @@
 <%
 }
 %>
-
    <div class="container">
       <div class="row">
 <%
