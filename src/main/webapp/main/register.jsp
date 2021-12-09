@@ -6,7 +6,7 @@
 	String id = request.getParameter("id");
 	String password = request.getParameter("password");
 	String name = request.getParameter("name");
-	int age = 0;
+	int age = Integer.parseInt(request.getParameter("age"));
 	String gender = request.getParameter("gender");
 	String address = request.getParameter("address");
 	
@@ -26,23 +26,12 @@
 		response.sendRedirect("registerform.jsp?error=password-empty");
 		return;
 	}
-	if (name != null && name.isBlank()) {
-		if (age == 0) {
-			if (address != null && address.isBlank()) {
-		
-				response.sendRedirect("registerform.jsp?error=all-empty");
-				return;
-			}
-		}	
-	}
+	
 	if (name != null && name.isBlank()) {
 		response.sendRedirect("registerform.jsp?error=name-empty");
 		return;
 	}
-	if (age == 0) {
-		response.sendRedirect("registerform.jsp?error=age-empty");
-		return;
-	}
+	
 	if (address != null && address.isBlank()) {
 		response.sendRedirect("registerform.jsp?error=address-empty");
 		return;

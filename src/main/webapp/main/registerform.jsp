@@ -50,26 +50,15 @@
 			<strong>회원가입 실패</strong> 이름을 입력하세요.
 		</div>		
 <%
-	} else if ("age-empty".equals(error)) {					
-%>
-		<div class="alert alert-danger">
-			<strong>회원가입 실패</strong> 나이를 입력하세요.
-		</div>
-<%
 	} else if ("address-empty".equals(error)) {					
 %>
 		<div class="alert alert-danger">
 			<strong>회원가입 실패</strong> 주소를 입력하세요.
 		</div>
 <%
-	} else if ("all-empty".equals(error)) {					
+	}
 %>
-		<div class="alert alert-danger">
-			<strong>회원가입 실패</strong> 기본정보를 입력하세요.
-		</div>
-<%
-	} 
-%>
+
 
 	<div class="row mb-3">
 		<div class="col">

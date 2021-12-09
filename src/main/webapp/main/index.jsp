@@ -1,3 +1,5 @@
+<%@page import="dto.BestItemDto"%>
+<%@page import="dao.UserOrderDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -72,7 +74,7 @@
 	</div> 
 	<hr>
 	<h4 style="line-height:400%; text-indent:10em;">best</h4>
-	<div class="row">
+<div class="row">
 
 		<div class="col" style="width:180px; padding-left:355px;">
 			<div class="space" style="width: 290px;">
