@@ -56,7 +56,7 @@ font-size: 14px;
 %>
 		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 h-100">
 			<div class="card mb-3 border border-white">
-				<a href="detail.jsp?productNo=<%=products.getProductNo() %>"><img class="card-img-top" src="<%=products.getProductPicture() %>"></a>
+				<a href="detail.jsp?productNo=<%=products.getProductNo() %>"><img class="card-img-top" src="<%=products.getProductPicture() %>" height="365"></a>
 				<div class="card-body">
 					<h5 class="fw-bold card-title"><small><%=products.getProductName() %></small></h5>
 					<hr>
