@@ -95,18 +95,18 @@
 	<div class="row mb-3">
 		<div class="col-6 offset-3">
 			<ul class="pagination justify-content-center">
-				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="notice.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
+				<li class="page-item <%=!pagination.isExistPrev() ? "disabled" : "" %>"><a class="page-link" href="userpointdetail.jsp?pageNo=<%=pagination.getPrevPage()%>" >이전</a></li>
 <%
 	
 	for (int num = pagination.getBeginPage(); num <= pagination.getEndPage(); num++) {
 		if (num > 0) {
 %>					
-				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="notice.jsp?pageNo=<%=num%>"><%=num %></a></li>
-<%
+				<li class="page-item <%=pagination.getPageNo() == num ? "active" : "" %>"><a class="page-link" href="userpointdetail.jsp?pageNo=<%=num%>"><%=num %></a></li>
+<% 
 		}
 	}
 %>			
-				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="notice.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
+				<li class="page-item <%=!pagination.isExistNext() ? "disabled" :"" %>"><a class="page-link" href="userpointdetail.jsp?pageNo=<%=pagination.getNextPage()%>" >다음</a></li>
 			</ul>
 		</div>
 		<div class="col-3 text-end">
