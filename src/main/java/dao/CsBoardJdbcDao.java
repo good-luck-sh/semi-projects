@@ -38,7 +38,8 @@ public class CsBoardJdbcDao implements CsBoardDao {
 				+ " from cs_board C, user_table U "
 				+ " where C.user_no = U.user_no"
 				+ ") "
-				+ "where rn >= ? and rn <= ? ";
+				+ "where rn >= ? and rn <= ? "
+				+ "order by 1 ";
 		Connection connection = getConnection();
 		PreparedStatement ptmt = connection.prepareStatement(sql);
 		ptmt.setInt(1, begin);

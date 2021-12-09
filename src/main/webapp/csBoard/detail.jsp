@@ -21,7 +21,6 @@
 <%
 	int no = Integer.parseInt(request.getParameter("no"));
 	int cpno = Integer.parseInt(request.getParameter("cpno"));
-	int userNo = Integer.parseInt(request.getParameter("userNo"));
 	String error = request.getParameter("error");
 	if(loginUserInfo == null) {
 		response.sendRedirect("../main/loginform.jsp?error=empty");
