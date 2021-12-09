@@ -50,6 +50,7 @@
 	for(UserTable finduser : users) {
 	if(finduser.getManagerCheck() == null) {
 %>	
+					<div>
 					<form action="userSystemRegister.jsp" method="post">
 					<input type="hidden" name="usergiveManager" value="<%=finduser.getUserNo() %>">
 					<label for="exampleFormControlInput1" class="form-label">회원 아이디</label>
@@ -58,14 +59,21 @@
 						<option selected="selected" disabled="disabled">매니저 설정하세요</option>
 						<option value="manager">설정</option>
 					</select>
+					<button class="btn btn-outline-primary" type="submit" onclick="register();">등록하기</button>
+					</form>
+					</div>
 <%
-	} }
-%>
+	} else {
+		
+	}
+	
+	}
+%>					
+						
 					<div class="text-end">
-						<button class="btn btn-outline-primary" type="submit" onclick="register();">등록하기</button>
 						<button class="btn btn-outline-danger"><a href="managerlist.jsp">취소하기</a></button>
 					</div>
-				</form>
+			
 			</div>
 		</div>
 	</div>
