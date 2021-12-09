@@ -84,6 +84,22 @@ public class UserBasketDao {
 		return basket;
 	}
 	
+	public void updateBasketByOrder(UserBasket userBasket) throws SQLException {
+		String sql = "update user_basket "
+				+ "set "
+				+ "	user_order = ? "
+				+ "where user_no = ? "
+				+ "and product_no = ? ";
+		Connection connection = getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setString(1, userBasket.getUserOrder());
+		pstmt.setInt(2, userBasket.getUserTable().getUserNo());
+		pstmt.setInt(3, userBasket.getProduct().getProductNo());
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
 	
 	
 	/**
@@ -202,24 +218,27 @@ public class UserBasketDao {
 	 * @return 장바구니 상품 정보
 	 * @throws SQLException
 	 */
-	public List<UserBasket> getAllUserBasketItemByNo(int userNo) throws SQLException {
-		String sql = "select B.user_basket_no, B.user_no, B.product_no, B.basket_amount, "
+	public List<UserBasket> getAllUserBasketItemByNo(int userNo, String order) throws SQLException {
+		String sql = "select B.user_basket_no, B.user_no, B.product_no, B.basket_amount, B.user_order, "
 					+ "P.product_name, P.product_picture, P.product_price, P.product_discount_price "
 					+ "from user_basket B, product P "
 					+ "where B.product_no = P.product_no "
-					+ "and B.user_no = ? ";
+					+ "and B.user_no = ? "
+					+ "and B.user_order like '%' || ? || '%' ";
 		
 		List<UserBasket> baskets = new ArrayList<>();
 		
 		Connection connection = getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(sql);
 		pstmt.setInt(1, userNo);
+		pstmt.setString(2, order);
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
 			UserBasket basket = new UserBasket();
 			basket.setUserBasketNo(rs.getInt("user_basket_no"));
 			basket.setBasketAmount(rs.getInt("basket_amount"));
+			basket.setUserOrder(rs.getString("user_order"));
 			
 			UserTable user = new UserTable();
 			user.setUserNo(rs.getInt("user_no"));

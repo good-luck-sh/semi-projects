@@ -6,7 +6,16 @@ public class UserBasket {
 	private UserTable userTable;
 	private Product product;
 	private int basketAmount;
+	private String userOrder;
 	
+	public String getUserOrder() {
+		return userOrder;
+	}
+
+	public void setUserOrder(String userOrder) {
+		this.userOrder = userOrder;
+	}
+
 	public UserBasket() {}
 
 	public int getUserBasketNo() {

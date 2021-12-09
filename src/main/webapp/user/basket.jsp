@@ -30,7 +30,8 @@
 <div class="container">
 <%
 	UserBasketDao basketDao = UserBasketDao.getInstance();
-	List<UserBasket> basketList = basketDao.getAllUserBasketItemByNo(loginUserInfo.getUserNo());
+	String order = "주문진행";
+	List<UserBasket> basketList = basketDao.getAllUserBasketItemByNo(loginUserInfo.getUserNo(), order);
 %>
 <hr>
 	<div class="row mb-3">
@@ -81,8 +82,9 @@
 						
 <%
 	} else {
+		
 		for(UserBasket basket : basketList ){
-
+			
 %>
 	 				<tr>
 	 					<td><input type="checkbox" id="ch-<%=basket.getUserBasketNo() %>" name="basketNo" value="<%=basket.getUserBasketNo() %>"></td>
@@ -95,8 +97,7 @@
 	 					<td><a href="deletebasket.jsp?basketNo=<%=basket.getUserBasketNo() %>" class="btn btn-outline-danger btn-sm">삭제</a></td>
 	 				</tr>
 <%
-		}
-	}
+		} }
 %>
 	 			</tbody>
 	 		</table>
@@ -108,7 +109,8 @@
 	int totalPrice = 0;
 	for(UserBasket basket : basketList ){
 		totalPrice += basket.getProduct().getProductDiscountPrice() * basket.getBasketAmount();
-	}
+		}
+	
 %>
 	 			<div class="d-flex justify-content-md-end">
 	 				<h3>= <Strong><%=totalPrice %>원</Strong></h3>
