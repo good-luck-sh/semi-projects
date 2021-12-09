@@ -50,6 +50,7 @@ font-size: 14px;
 		</div>
 	</div>
 	<div class="row mb-3">
+	
 <%
 	for (Product products : productList) {
 %>

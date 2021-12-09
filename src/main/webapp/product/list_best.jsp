@@ -54,6 +54,7 @@
 <%
 		if (best.getPrice() == best.getDiscountPrice()) {
 %>
+
 					<p class="card-text mb-2"><strong>판매가: <%=best.getPrice() %> 원</strong></p>
 					<p class="card-text mb-2 text-muted"><strong>할인 불가</strong></p>
 					<p class="detail card-text text-muted mb-2"><%=best.getProductName() %></p>
