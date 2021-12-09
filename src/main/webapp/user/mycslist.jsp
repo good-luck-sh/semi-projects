@@ -81,7 +81,7 @@
 %>
 					<tr>
 						<td class="col-2"><%=board.getCsCreateDate() %></td>
-						<td class="col-6"><a href="../csBoard/detail.jsp?no=<%=board.getCsBoardNo() %>&userNo=<%=loginUserInfo.getUserNo() %>" class="text-black"><%=board.getCsBoardTitle() %></a>
+						<td class="col-6"><a href="../csBoard/detail.jsp?no=<%=board.getCsBoardNo() %>&cpno=1" class="text-black"><%=board.getCsBoardTitle() %></a>
 						<span class="badge text-black" style="background-color: #f2efe4""><%=board.getCsReplyCheck() %></span></td> <!-- 게시글 상세보기 연결,페이지네이션후 cpno추가 -->
 						<td class="col-2"><%=board.getUserTable().getUserName() %></td>
 						<td class="col-1"><%=board.getCsBoardLikeCount() %> 개</td>
