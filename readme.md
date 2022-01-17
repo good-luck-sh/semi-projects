@@ -2,6 +2,11 @@
 </br>
 사용기법 
 ==================
+erd
+---
+<img width="606" alt="image" src="https://user-images.githubusercontent.com/79691180/149685332-072b8949-0277-4e25-9d98-e4e9edb2862d.png">
+
+
 back-end
 ------------------
 java, JSP, ORACLE SQL
