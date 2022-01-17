@@ -4,8 +4,7 @@
 ==================
 erd
 ---
-<img width="606" alt="image" src="https://user-images.githubusercontent.com/79691180/149685332-072b8949-0277-4e25-9d98-e4e9edb2862d.png">
-
+<img width="628" alt="image" src="https://user-images.githubusercontent.com/79691180/149711749-08b980f2-fa6e-41c7-b274-ab3cc7df3ecc.png">
 
 back-end
 ------------------
